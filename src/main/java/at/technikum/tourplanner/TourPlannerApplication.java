@@ -13,7 +13,9 @@ public class TourPlannerApplication extends Application {
     public void start(Stage stage) throws IOException {
         setUpControllerFactory();
 
-        Parent root = FXMLDependencyInjection.load(TourPlannerApplication.class.getResource("dashboard-view.fxml"));
+        Parent root = FXMLDependencyInjection.load(
+                TourPlannerApplication.class.getResource("dashboard/dashboard-view.fxml")
+        );
         Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Tour Planner");
         stage.setScene(scene);

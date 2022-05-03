@@ -5,7 +5,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.DashboardController">
+<VBox xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="at.technikum.tourplanner.dashboard.DashboardController"
+      prefHeight="400.0" prefWidth="640.0">
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" text="Save" />
@@ -91,7 +94,7 @@
                 </ToolBar>
                 <TextArea prefHeight="200.0" prefWidth="200.0" />
             </VBox>
-            <fx:include source="tourlist/tourlist-view.fxml" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+            <fx:include source="tourlist-view.fxml" GridPane.rowIndex="1" GridPane.rowSpan="2" />
         </GridPane>
     </AnchorPane>
 </VBox>

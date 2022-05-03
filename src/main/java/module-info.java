@@ -6,6 +6,6 @@ module at.technikum.tourplanner {
     opens at.technikum.tourplanner to javafx.fxml;
     exports at.technikum.tourplanner;
 
-    opens at.technikum.tourplanner.tourlist to javafx.fxml;
-    exports at.technikum.tourplanner.tourlist to javafx.fxml;
+    opens at.technikum.tourplanner.dashboard to javafx.fxml;
+    exports at.technikum.tourplanner.dashboard;
 }

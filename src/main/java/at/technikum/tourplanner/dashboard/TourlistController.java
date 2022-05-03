@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.tourlist;
+package at.technikum.tourplanner.dashboard;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
