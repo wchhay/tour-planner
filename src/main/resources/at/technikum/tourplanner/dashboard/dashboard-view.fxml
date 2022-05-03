@@ -1,39 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/11.0.14-internal"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="at.technikum.tourplanner.dashboard.DashboardController"
       prefHeight="400.0" prefWidth="640.0">
-    <MenuBar VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Import PDF" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Options">
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="Help" />
-            <MenuItem mnemonicParsing="false" text="About Tour Planner" />
-        </Menu>
-    </MenuBar>
+    <fx:include source="menubar-view.fxml" VBox.vgrow="NEVER"/>
     <AnchorPane VBox.vgrow="ALWAYS">
         <GridPane layoutX="25.0" layoutY="23.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -46,55 +19,10 @@
                 <RowConstraints vgrow="SOMETIMES" />
                 <RowConstraints vgrow="SOMETIMES" />
             </rowConstraints>
-            <TextField prefHeight="25.0" prefWidth="546.0" promptText="Search" GridPane.columnSpan="2">
-                <GridPane.margin>
-                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                </GridPane.margin>
-            </TextField>
-            <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" />
-            <VBox prefHeight="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                <GridPane.margin>
-                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                </GridPane.margin>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs:">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                    </VBox.margin>
-                </Text>
-                <TableView prefHeight="155.0" prefWidth="403.0">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="Date" />
-                        <TableColumn prefWidth="75.0" text="Duration" />
-                        <TableColumn prefWidth="75.0" text="Distance" />
-                        <TableColumn prefWidth="75.0" text="..." />
-                    </columns>
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
-                </TableView>
-            </VBox>
-            <VBox prefHeight="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
-                <GridPane.margin>
-                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                </GridPane.margin>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                    </VBox.margin>
-                </Text>
-                <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <Button mnemonicParsing="false" text="Route" />
-                    <Button mnemonicParsing="false" text="Description" />
-                </ToolBar>
-                <TextArea prefHeight="200.0" prefWidth="200.0" />
-            </VBox>
-            <fx:include source="tourlist-view.fxml" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+            <fx:include source="searchbar-view.fxml" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647"/>
+            <fx:include source="tourlist-view.fxml" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.rowSpan="2" />
+            <fx:include source="tour-view.fxml" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+            <fx:include source="logs-view.fxml" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.columnSpan="2" />
         </GridPane>
     </AnchorPane>
 </VBox>

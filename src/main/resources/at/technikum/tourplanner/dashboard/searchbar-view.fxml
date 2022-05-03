@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="at.technikum.tourplanner.dashboard.SearchbarController">
+    <TextField prefHeight="25.0" promptText="Search" HBox.hgrow="ALWAYS"/>
+    <Button maxWidth="60.0" minWidth="60.0" mnemonicParsing="false" text="Search" />
+</HBox>

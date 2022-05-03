@@ -1,5 +1,4 @@
 package at.technikum.tourplanner.dashboard;
 
-
-public class DashboardController {
+public class TourController {
 }
