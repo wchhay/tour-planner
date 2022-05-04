@@ -11,8 +11,6 @@ import java.io.IOException;
 public class TourPlannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        setUpControllerFactory();
-
         Parent root = FXMLDependencyInjection.load(
                 TourPlannerApplication.class.getResource("dashboard/dashboard-view.fxml")
         );
@@ -24,9 +22,5 @@ public class TourPlannerApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    private void setUpControllerFactory() {
-        /* Add custom controller creators for dependency injection here */
     }
 }

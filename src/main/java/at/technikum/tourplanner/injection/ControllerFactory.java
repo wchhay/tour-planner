@@ -1,5 +1,8 @@
 package at.technikum.tourplanner.injection;
 
+import at.technikum.tourplanner.dashboard.SearchbarController;
+import at.technikum.tourplanner.dashboard.SearchbarViewModel;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +13,11 @@ public class ControllerFactory {
 
     private static ControllerFactory instance;
 
-    private ControllerFactory() {}
+    private final SearchbarViewModel searchbarViewModel = new SearchbarViewModel();
+
+    private ControllerFactory() {
+        setUpControllerFactory();
+    }
 
     public static ControllerFactory getInstance() {
         if (null == instance) {
@@ -41,5 +48,9 @@ public class ControllerFactory {
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    private void setUpControllerFactory() {
+        addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
     }
 }

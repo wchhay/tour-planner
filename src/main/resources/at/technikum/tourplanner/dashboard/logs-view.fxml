@@ -10,9 +10,9 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="at.technikum.tourplanner.dashboard.LogsController"
       prefHeight="200.0">
-    <GridPane.margin>
+    <VBox.margin>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
-    </GridPane.margin>
+    </VBox.margin>
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs:">
         <font>
             <Font size="16.0"/>

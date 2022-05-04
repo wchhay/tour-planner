@@ -12,9 +12,9 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="at.technikum.tourplanner.dashboard.TourlistController"
       prefHeight="200.0" prefWidth="100.0">
-    <GridPane.margin>
+    <VBox.margin>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
-    </GridPane.margin>
+    </VBox.margin>
     <ToolBar>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours">
             <font>
