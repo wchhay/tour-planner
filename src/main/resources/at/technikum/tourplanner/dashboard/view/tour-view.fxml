@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="at.technikum.tourplanner.dashboard.view.TourController">
+    <VBox.margin>
+        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+    </VBox.margin>
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
+        <font>
+            <Font size="16.0"/>
+        </font>
+        <VBox.margin>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+        </VBox.margin>
+    </Text>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <Button mnemonicParsing="false" text="Route"/>
+        <Button mnemonicParsing="false" text="Description"/>
+    </ToolBar>
+    <TextArea prefHeight="200.0" prefWidth="200.0"/>
+</VBox>

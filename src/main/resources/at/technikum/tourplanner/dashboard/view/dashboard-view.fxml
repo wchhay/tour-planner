@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.14-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="at.technikum.tourplanner.dashboard.view.DashboardController">
+    <fx:include source="menubar-view.fxml" VBox.vgrow="NEVER"/>
+    <AnchorPane VBox.vgrow="ALWAYS">
+        <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints vgrow="ALWAYS"/>
+            </rowConstraints>
+            <fx:include source="searchbar-view.fxml" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647"/>
+            <fx:include source="tourlist-view.fxml" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                <Tab text="Overview">
+                    <VBox>
+                        <fx:include source="tour-view.fxml" VBox.vgrow="SOMETIMES"/>
+                        <fx:include source="logs-view.fxml" VBox.vgrow="SOMETIMES"/>
+                    </VBox>
+                </Tab>
+                <Tab text="Edit Tour">
+                </Tab>
+            </TabPane>
+        </GridPane>
+    </AnchorPane>
+</VBox>

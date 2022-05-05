@@ -8,12 +8,11 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tourplanner.dashboard.TourController"
-      prefHeight="200.0">
+      fx:controller="at.technikum.tourplanner.dashboard.view.LogsController">
     <VBox.margin>
         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
     </VBox.margin>
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs:">
         <font>
             <Font size="16.0"/>
         </font>
@@ -21,9 +20,15 @@
             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
         </VBox.margin>
     </Text>
-    <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <Button mnemonicParsing="false" text="Route"/>
-        <Button mnemonicParsing="false" text="Description"/>
-    </ToolBar>
-    <TextArea prefHeight="200.0" prefWidth="200.0"/>
+    <TableView>
+        <columns>
+            <TableColumn prefWidth="75.0" text="Date"/>
+            <TableColumn prefWidth="75.0" text="Duration"/>
+            <TableColumn prefWidth="75.0" text="Distance"/>
+            <TableColumn prefWidth="75.0" text="..."/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
 </VBox>
