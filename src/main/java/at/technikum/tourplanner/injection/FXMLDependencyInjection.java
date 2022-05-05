@@ -10,7 +10,8 @@ import java.net.URL;
 
 public class FXMLDependencyInjection {
 
-    private FXMLDependencyInjection() {}
+    private FXMLDependencyInjection() {
+    }
 
     public static Parent load(URL location) throws IOException {
         FXMLLoader loader = getLoader(location);
@@ -23,6 +24,6 @@ public class FXMLDependencyInjection {
                 null,
                 new JavaFXBuilderFactory(),
                 controllerClass -> ControllerFactory.getInstance().create(controllerClass)
-                );
+        );
     }
 }

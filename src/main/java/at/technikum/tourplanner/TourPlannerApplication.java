@@ -12,7 +12,7 @@ public class TourPlannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLDependencyInjection.load(
-                TourPlannerApplication.class.getResource("dashboard/dashboard-view.fxml")
+                TourPlannerApplication.class.getResource("dashboard/view/dashboard-view.fxml")
         );
         Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Tour Planner");

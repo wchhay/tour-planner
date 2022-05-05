@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.dashboard;
+package at.technikum.tourplanner.dashboard.viewmodel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

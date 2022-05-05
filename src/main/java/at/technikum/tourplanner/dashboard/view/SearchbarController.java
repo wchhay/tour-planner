@@ -1,6 +1,6 @@
-package at.technikum.tourplanner.dashboard;
+package at.technikum.tourplanner.dashboard.view;
 
-import javafx.event.ActionEvent;
+import at.technikum.tourplanner.dashboard.viewmodel.SearchbarViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -20,7 +20,7 @@ public class SearchbarController {
         searchField.textProperty().bindBidirectional(searchbarViewModel.searchStringProperty());
     }
 
-    public void search(ActionEvent event) {
+    public void search() {
         searchbarViewModel.search();
     }
 }

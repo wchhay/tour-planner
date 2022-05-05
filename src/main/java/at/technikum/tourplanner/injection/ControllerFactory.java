@@ -1,7 +1,9 @@
 package at.technikum.tourplanner.injection;
 
-import at.technikum.tourplanner.dashboard.SearchbarController;
-import at.technikum.tourplanner.dashboard.SearchbarViewModel;
+import at.technikum.tourplanner.dashboard.view.SearchbarController;
+import at.technikum.tourplanner.dashboard.viewmodel.SearchbarViewModel;
+import at.technikum.tourplanner.dashboard.view.TourlistController;
+import at.technikum.tourplanner.dashboard.viewmodel.TourViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ public class ControllerFactory {
     private static ControllerFactory instance;
 
     private final SearchbarViewModel searchbarViewModel = new SearchbarViewModel();
+    private final TourViewModel tourViewModel = new TourViewModel();
 
     private ControllerFactory() {
         setUpControllerFactory();
@@ -52,5 +55,6 @@ public class ControllerFactory {
 
     private void setUpControllerFactory() {
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
+        addControllerCreator(TourlistController.class, () -> new TourlistController(tourViewModel));
     }
 }
