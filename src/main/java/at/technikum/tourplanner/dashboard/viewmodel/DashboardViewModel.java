@@ -4,14 +4,14 @@ import at.technikum.tourplanner.dashboard.model.Tour;
 
 public class DashboardViewModel {
 
-    private final TourViewModel tourViewModel;
+    private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
 
-    public DashboardViewModel(TourViewModel tourViewModel, TourDetailsViewModel tourDetailsViewModel) {
-        this.tourViewModel = tourViewModel;
+    public DashboardViewModel(TourListViewModel tourListViewModel, TourDetailsViewModel tourDetailsViewModel) {
+        this.tourListViewModel = tourListViewModel;
         this.tourDetailsViewModel = tourDetailsViewModel;
 
-        this.tourViewModel.addSelectionChangedListener(this::selectTour);
+        this.tourListViewModel.addListener(this::selectTour);
     }
 
     private void selectTour(Tour tour) {

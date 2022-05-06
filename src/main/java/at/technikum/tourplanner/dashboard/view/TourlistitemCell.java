@@ -32,7 +32,7 @@ public class TourlistitemCell extends ListCell<Tour> {
         setText(null);
         setGraphic(null);
         if (null != item && !empty) {
-            tourName.setText(item.name());
+            tourName.setText(item.getName());
             setGraphic(hbox);
         }
     }

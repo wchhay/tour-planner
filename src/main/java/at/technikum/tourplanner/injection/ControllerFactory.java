@@ -7,7 +7,7 @@ import at.technikum.tourplanner.dashboard.viewmodel.DashboardViewModel;
 import at.technikum.tourplanner.dashboard.viewmodel.SearchbarViewModel;
 import at.technikum.tourplanner.dashboard.view.TourlistController;
 import at.technikum.tourplanner.dashboard.viewmodel.TourDetailsViewModel;
-import at.technikum.tourplanner.dashboard.viewmodel.TourViewModel;
+import at.technikum.tourplanner.dashboard.viewmodel.TourListViewModel;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -20,15 +20,15 @@ public class ControllerFactory {
     private static ControllerFactory instance;
 
     private final SearchbarViewModel searchbarViewModel;
-    private final TourViewModel tourViewModel;
+    private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
     private final DashboardViewModel dashboardViewModel;
 
     private ControllerFactory() {
         searchbarViewModel = new SearchbarViewModel();
-        tourViewModel = new TourViewModel();
+        tourListViewModel = new TourListViewModel();
         tourDetailsViewModel = new TourDetailsViewModel();
-        dashboardViewModel = new DashboardViewModel(tourViewModel, tourDetailsViewModel);
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel);
 
         setUpControllerFactory();
     }
@@ -66,7 +66,7 @@ public class ControllerFactory {
 
     private void setUpControllerFactory() {
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
-        addControllerCreator(TourlistController.class, () -> new TourlistController(tourViewModel));
+        addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }

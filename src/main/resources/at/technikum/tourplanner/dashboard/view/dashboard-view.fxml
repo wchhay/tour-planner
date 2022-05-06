@@ -31,8 +31,6 @@
                 <Tab text="Logs">
                     <fx:include source="logs-view.fxml" VBox.vgrow="SOMETIMES"/>
                 </Tab>
-                <Tab text="Edit Tour">
-                </Tab>
             </TabPane>
         </GridPane>
     </AnchorPane>
