@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 
+<?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx/11.0.14-internal"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="at.technikum.tourplanner.dashboard.view.DashboardController">
@@ -21,11 +22,14 @@
             <fx:include source="searchbar-view.fxml" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2147483647"/>
             <fx:include source="tourlist-view.fxml" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
             <TabPane tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1" GridPane.columnIndex="1">
-                <Tab text="Overview">
-                    <VBox>
-                        <fx:include source="tour-view.fxml" VBox.vgrow="SOMETIMES"/>
-                        <fx:include source="logs-view.fxml" VBox.vgrow="SOMETIMES"/>
-                    </VBox>
+                <GridPane.margin>
+                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+                </GridPane.margin>
+                <Tab text="Details">
+                    <fx:include source="tour-details-view.fxml" VBox.vgrow="SOMETIMES"/>
+                </Tab>
+                <Tab text="Logs">
+                    <fx:include source="logs-view.fxml" VBox.vgrow="SOMETIMES"/>
                 </Tab>
                 <Tab text="Edit Tour">
                 </Tab>

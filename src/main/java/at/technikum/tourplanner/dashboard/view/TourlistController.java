@@ -21,6 +21,7 @@ public class TourlistController {
     void initialize() {
         tourList.setItems(tourViewModel.getTourList());
         tourList.setCellFactory(param -> new TourlistitemCell());
+        tourList.getSelectionModel().selectedItemProperty().addListener(tourViewModel.getChangeListener());
     }
 
     public void addTour() {
