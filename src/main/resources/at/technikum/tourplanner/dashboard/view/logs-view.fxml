@@ -9,22 +9,27 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="at.technikum.tourplanner.dashboard.view.LogsController">
-    <VBox.margin>
-        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
-    </VBox.margin>
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs:">
-        <font>
-            <Font size="16.0"/>
-        </font>
-        <VBox.margin>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
-        </VBox.margin>
-    </Text>
-    <TableView VBox.vgrow="ALWAYS">
+    <HBox>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logs:">
+            <font>
+                <Font size="16.0"/>
+            </font>
+            <HBox.margin>
+                <Insets topRightBottomLeft="4.0"/>
+            </HBox.margin>
+        </Text>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="+" onAction="#addTourLog">
+            <HBox.margin>
+                <Insets topRightBottomLeft="4.0"/>
+            </HBox.margin>
+        </Button>
+    </HBox>
+    <TableView fx:id="logTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn text="Date"/>
-            <TableColumn text="Duration"/>
-            <TableColumn text="Distance"/>
+            <TableColumn fx:id="logDate" text="Date"/>
+            <TableColumn fx:id="logDuration" text="Duration"/>
+            <TableColumn fx:id="logDistance" text="Distance"/>
             <TableColumn text="..."/>
         </columns>
         <columnResizePolicy>

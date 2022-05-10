@@ -22,19 +22,30 @@
             </HBox.margin>
         </Text>
         <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS"/>
-        <Button fx:id="editButton" onAction="#onEdit" text="Edit"/>
+        <Button fx:id="editButton" onAction="#onEdit" text="Edit">
+            <HBox.margin>
+                <Insets left="4.0"/>
+            </HBox.margin>
+        </Button>
     </HBox>
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route:">
         <VBox.margin>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            <Insets topRightBottomLeft="4.0"/>
         </VBox.margin>
     </Text>
     <TextArea fx:id="route" editable="false" VBox.vgrow="ALWAYS"/>
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
         <VBox.margin>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            <Insets topRightBottomLeft="4.0"/>
         </VBox.margin>
     </Text>
     <TextArea fx:id="description" editable="false" VBox.vgrow="ALWAYS"/>
-    <Button fx:id="saveButton" onAction="#onSave" text="Save" visible="false"/>
+    <HBox>
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button fx:id="saveButton" onAction="#onSave" text="Save" visible="false">
+            <HBox.margin>
+                <Insets topRightBottomLeft="4.0"/>
+            </HBox.margin>
+        </Button>
+    </HBox>
 </VBox>

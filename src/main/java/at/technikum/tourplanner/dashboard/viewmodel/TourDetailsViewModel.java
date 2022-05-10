@@ -31,7 +31,9 @@ public class TourDetailsViewModel {
     }
 
     public void updateTour() {
-        selectedTour.setName(name.get());
-        selectedTour.setDescription(description.get());
+        if (null != selectedTour) {
+            selectedTour.setName(name.get());
+            selectedTour.setDescription(description.get());
+        }
     }
 }

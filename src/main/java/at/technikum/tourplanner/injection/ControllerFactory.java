@@ -1,13 +1,7 @@
 package at.technikum.tourplanner.injection;
 
-import at.technikum.tourplanner.dashboard.view.DashboardController;
-import at.technikum.tourplanner.dashboard.view.SearchbarController;
-import at.technikum.tourplanner.dashboard.view.TourDetailsController;
-import at.technikum.tourplanner.dashboard.viewmodel.DashboardViewModel;
-import at.technikum.tourplanner.dashboard.viewmodel.SearchbarViewModel;
-import at.technikum.tourplanner.dashboard.view.TourlistController;
-import at.technikum.tourplanner.dashboard.viewmodel.TourDetailsViewModel;
-import at.technikum.tourplanner.dashboard.viewmodel.TourListViewModel;
+import at.technikum.tourplanner.dashboard.view.*;
+import at.technikum.tourplanner.dashboard.viewmodel.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -20,12 +14,14 @@ public class ControllerFactory {
     private static ControllerFactory instance;
 
     private final SearchbarViewModel searchbarViewModel;
+    private final LogsViewModel logsViewModel;
     private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
     private final DashboardViewModel dashboardViewModel;
 
     private ControllerFactory() {
         searchbarViewModel = new SearchbarViewModel();
+        logsViewModel = new LogsViewModel();
         tourListViewModel = new TourListViewModel();
         tourDetailsViewModel = new TourDetailsViewModel();
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel);
@@ -66,6 +62,7 @@ public class ControllerFactory {
 
     private void setUpControllerFactory() {
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
+        addControllerCreator(LogsController.class, () -> new LogsController(logsViewModel));
         addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
