@@ -44,6 +44,10 @@ public class ControllerFactory {
         controllerCreators.remove(controllerClass);
     }
 
+    public void removeAllControllerCreators() {
+        controllerCreators.clear();
+    }
+
     public Object create(Class<?> controllerClass) {
         if (controllerCreators.containsKey(controllerClass)) {
             return controllerCreators.get(controllerClass).create();
