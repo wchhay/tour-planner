@@ -9,8 +9,7 @@ public class TourListViewModel extends Publisher<Tour> {
 
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
 
-    public void addTour() {
-        Tour tour = new Tour("New Tour", "");
+    public void addTour(Tour tour) {
         tourList.add(tour);
     }
 

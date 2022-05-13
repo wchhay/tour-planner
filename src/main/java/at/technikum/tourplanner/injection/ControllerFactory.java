@@ -1,5 +1,6 @@
 package at.technikum.tourplanner.injection;
 
+import at.technikum.tourplanner.dashboard.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
 
@@ -17,14 +18,21 @@ public class ControllerFactory {
     private final LogsViewModel logsViewModel;
     private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
+    private final TourDialogViewModel tourDialogViewModel;
+    private final TourDialogService tourDialogService;
+
     private final DashboardViewModel dashboardViewModel;
+
 
     private ControllerFactory() {
         searchbarViewModel = new SearchbarViewModel();
         logsViewModel = new LogsViewModel();
         tourListViewModel = new TourListViewModel();
         tourDetailsViewModel = new TourDetailsViewModel();
-        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel);
+        tourDialogViewModel = new TourDialogViewModel();
+        tourDialogService = new TourDialogService();
+
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel);
 
         setUpControllerFactory();
     }
@@ -67,8 +75,9 @@ public class ControllerFactory {
     private void setUpControllerFactory() {
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
         addControllerCreator(LogsController.class, () -> new LogsController(logsViewModel));
-        addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));
+        addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel, tourDialogService));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
+        addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.dashboard.view;
+package at.technikum.tourplanner.dashboard.component;
 
 import at.technikum.tourplanner.dashboard.model.Tour;
 import javafx.geometry.Pos;
