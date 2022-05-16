@@ -77,7 +77,7 @@ public class ControllerFactory {
         addControllerCreator(LogsController.class, () -> new LogsController(logsViewModel));
         addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel, tourDialogService));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
-        addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
+        addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel, tourDialogService));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

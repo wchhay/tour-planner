@@ -11,17 +11,25 @@ import java.io.IOException;
 
 public class TourDialogService {
 
+    private Stage stage;
+
     public void openDialog() {
         try {
             Parent parent = FXMLDependencyInjection.load(TourDialogController.class.getResource("tour-dialog-view.fxml"));
 
             Scene scene = new Scene(parent, 350, 150);
-            Stage stage = new Stage();
+            stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void closeDialog() {
+        if (null != stage) {
+            stage.close();
         }
     }
 }

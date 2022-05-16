@@ -1,5 +1,6 @@
 package at.technikum.tourplanner.dashboard.view;
 
+import at.technikum.tourplanner.dashboard.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.viewmodel.TourDialogViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -17,8 +18,11 @@ public class TourDialogController {
 
     private final TourDialogViewModel tourDialogViewModel;
 
-    public TourDialogController(TourDialogViewModel tourDialogViewModel) {
+    private final TourDialogService tourDialogService;
+
+    public TourDialogController(TourDialogViewModel tourDialogViewModel, TourDialogService tourDialogService) {
         this.tourDialogViewModel = tourDialogViewModel;
+        this.tourDialogService = tourDialogService;
     }
 
     @FXML
@@ -30,5 +34,6 @@ public class TourDialogController {
 
     public void onCreate() {
         tourDialogViewModel.validateAndBuildTour();
+        tourDialogService.closeDialog();
     }
 }
