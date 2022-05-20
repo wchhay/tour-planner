@@ -49,7 +49,6 @@ public class TourDialogViewModel extends Publisher<Tour> {
     public String getTourFrom() {
         return tourFrom.get();
     }
-
     public StringProperty tourFromProperty() {
         return tourFrom;
     }

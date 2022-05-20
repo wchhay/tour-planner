@@ -10,10 +10,11 @@ public class LogsViewModel {
 
     ObservableList<Log> logsList = FXCollections.observableArrayList();
 
-    public void addTourLog() {
+  /* public void addTourLog() {
         Log log = new Log(LocalDateTime.now(), 0L, 0L);
         logsList.add(log);
     }
+   */
 
     public ObservableList<Log> getLogsList() {
         return logsList;

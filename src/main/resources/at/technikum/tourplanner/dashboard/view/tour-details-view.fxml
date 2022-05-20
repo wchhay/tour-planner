@@ -1,51 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
     <HBox>
         <VBox.margin>
-            <Insets top="8.0"/>
+            <Insets top="8.0" />
         </VBox.margin>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
             <font>
-                <Font size="16.0"/>
+                <Font size="16.0" />
             </font>
             <HBox.margin>
-                <Insets right="4.0"/>
+                <Insets right="4.0" />
             </HBox.margin>
         </Text>
-        <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS" />
         <Button fx:id="editButton" onAction="#onEdit" text="Edit">
             <HBox.margin>
-                <Insets left="4.0"/>
+                <Insets left="4.0" />
             </HBox.margin>
         </Button>
     </HBox>
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Route:">
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From:">
         <VBox.margin>
-            <Insets topRightBottomLeft="4.0"/>
+            <Insets topRightBottomLeft="4.0" />
         </VBox.margin>
     </Text>
-    <TextArea fx:id="route" editable="false" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="from" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
         <VBox.margin>
-            <Insets topRightBottomLeft="4.0"/>
+            <Insets topRightBottomLeft="4.0" />
         </VBox.margin>
     </Text>
-    <TextArea fx:id="description" editable="false" VBox.vgrow="ALWAYS"/>
-    <HBox>
-        <Pane HBox.hgrow="ALWAYS"/>
-        <Button fx:id="saveButton" onAction="#onSave" text="Save" visible="false">
-            <HBox.margin>
-                <Insets topRightBottomLeft="4.0"/>
-            </HBox.margin>
-        </Button>
-    </HBox>
+    <TextArea fx:id="description" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
 </VBox>

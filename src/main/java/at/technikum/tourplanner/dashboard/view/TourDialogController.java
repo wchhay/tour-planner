@@ -43,13 +43,13 @@ public class TourDialogController {
     @FXML
     void initialize() {
         tourName.textProperty().bindBidirectional(tourDialogViewModel.tourNameProperty());
-        tourFrom.textProperty().bindBidirectional(tourDialogViewModel.tourRouteProperty());
-        tourTo.textProperty().bindBidirectional(tourDialogViewModel.tourRouteProperty());
+        tourFrom.textProperty().bindBidirectional(tourDialogViewModel.tourFromProperty());
+        tourTo.textProperty().bindBidirectional(tourDialogViewModel.tourToProperty());
         tourDescription.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
-        tourTransportType.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
-        tourDistance.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
-        tourTime.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
-        tourInfo.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+        tourTransportType.textProperty().bindBidirectional(tourDialogViewModel.tourTransportTypeProperty());
+        tourDistance.textProperty().bindBidirectional(tourDialogViewModel.tourDistanceProperty());
+        tourTime.textProperty().bindBidirectional(tourDialogViewModel.tourTimeProperty());
+        tourInfo.textProperty().bindBidirectional(tourDialogViewModel.tourInfoProperty());
     }
 
     public void onCreate() {

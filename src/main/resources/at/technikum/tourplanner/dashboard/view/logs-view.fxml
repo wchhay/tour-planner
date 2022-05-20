@@ -28,9 +28,10 @@
     <TableView fx:id="logTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="logDate" text="Date"/>
-            <TableColumn fx:id="logDuration" text="Duration"/>
-            <TableColumn fx:id="logDistance" text="Distance"/>
-            <TableColumn text="..."/>
+            <TableColumn fx:id="logComment" text="Comment"/>
+            <TableColumn fx:id="logDifficulty" text="Difficulty"/>
+            <TableColumn fx:id="logTotalTime" text="Total-Time"/>
+            <TableColumn fx:id="logRating" text="Rating"/>
         </columns>
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

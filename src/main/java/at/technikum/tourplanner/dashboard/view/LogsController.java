@@ -47,6 +47,6 @@ public class LogsController {
     }
 
     public void addTourLog() {
-        logsViewModel.addTourLog();
+      //  logsViewModel.addTourLog();
     }
 }

@@ -24,11 +24,21 @@
         </rowConstraints>
         <Label text="Tour name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <TextField fx:id="tourName" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Label text="Route" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourRoute" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <Label text="Description" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourDescription" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-        <HBox GridPane.rowIndex="3" GridPane.columnSpan="2">
+        <Label text="From" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourFrom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="To" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourTo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <Label text="Description" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourDescription" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        <Label text="Transport type" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourTransportType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Label text="Distance" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourDistance" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <Label text="Time" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourTime" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+        <Label text="Info" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <TextField fx:id="tourInfo" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        <HBox GridPane.rowIndex="8" GridPane.columnSpan="2">
             <Pane HBox.hgrow="ALWAYS"/>
             <Button text="Create" onAction="#onCreate"/>
         </HBox>
