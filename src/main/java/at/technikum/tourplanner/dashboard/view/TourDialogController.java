@@ -11,10 +11,25 @@ public class TourDialogController {
     TextField tourName;
 
     @FXML
-    TextField tourRoute;
+    TextField tourFrom;
+
+    @FXML
+    TextField tourTo;
 
     @FXML
     TextField tourDescription;
+
+    @FXML
+    TextField tourTransportType;
+
+    @FXML
+    TextField tourDistance;
+
+    @FXML
+    TextField tourTime;
+
+    @FXML
+    TextField tourInfo;
 
     private final TourDialogViewModel tourDialogViewModel;
 
@@ -28,8 +43,13 @@ public class TourDialogController {
     @FXML
     void initialize() {
         tourName.textProperty().bindBidirectional(tourDialogViewModel.tourNameProperty());
-        tourRoute.textProperty().bindBidirectional(tourDialogViewModel.tourRouteProperty());
+        tourFrom.textProperty().bindBidirectional(tourDialogViewModel.tourRouteProperty());
+        tourTo.textProperty().bindBidirectional(tourDialogViewModel.tourRouteProperty());
         tourDescription.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+        tourTransportType.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+        tourDistance.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+        tourTime.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+        tourInfo.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
     }
 
     public void onCreate() {

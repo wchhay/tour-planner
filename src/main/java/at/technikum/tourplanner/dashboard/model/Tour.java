@@ -14,5 +14,11 @@ import java.util.UUID;
 public class Tour {
     private final UUID uuid = UUID.randomUUID();
     private String name;
+    private String from;
+    private String to;
     private String description;
+    private String transportType;
+    private String distance;
+    private String time;
+    private String info;
 }

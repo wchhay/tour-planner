@@ -15,10 +15,16 @@ public class LogsController {
     TableColumn<Log, LocalDateTime> logDate;
 
     @FXML
-    TableColumn<Log, Long> logDuration;
+    TableColumn<Log, Long> logComment;
 
     @FXML
-    TableColumn<Log, Long> logDistance;
+    TableColumn<Log, Long> logDifficulty;
+
+    @FXML
+    TableColumn<Log, Long> logTotalTime;
+
+    @FXML
+    TableColumn<Log, Long> logRating;
 
     @FXML
     TableView<Log> logTable;
@@ -32,8 +38,10 @@ public class LogsController {
     @FXML
     void initialize() {
         logDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        logDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        logDistance.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        logComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        logDifficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+        logTotalTime.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        logRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
         logTable.setItems(logsViewModel.getLogsList());
     }

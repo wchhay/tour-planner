@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Log {
     private LocalDateTime date;
-    private Long duration;
-    private Long distance;
+    private Long comment;
+    private Long difficulty;
+    private Long totalTime;
+    private Long rating;
 }

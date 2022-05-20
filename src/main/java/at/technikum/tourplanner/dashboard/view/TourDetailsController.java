@@ -12,10 +12,25 @@ public class TourDetailsController {
     TextField title;
 
     @FXML
-    TextArea route;
+    TextArea from;
+
+    @FXML
+    TextArea to;
 
     @FXML
     TextArea description;
+
+    @FXML
+    TextArea transportType;
+
+    @FXML
+    TextArea distance;
+
+    @FXML
+    TextArea time;
+
+    @FXML
+    TextArea info;
 
     @FXML
     Button editButton;
@@ -51,7 +66,12 @@ public class TourDetailsController {
         saveButton.setVisible(editable);
 
         title.setEditable(editable);
-        route.setEditable(editable);
+        from.setEditable(editable);
+        to.setEditable(editable);
         description.setEditable(editable);
+        transportType.setEditable(editable);
+        distance.setEditable(editable);
+        time.setEditable(editable);
+        info.setEditable(editable);
     }
 }

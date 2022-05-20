@@ -8,15 +8,31 @@ public class TourDialogViewModel extends Publisher<Tour> {
 
     private final StringProperty tourName = new SimpleStringProperty();
 
-    private final StringProperty tourRoute = new SimpleStringProperty();
+    private final StringProperty tourFrom = new SimpleStringProperty();
+
+    private final StringProperty tourTo = new SimpleStringProperty();
 
     private final StringProperty tourDescription = new SimpleStringProperty();
+
+    private final StringProperty tourTransportType = new SimpleStringProperty();
+
+    private final StringProperty tourDistance = new SimpleStringProperty();
+
+    private final StringProperty tourTime = new SimpleStringProperty();
+
+    private final StringProperty tourInfo = new SimpleStringProperty();
 
     public void validateAndBuildTour() {
         // TODO: Validate User input
         Tour tour = Tour.builder()
                 .name(tourName.get())
+                .name(tourFrom.get())
+                .name(tourTo.get())
                 .description(tourDescription.get())
+                .description(tourTransportType.get())
+                .description(tourDistance.get())
+                .description(tourTime.get())
+                .description(tourInfo.get())
                 .build();
 
         notifyListeners(tour);
@@ -30,12 +46,20 @@ public class TourDialogViewModel extends Publisher<Tour> {
         return tourName;
     }
 
-    public String getTourRoute() {
-        return tourRoute.get();
+    public String getTourFrom() {
+        return tourFrom.get();
     }
 
-    public StringProperty tourRouteProperty() {
-        return tourRoute;
+    public StringProperty tourFromProperty() {
+        return tourFrom;
+    }
+
+    public String getTourTo() {
+        return tourTo.get();
+    }
+
+    public StringProperty tourToProperty() {
+        return tourTo;
     }
 
     public String getTourDescription() {
@@ -44,5 +68,37 @@ public class TourDialogViewModel extends Publisher<Tour> {
 
     public StringProperty tourDescriptionProperty() {
         return tourDescription;
+    }
+
+    public String getTourTransportType() {
+        return tourTransportType.get();
+    }
+
+    public StringProperty tourTransportTypeProperty() {
+        return tourTransportType;
+    }
+
+    public String getTourDistance() {
+        return tourDistance.get();
+    }
+
+    public StringProperty tourDistanceProperty() {
+        return tourDistance;
+    }
+
+    public String getTourTime() {
+        return tourTime.get();
+    }
+
+    public StringProperty tourTimeProperty() {
+        return tourTime;
+    }
+
+    public String getInfoDistance() {
+        return tourInfo.get();
+    }
+
+    public StringProperty tourInfoProperty() {
+        return tourInfo;
     }
 }
