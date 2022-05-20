@@ -17,7 +17,7 @@ public class TourDialogService {
         try {
             Parent parent = FXMLDependencyInjection.load(TourDialogController.class.getResource("tour-dialog-view.fxml"));
 
-            Scene scene = new Scene(parent, 350, 150);
+            Scene scene = new Scene(parent, 550, 250);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
