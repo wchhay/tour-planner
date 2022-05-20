@@ -53,13 +53,13 @@ public class TourDetailsViewModel {
         selectedTour = tour;
         if (null != tour) {
             name.set(tour.getName());
-            from.set(tour.getName());
-            to.set(tour.getName());
+            from.set(tour.getFrom());
+            to.set(tour.getTo());
             description.set(tour.getDescription());
-            transportType.set(tour.getName());
-            distance.set(tour.getName());
-            time.set(tour.getName());
-            info.set(tour.getName());
+            transportType.set(tour.getTransportType());
+            distance.set(tour.getDistance());
+            time.set(tour.getTime());
+            info.set(tour.getInfo());
         } else {
             name.set("");
             from.set("");

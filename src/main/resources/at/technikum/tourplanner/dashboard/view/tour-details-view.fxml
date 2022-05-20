@@ -19,11 +19,6 @@
             </HBox.margin>
         </Text>
         <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS" />
-        <Button fx:id="editButton" onAction="#onEdit" text="Edit">
-            <HBox.margin>
-                <Insets left="4.0" />
-            </HBox.margin>
-        </Button>
     </HBox>
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From:">
         <VBox.margin>
@@ -31,6 +26,14 @@
         </VBox.margin>
     </Text>
     <TextArea fx:id="from" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0" />
+        </VBox.margin>
+    </Text>
+    <TextArea fx:id="to" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
         <VBox.margin>
             <Insets topRightBottomLeft="4.0" />
@@ -38,4 +41,31 @@
     </Text>
     <TextArea fx:id="description" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
 
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transport type:">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0" />
+        </VBox.margin>
+    </Text>
+    <TextArea fx:id="transportType" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distance:">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0" />
+        </VBox.margin>
+    </Text>
+    <TextArea fx:id="distance" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0" />
+        </VBox.margin>
+    </Text>
+    <TextArea fx:id="time" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Info:">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0" />
+        </VBox.margin>
+    </Text>
+    <TextArea fx:id="info" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
 </VBox>

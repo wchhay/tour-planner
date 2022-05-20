@@ -26,13 +26,13 @@ public class TourDialogViewModel extends Publisher<Tour> {
         // TODO: Validate User input
         Tour tour = Tour.builder()
                 .name(tourName.get())
-                .name(tourFrom.get())
-                .name(tourTo.get())
+                .from(tourFrom.get())
+                .to(tourTo.get())
                 .description(tourDescription.get())
-                .description(tourTransportType.get())
-                .description(tourDistance.get())
-                .description(tourTime.get())
-                .description(tourInfo.get())
+                .transportType(tourTransportType.get())
+                .distance(tourDistance.get())
+                .time(tourTime.get())
+                .info(tourInfo.get())
                 .build();
 
         notifyListeners(tour);

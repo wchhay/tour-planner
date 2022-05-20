@@ -47,7 +47,13 @@ public class TourDetailsController {
     @FXML
     void initialize() {
         title.textProperty().bindBidirectional(tourDetailsViewModel.nameProperty());
+        from.textProperty().bindBidirectional(tourDetailsViewModel.fromProperty());
+        to.textProperty().bindBidirectional(tourDetailsViewModel.toProperty());
         description.textProperty().bindBidirectional(tourDetailsViewModel.descriptionProperty());
+        transportType.textProperty().bindBidirectional(tourDetailsViewModel.transportTypeProperty());
+        distance.textProperty().bindBidirectional(tourDetailsViewModel.distanceProperty());
+        time.textProperty().bindBidirectional(tourDetailsViewModel.timeProperty());
+        info.textProperty().bindBidirectional(tourDetailsViewModel.infoProperty());
     }
 
     public void onEdit() {
