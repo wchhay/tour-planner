@@ -2,6 +2,7 @@ module at.technikum.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
+    requires java.logging;
 
 
     exports at.technikum.tourplanner;

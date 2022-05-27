@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-
-<MenuBar xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml"
-         fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
+<MenuBar xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
     <Menu mnemonicParsing="false" text="File">
-        <MenuItem mnemonicParsing="false" text="Import"/>
-        <MenuItem mnemonicParsing="false" text="Export"/>
+        <MenuItem mnemonicParsing="false" onAction="#showImportDialog" text="Import" />
+        <MenuItem mnemonicParsing="false" onAction="#showExportDialog" text="Export" />
     </Menu>
     <Menu mnemonicParsing="false" text="Report">
-        <MenuItem mnemonicParsing="false" text="Tour-report"/>
-        <MenuItem mnemonicParsing="false" text="Summarize-report"/>
+        <MenuItem mnemonicParsing="false" onAction="#showReportDialog" text="Tour-report" />
+        <MenuItem mnemonicParsing="false" onAction="#showSummarizeDialog" text="Summarize-report" />
     </Menu>
 
 </MenuBar>
+
