@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.util.EventObject;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class MenuBarController {
@@ -27,20 +29,6 @@ public class MenuBarController {
     private Stage stage;
 
     @FXML
-    public void getText(MouseEvent mouseEvent) {
-        File file = fileChooser.showOpenDialog(new Stage());
-
-        try {
-            Scanner scanner = new Scanner(file);
-            while(scanner.hasNextLine()){
-                textArea.appendText(scanner.nextLine() + "\n");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     void initialize() {
         // the path needs to be changed separately
         fileChooser.setInitialDirectory(new File("C:\\Users\\jonia\\tour-planner\\src\\main\\java\\files"));
@@ -48,7 +36,7 @@ public class MenuBarController {
 
     public void showImportDialog() {
         try {
-            Parent parent = FXMLDependencyInjection.load(FileImportExportViewController.class.getResource("fileImport-view.fxml"));
+            Parent parent = FXMLDependencyInjection.load(MenuBarController.class.getResource("fileImport-view.fxml"));
 
             Scene scene = new Scene(parent, 550, 250);
             stage = new Stage();
@@ -60,9 +48,23 @@ public class MenuBarController {
         }
     }
 
+    @FXML
+    public void getText(MouseEvent mouseEvent) {
+        File file = fileChooser.showOpenDialog(new Stage());
+        try {
+            Scanner scanner = new Scanner(file);
+            while(scanner.hasNextLine()){
+                textArea.appendText(scanner.nextLine() + "\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void showExportDialog() {
         try {
-            Parent parent = FXMLDependencyInjection.load(FileImportExportViewController.class.getResource("fileExport-view.fxml"));
+            Parent parent = FXMLDependencyInjection.load(MenuBarController.class.getResource("fileExport-view.fxml"));
 
             Scene scene = new Scene(parent, 550, 250);
             stage = new Stage();

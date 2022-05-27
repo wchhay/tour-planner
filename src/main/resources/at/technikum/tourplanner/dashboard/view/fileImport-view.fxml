@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.FileImportExportViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
    <children>
-      <Button layoutX="250.0" layoutY="30.0" mnemonicParsing="false" prefWidth="80.0" text="Import" />
-      <TextArea layoutX="200.0" layoutY="70.0" prefHeight="160.0" prefWidth="200.0" />
+      <Button onMouseClicked="#getText" layoutX="250.0" layoutY="30.0" mnemonicParsing="false" prefWidth="80.0" text="Choose File" />
+      <TextArea fx:id="textArea" layoutX="200.0" layoutY="70.0" prefHeight="160.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
