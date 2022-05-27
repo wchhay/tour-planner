@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -24,7 +25,9 @@ public class MenuBarController {
     FileChooser fileChooser = new FileChooser();
 
     @FXML
-    public TextArea textArea;
+    public TextArea textAreaImport;
+
+    public TextArea textAreaExport;
 
     private Stage stage;
 
@@ -34,6 +37,7 @@ public class MenuBarController {
         fileChooser.setInitialDirectory(new File("C:\\Users\\jonia\\tour-planner\\src\\main\\java\\files"));
     }
 
+    // Import File
     public void showImportDialog() {
         try {
             Parent parent = FXMLDependencyInjection.load(MenuBarController.class.getResource("fileImport-view.fxml"));
@@ -54,7 +58,7 @@ public class MenuBarController {
         try {
             Scanner scanner = new Scanner(file);
             while(scanner.hasNextLine()){
-                textArea.appendText(scanner.nextLine() + "\n");
+                textAreaImport.appendText(scanner.nextLine() + "\n");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -62,6 +66,7 @@ public class MenuBarController {
 
     }
 
+    // Export File
     public void showExportDialog() {
         try {
             Parent parent = FXMLDependencyInjection.load(MenuBarController.class.getResource("fileExport-view.fxml"));
@@ -75,10 +80,28 @@ public class MenuBarController {
             e.printStackTrace();
         }
     }
+    public void export(MouseEvent mouseEvent) {
+        File file = fileChooser.showSaveDialog(new Stage());
+        if(file != null){
+            exportSystem(file,textAreaExport.getText());
+        }
+    }
+
+    public void exportSystem(File file, String content){
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.write(content);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void showReportDialog() {
     }
 
     public void showSummarizeDialog() {
     }
+
 }
