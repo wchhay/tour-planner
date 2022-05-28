@@ -1,18 +1,19 @@
 package at.technikum.tourplanner.dashboard.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Log {
+    private UUID id;
     private LocalDateTime date;
-    private Long duration;
-    private Long distance;
+    private Long totalTime;
+    private Integer difficulty;
+    private Integer rating;
+    private String comment;
 }
