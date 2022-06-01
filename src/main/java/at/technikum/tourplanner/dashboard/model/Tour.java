@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -12,13 +13,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Tour {
-    private final UUID uuid = UUID.randomUUID();
+    private UUID id;
     private String name;
     private String from;
     private String to;
-    private String description;
     private String transportType;
-    private String distance;
-    private String time;
-    private String info;
+    private Double distance;
+    private Long estimatedTime;
+    private String description;
+    private List<Log> logs;
 }

@@ -2,7 +2,8 @@ module at.technikum.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
-    requires java.logging;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
 
 
     exports at.technikum.tourplanner;
@@ -22,5 +23,9 @@ module at.technikum.tourplanner {
 
     exports at.technikum.tourplanner.dashboard.service;
     opens at.technikum.tourplanner.dashboard.service to javafx.fxml;
+    exports at.technikum.tourplanner.dashboard.rest;
+    opens at.technikum.tourplanner.dashboard.rest to javafx.fxml;
+    exports at.technikum.tourplanner.observer;
+    opens at.technikum.tourplanner.observer to javafx.fxml;
 
 }
