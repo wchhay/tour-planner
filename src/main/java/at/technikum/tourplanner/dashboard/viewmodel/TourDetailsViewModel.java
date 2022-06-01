@@ -15,7 +15,6 @@ public class TourDetailsViewModel {
     private final StringProperty transportType = new SimpleStringProperty();
     private final StringProperty distance = new SimpleStringProperty();
     private final StringProperty time = new SimpleStringProperty();
-    private final StringProperty info = new SimpleStringProperty();
 
     public StringProperty nameProperty() {
         return name;
@@ -45,10 +44,6 @@ public class TourDetailsViewModel {
         return time;
     }
 
-    public StringProperty infoProperty() {
-        return info;
-    }
-
     public void setTour(Tour tour) {
         selectedTour = tour;
         if (null != tour) {
@@ -57,19 +52,17 @@ public class TourDetailsViewModel {
             to.set(tour.getTo());
             description.set(tour.getDescription());
             transportType.set(tour.getTransportType());
-            distance.set(tour.getDistance());
-            time.set(tour.getTime());
-            info.set(tour.getInfo());
         } else {
             name.set("");
             from.set("");
             to.set("");
             description.set("");
             transportType.set("");
-            distance.set("");
-            time.set("");
-            info.set("");
         }
+
+        // TODO: get values from backend
+        distance.set("");
+        time.set("");
     }
 
     public void updateTour() {
@@ -81,7 +74,6 @@ public class TourDetailsViewModel {
             selectedTour.setDescription(transportType.get());
             selectedTour.setDescription(distance.get());
             selectedTour.setDescription(time.get());
-            selectedTour.setDescription(info.get());
         }
     }
 }

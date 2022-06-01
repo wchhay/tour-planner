@@ -1,8 +1,0 @@
-40
-Tour40
-Wien
-Linz
-Train
-300
-3
-tourEntry

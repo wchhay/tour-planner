@@ -4,18 +4,15 @@ import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.observer.Listener;
 import at.technikum.tourplanner.observer.Observable;
 import at.technikum.tourplanner.observer.Publisher;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class TourDialogViewModel implements Publisher<Tour> {
 
     private final StringProperty tourName = new SimpleStringProperty();
-
     private final StringProperty tourFrom = new SimpleStringProperty();
-
     private final StringProperty tourTo = new SimpleStringProperty();
-
     private final StringProperty tourDescription = new SimpleStringProperty();
+    private final StringProperty tourTransportType = new SimpleStringProperty();
 
     private final Observable<Tour> tourObservable = new Observable<>();
 
@@ -29,14 +26,6 @@ public class TourDialogViewModel implements Publisher<Tour> {
         tourObservable.unsubscribe(listener);
     }
 
-    private final StringProperty tourTransportType = new SimpleStringProperty();
-
-    private final StringProperty tourDistance = new SimpleStringProperty();
-
-    private final StringProperty tourTime = new SimpleStringProperty();
-
-    private final StringProperty tourInfo = new SimpleStringProperty();
-
     public void validateAndBuildTour() {
         // TODO: Validate User input
         Tour tour = Tour.builder()
@@ -45,9 +34,6 @@ public class TourDialogViewModel implements Publisher<Tour> {
                 .to(tourTo.get())
                 .description(tourDescription.get())
                 .transportType(tourTransportType.get())
-                .distance(tourDistance.get())
-                .time(tourTime.get())
-                .info(tourInfo.get())
                 .build();
 
         tourObservable.notifyListeners(tour);
@@ -90,29 +76,5 @@ public class TourDialogViewModel implements Publisher<Tour> {
 
     public StringProperty tourTransportTypeProperty() {
         return tourTransportType;
-    }
-
-    public String getTourDistance() {
-        return tourDistance.get();
-    }
-
-    public StringProperty tourDistanceProperty() {
-        return tourDistance;
-    }
-
-    public String getTourTime() {
-        return tourTime.get();
-    }
-
-    public StringProperty tourTimeProperty() {
-        return tourTime;
-    }
-
-    public String getInfoDistance() {
-        return tourInfo.get();
-    }
-
-    public StringProperty tourInfoProperty() {
-        return tourInfo;
     }
 }

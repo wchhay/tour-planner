@@ -30,9 +30,6 @@ public class TourDetailsController {
     TextArea time;
 
     @FXML
-    TextArea info;
-
-    @FXML
     Button editButton;
 
     @FXML
@@ -51,9 +48,9 @@ public class TourDetailsController {
         to.textProperty().bindBidirectional(tourDetailsViewModel.toProperty());
         description.textProperty().bindBidirectional(tourDetailsViewModel.descriptionProperty());
         transportType.textProperty().bindBidirectional(tourDetailsViewModel.transportTypeProperty());
-        distance.textProperty().bindBidirectional(tourDetailsViewModel.distanceProperty());
-        time.textProperty().bindBidirectional(tourDetailsViewModel.timeProperty());
-        info.textProperty().bindBidirectional(tourDetailsViewModel.infoProperty());
+
+        distance.textProperty().bind(tourDetailsViewModel.distanceProperty());
+        time.textProperty().bind(tourDetailsViewModel.timeProperty());
     }
 
     public void onEdit() {
@@ -76,8 +73,5 @@ public class TourDetailsController {
         to.setEditable(editable);
         description.setEditable(editable);
         transportType.setEditable(editable);
-        distance.setEditable(editable);
-        time.setEditable(editable);
-        info.setEditable(editable);
     }
 }
