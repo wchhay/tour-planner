@@ -7,6 +7,7 @@ import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
 import at.technikum.tourplanner.service.TourServiceImpl;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -32,7 +33,7 @@ public class ControllerFactory {
     private ControllerFactory() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(REST_API_BASE_URL)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .addConverterFactory(JacksonConverterFactory.create(JsonMapper.builder().findAndAddModules().build()))
                 .build();
 
         TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
@@ -43,7 +44,7 @@ public class ControllerFactory {
         tourDetailsViewModel = new TourDetailsViewModel();
         tourDialogViewModel = new TourDialogViewModel();
         tourDialogService = new TourDialogService();
-        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel);
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel);
 
         setUpControllerFactory();
     }

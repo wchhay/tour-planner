@@ -21,5 +21,5 @@ public interface TourRepository {
 
     Optional<Log> updateLog(UUID tourId, UUID logId, Log log);
 
-    void delete(UUID uuid);
+    boolean delete(UUID uuid);
 }

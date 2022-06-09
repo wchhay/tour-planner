@@ -3,7 +3,7 @@ package at.technikum.tourplanner.rest;
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.rest.dto.DtoMapper;
-import at.technikum.tourplanner.rest.exception.TourAPIConnectionException;
+import at.technikum.tourplanner.rest.exception.TourAPIException;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -51,8 +51,12 @@ public class TourRemoteRepository implements TourRepository {
     }
 
     @Override
-    public void delete(UUID uuid) {
-        tourRestAPI.delete(uuid);
+    public boolean delete(UUID uuid) {
+        try {
+            return tourRestAPI.delete(uuid).execute().isSuccessful();
+        } catch (IOException e) {
+            throw new TourAPIException();
+        }
     }
 
     private <T> Optional<T> executeCall(Call<T> call) {
@@ -60,7 +64,7 @@ public class TourRemoteRepository implements TourRepository {
             Response<T> response = call.execute();
             return Optional.ofNullable(response.body());
         } catch (IOException e) {
-            throw new TourAPIConnectionException();
+            throw new TourAPIException();
         }
     }
 }

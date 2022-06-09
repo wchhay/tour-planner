@@ -31,5 +31,5 @@ public interface TourRestAPI {
     Call<Log> updateLog(@Path("tourId") UUID tourId, @Path("logId") UUID logId, @Body LogDto log);
 
     @DELETE("/tours/{id}")
-    void delete(@Path("id") UUID uuid);
+    Call<Void> delete(@Path("id") UUID uuid);
 }
