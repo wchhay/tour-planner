@@ -1,14 +1,21 @@
 package at.technikum.tourplanner.injection;
 
-import at.technikum.tourplanner.dashboard.service.TourDialogService;
+import at.technikum.tourplanner.rest.TourRemoteRepository;
+import at.technikum.tourplanner.rest.TourRepository;
+import at.technikum.tourplanner.rest.TourRestAPI;
+import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
+import at.technikum.tourplanner.service.TourServiceImpl;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ControllerFactory {
+    public static final String REST_API_BASE_URL = "http://localhost:8080";
 
     private static final Map<Class<?>, ControllerCreator> controllerCreators = new HashMap<>();
 
@@ -20,18 +27,22 @@ public class ControllerFactory {
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
     private final TourDialogService tourDialogService;
-
     private final DashboardViewModel dashboardViewModel;
 
-
     private ControllerFactory() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(REST_API_BASE_URL)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build();
+
+        TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
+
         searchbarViewModel = new SearchbarViewModel();
         logsViewModel = new LogsViewModel();
-        tourListViewModel = new TourListViewModel();
+        tourListViewModel = new TourListViewModel(new TourServiceImpl(tourRepository));
         tourDetailsViewModel = new TourDetailsViewModel();
         tourDialogViewModel = new TourDialogViewModel();
         tourDialogService = new TourDialogService();
-
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel);
 
         setUpControllerFactory();

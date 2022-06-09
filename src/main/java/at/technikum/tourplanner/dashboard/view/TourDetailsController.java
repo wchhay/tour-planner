@@ -2,7 +2,6 @@ package at.technikum.tourplanner.dashboard.view;
 
 import at.technikum.tourplanner.dashboard.viewmodel.TourDetailsViewModel;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -29,12 +28,6 @@ public class TourDetailsController {
     @FXML
     TextArea time;
 
-    @FXML
-    Button editButton;
-
-    @FXML
-    Button saveButton;
-
     private final TourDetailsViewModel tourDetailsViewModel;
 
     public TourDetailsController(TourDetailsViewModel tourDetailsViewModel) {
@@ -51,27 +44,5 @@ public class TourDetailsController {
 
         distance.textProperty().bind(tourDetailsViewModel.distanceProperty());
         time.textProperty().bind(tourDetailsViewModel.timeProperty());
-    }
-
-    public void onEdit() {
-        changeEditableState(true);
-    }
-
-
-    public void onSave() {
-        changeEditableState(false);
-
-        tourDetailsViewModel.updateTour();
-    }
-
-    private void changeEditableState(boolean editable) {
-        editButton.setVisible(!editable);
-        saveButton.setVisible(editable);
-
-        title.setEditable(editable);
-        from.setEditable(editable);
-        to.setEditable(editable);
-        description.setEditable(editable);
-        transportType.setEditable(editable);
     }
 }

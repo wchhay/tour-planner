@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.dashboard.rest;
+package at.technikum.tourplanner.rest;
 
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
@@ -16,6 +16,8 @@ public interface TourRepository {
     Optional<Tour> create(Tour tour);
 
     Optional<Tour> updateTour(Tour tour);
+
+    Optional<Log> createLog(UUID tourId, Log log);
 
     Optional<Log> updateLog(UUID tourId, UUID logId, Log log);
 

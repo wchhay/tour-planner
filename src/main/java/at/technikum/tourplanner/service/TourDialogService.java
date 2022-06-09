@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.dashboard.service;
+package at.technikum.tourplanner.service;
 
 import at.technikum.tourplanner.dashboard.view.TourDialogController;
 import at.technikum.tourplanner.injection.FXMLDependencyInjection;

@@ -1,6 +1,6 @@
 package at.technikum.tourplanner.dashboard.view;
 
-import at.technikum.tourplanner.dashboard.service.TourDialogService;
+import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.viewmodel.TourDialogViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

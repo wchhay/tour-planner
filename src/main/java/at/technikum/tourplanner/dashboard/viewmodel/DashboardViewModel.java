@@ -27,6 +27,6 @@ public class DashboardViewModel {
     }
 
     private void addTour(Tour tour) {
-        tourListViewModel.addTour(tour);
+        tourListViewModel.createTour(tour);
     }
 }

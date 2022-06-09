@@ -1,9 +1,10 @@
 package at.technikum.tourplanner.dashboard.viewmodel;
 
 import at.technikum.tourplanner.dashboard.model.Tour;
-import at.technikum.tourplanner.observer.Listener;
-import at.technikum.tourplanner.observer.Observable;
-import at.technikum.tourplanner.observer.Publisher;
+import at.technikum.tourplanner.dashboard.model.TransportType;
+import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
+import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
+import at.technikum.tourplanner.dashboard.viewmodel.observer.Publisher;
 import javafx.beans.property.*;
 
 public class TourDialogViewModel implements Publisher<Tour> {
@@ -33,7 +34,7 @@ public class TourDialogViewModel implements Publisher<Tour> {
                 .from(tourFrom.get())
                 .to(tourTo.get())
                 .description(tourDescription.get())
-                .transportType(tourTransportType.get())
+                .transportType(TransportType.valueOf(tourTransportType.get()))
                 .build();
 
         tourObservable.notifyListeners(tour);

@@ -3,7 +3,7 @@ package at.technikum.tourplanner.dashboard.view;
 
 import at.technikum.tourplanner.dashboard.component.TourlistitemCell;
 import at.technikum.tourplanner.dashboard.model.Tour;
-import at.technikum.tourplanner.dashboard.service.TourDialogService;
+import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.viewmodel.TourListViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -31,5 +31,9 @@ public class TourlistController {
 
     public void addTour() {
         tourDialogService.openDialog();
+    }
+
+    public void fetchTours() {
+        tourListViewModel.fetchTours();
     }
 }

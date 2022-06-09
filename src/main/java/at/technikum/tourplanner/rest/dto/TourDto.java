@@ -1,25 +1,20 @@
-package at.technikum.tourplanner.dashboard.model;
+package at.technikum.tourplanner.rest.dto;
 
+
+import at.technikum.tourplanner.dashboard.model.TransportType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tour {
-    private UUID id;
+public class TourDto {
     private String name;
     private String from;
     private String to;
     private TransportType transportType;
-    private Double distance;
-    private Long estimatedTime;
     private String description;
-    private List<Log> logs;
 }

@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.observer;
+package at.technikum.tourplanner.dashboard.viewmodel.observer;
 
 public interface Publisher<T> {
 

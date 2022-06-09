@@ -1,10 +1,11 @@
-package at.technikum.tourplanner.dashboard.rest;
+package at.technikum.tourplanner.rest;
 
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
+import at.technikum.tourplanner.rest.dto.DtoMapper;
+import at.technikum.tourplanner.rest.exception.TourAPIConnectionException;
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,18 +14,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class TourRemoteRepository implements TourRepository {
-
-    public static final String REST_API_BASE_URL = "http://localhost:8080";
-
     private final TourRestAPI tourRestAPI;
 
-    public TourRemoteRepository() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(REST_API_BASE_URL)
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build();
-
-        this.tourRestAPI = retrofit.create(TourRestAPI.class);
+    public TourRemoteRepository(TourRestAPI tourRestAPI) {
+        this.tourRestAPI = tourRestAPI;
     }
 
     @Override
@@ -39,17 +32,22 @@ public class TourRemoteRepository implements TourRepository {
 
     @Override
     public Optional<Tour> create(Tour tour) {
-        return executeCall(tourRestAPI.create(tour));
+        return executeCall(tourRestAPI.create(DtoMapper.toTourDto(tour)));
     }
 
     @Override
     public Optional<Tour> updateTour(Tour tour) {
-        return executeCall(tourRestAPI.updateTour(tour));
+        return executeCall(tourRestAPI.updateTour(tour.getId(), DtoMapper.toTourDto(tour)));
+    }
+
+    @Override
+    public Optional<Log> createLog(UUID tourId, Log log) {
+        return executeCall(tourRestAPI.createLog(tourId, DtoMapper.toLogDto(log)));
     }
 
     @Override
     public Optional<Log> updateLog(UUID tourId, UUID logId, Log log) {
-        return executeCall(tourRestAPI.updateLog(tourId, logId, log));
+        return executeCall(tourRestAPI.updateLog(tourId, logId, DtoMapper.toLogDto(log)));
     }
 
     @Override
@@ -59,10 +57,10 @@ public class TourRemoteRepository implements TourRepository {
 
     private <T> Optional<T> executeCall(Call<T> call) {
         try {
-            return Optional.ofNullable(call.execute().body());
+            Response<T> response = call.execute();
+            return Optional.ofNullable(response.body());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new TourAPIConnectionException();
         }
-        return Optional.empty();
     }
 }
