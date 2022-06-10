@@ -38,12 +38,12 @@ public class ControllerFactory {
 
         TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
 
+        tourDialogService = new TourDialogService();
         searchbarViewModel = new SearchbarViewModel();
         logsViewModel = new LogsViewModel();
-        tourListViewModel = new TourListViewModel(new TourServiceImpl(tourRepository));
+        tourListViewModel = new TourListViewModel(new TourServiceImpl(tourRepository), tourDialogService);
         tourDetailsViewModel = new TourDetailsViewModel();
-        tourDialogViewModel = new TourDialogViewModel();
-        tourDialogService = new TourDialogService();
+        tourDialogViewModel = new TourDialogViewModel(tourDialogService);
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel);
 
         setUpControllerFactory();
@@ -87,9 +87,9 @@ public class ControllerFactory {
     private void setUpControllerFactory() {
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
         addControllerCreator(LogsController.class, () -> new LogsController(logsViewModel));
-        addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel, tourDialogService));
+        addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
-        addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel, tourDialogService));
+        addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

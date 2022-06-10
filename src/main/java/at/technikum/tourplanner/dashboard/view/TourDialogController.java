@@ -1,8 +1,10 @@
 package at.technikum.tourplanner.dashboard.view;
 
-import at.technikum.tourplanner.service.TourDialogService;
+import at.technikum.tourplanner.dashboard.model.TransportType;
 import at.technikum.tourplanner.dashboard.viewmodel.TourDialogViewModel;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class TourDialogController {
@@ -20,28 +22,27 @@ public class TourDialogController {
     TextField tourDescription;
 
     @FXML
-    TextField tourTransportType;
+    ComboBox<TransportType> tourTransportType;
 
     private final TourDialogViewModel tourDialogViewModel;
 
-    private final TourDialogService tourDialogService;
-
-    public TourDialogController(TourDialogViewModel tourDialogViewModel, TourDialogService tourDialogService) {
+    public TourDialogController(TourDialogViewModel tourDialogViewModel) {
         this.tourDialogViewModel = tourDialogViewModel;
-        this.tourDialogService = tourDialogService;
     }
 
     @FXML
     void initialize() {
+        tourTransportType.setItems(FXCollections.observableArrayList(TransportType.values()));
+
         tourName.textProperty().bindBidirectional(tourDialogViewModel.tourNameProperty());
         tourFrom.textProperty().bindBidirectional(tourDialogViewModel.tourFromProperty());
         tourTo.textProperty().bindBidirectional(tourDialogViewModel.tourToProperty());
         tourDescription.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
-        tourTransportType.textProperty().bindBidirectional(tourDialogViewModel.tourTransportTypeProperty());
+        tourTransportType.valueProperty().bindBidirectional(tourDialogViewModel.tourTransportTypeProperty());
     }
 
     public void onCreate() {
         tourDialogViewModel.validateAndBuildTour();
-        tourDialogService.closeDialog();
+        tourDialogViewModel.closeDialog();
     }
 }

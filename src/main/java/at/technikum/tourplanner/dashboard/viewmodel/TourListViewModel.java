@@ -5,6 +5,7 @@ import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Publisher;
 import at.technikum.tourplanner.service.AsyncService;
+import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.service.TourService;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -20,12 +21,15 @@ public class TourListViewModel implements Publisher<Tour> {
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
     private final Observable<Tour> tourObservable = new Observable<>();
     private final TourService tourService;
+    private final TourDialogService tourDialogService;
     private final AsyncService<List<Tour>> tourFetchingService;
     private final AsyncService<Tour> tourCreationService;
     private final AsyncService<Boolean> tourDeletionService;
 
-    public TourListViewModel(TourService tourService) {
+    public TourListViewModel(TourService tourService, TourDialogService tourDialogService) {
         this.tourService = tourService;
+        this.tourDialogService = tourDialogService;
+
         this.tourFetchingService = new AsyncService<>(tourService::fetchTours);
         this.tourCreationService = new AsyncService<>();
         this.tourDeletionService = new AsyncService<>();
@@ -51,6 +55,10 @@ public class TourListViewModel implements Publisher<Tour> {
 
     public ChangeListener<Tour> getChangeListener() {
         return ((observable, oldValue, newValue) -> tourObservable.notifyListeners(newValue));
+    }
+
+    public void openDialog() {
+        tourDialogService.openDialog();
     }
 
     public void createTour(Tour tour) {

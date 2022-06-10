@@ -31,7 +31,7 @@
         <Label text="Description" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <TextField fx:id="tourDescription" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
         <Label text="Transport type" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourTransportType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <ComboBox fx:id="tourTransportType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
         <HBox GridPane.rowIndex="8" GridPane.columnSpan="2">
             <Pane HBox.hgrow="ALWAYS"/>
             <Button text="Create" onAction="#onCreate"/>

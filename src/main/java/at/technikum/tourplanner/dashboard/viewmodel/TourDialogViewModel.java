@@ -5,6 +5,7 @@ import at.technikum.tourplanner.dashboard.model.TransportType;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Publisher;
+import at.technikum.tourplanner.service.TourDialogService;
 import javafx.beans.property.*;
 
 public class TourDialogViewModel implements Publisher<Tour> {
@@ -13,9 +14,15 @@ public class TourDialogViewModel implements Publisher<Tour> {
     private final StringProperty tourFrom = new SimpleStringProperty();
     private final StringProperty tourTo = new SimpleStringProperty();
     private final StringProperty tourDescription = new SimpleStringProperty();
-    private final StringProperty tourTransportType = new SimpleStringProperty();
+    private final ObjectProperty<TransportType> tourTransportType = new SimpleObjectProperty<>();
 
     private final Observable<Tour> tourObservable = new Observable<>();
+
+    private final TourDialogService tourDialogService;
+
+    public TourDialogViewModel(TourDialogService tourDialogService) {
+        this.tourDialogService = tourDialogService;
+    }
 
     @Override
     public void addListener(Listener<Tour> listener) {
@@ -34,10 +41,14 @@ public class TourDialogViewModel implements Publisher<Tour> {
                 .from(tourFrom.get())
                 .to(tourTo.get())
                 .description(tourDescription.get())
-                .transportType(TransportType.valueOf(tourTransportType.get()))
+                .transportType(tourTransportType.get())
                 .build();
 
         tourObservable.notifyListeners(tour);
+    }
+
+    public void closeDialog() {
+        tourDialogService.closeDialog();
     }
 
     public String getTourName() {
@@ -71,11 +82,12 @@ public class TourDialogViewModel implements Publisher<Tour> {
         return tourDescription;
     }
 
-    public String getTourTransportType() {
+    public TransportType getTourTransportType() {
         return tourTransportType.get();
     }
 
-    public StringProperty tourTransportTypeProperty() {
+    public ObjectProperty<TransportType> tourTransportTypeProperty() {
         return tourTransportType;
     }
+
 }
