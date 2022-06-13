@@ -13,14 +13,23 @@ public class TourDialogService {
 
     private Stage stage;
 
-    public void openDialog() {
+    public void openCreationDialog() {
+        openDialog("Create new Tour", "tour-creation-dialog-view.fxml");
+    }
+
+    public void openUpdateDialog() {
+        openDialog("Update Tour", "tour-update-dialog-view.fxml");
+    }
+
+    private void openDialog(String title, String fxmlFile) {
         try {
-            Parent parent = FXMLDependencyInjection.load(TourDialogController.class.getResource("tour-dialog-view.fxml"));
+            Parent parent = FXMLDependencyInjection.load(TourDialogController.class.getResource(fxmlFile));
 
             Scene scene = new Scene(parent, 550, 250);
             stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
+            stage.setTitle(title);
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();

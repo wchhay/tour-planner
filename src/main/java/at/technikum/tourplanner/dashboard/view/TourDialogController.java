@@ -40,9 +40,4 @@ public class TourDialogController {
         tourDescription.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
         tourTransportType.valueProperty().bindBidirectional(tourDialogViewModel.tourTransportTypeProperty());
     }
-
-    public void onCreate() {
-        tourDialogViewModel.validateAndBuildTour();
-        tourDialogViewModel.closeDialog();
-    }
 }

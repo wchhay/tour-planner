@@ -3,6 +3,7 @@ package at.technikum.tourplanner.service;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.rest.TourRepository;
 import at.technikum.tourplanner.service.exception.FailedTourCreationException;
+import at.technikum.tourplanner.service.exception.FailedTourUpdateException;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +24,12 @@ public class TourServiceImpl implements TourService {
     @Override
     public Tour createTour(Tour tour) {
         return tourRepository.create(tour).orElseThrow(FailedTourCreationException::new);
+    }
+
+
+    @Override
+    public Tour updateTour(Tour tour) {
+        return tourRepository.updateTour(tour).orElseThrow(FailedTourUpdateException::new);
     }
 
     @Override

@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.tourplanner.dashboard.view.TourDialogController">
-    <GridPane alignment="CENTER" AnchorPane.topAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.bottomAnchor="4.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0"/>
-            <ColumnConstraints hgrow="ALWAYS"/>
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-        </rowConstraints>
-        <Label text="Tour name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourName" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-        <Label text="From" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourFrom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-        <Label text="To" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourTo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-        <Label text="Description" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="tourDescription" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-        <Label text="Transport type" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="tourTransportType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-        <HBox GridPane.rowIndex="8" GridPane.columnSpan="2">
-            <Pane HBox.hgrow="ALWAYS"/>
-            <Button text="Create" onAction="#onCreate"/>
-        </HBox>
-    </GridPane>
-</AnchorPane>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="at.technikum.tourplanner.dashboard.view.TourDialogController"
+          prefHeight="400.0" prefWidth="600.0"
+          alignment="CENTER">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <Label text="Tour name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="tourName" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <Label text="From" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="tourFrom" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Label text="To" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="tourTo" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Label text="Description" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="tourDescription" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <Label text="Transport type" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="tourTransportType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+</GridPane>
+

@@ -26,7 +26,7 @@ public class TourlistController {
     }
 
     public void addTour() {
-        tourListViewModel.openDialog();
+        tourListViewModel.openCreationDialog();
     }
 
     public void fetchTours() {

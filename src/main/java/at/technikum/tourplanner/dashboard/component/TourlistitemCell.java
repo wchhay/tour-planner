@@ -8,8 +8,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
-import java.util.Optional;
-
 public class TourlistitemCell extends ListCell<Tour> {
 
     private final TourListViewModel tourListViewModel;
@@ -17,8 +15,8 @@ public class TourlistitemCell extends ListCell<Tour> {
     private final HBox hbox = new HBox();
     private final Label tourName = new Label();
     private final Pane pane = new Pane();
-    private final Button deleteButton = new Button("x");
-
+    private final Button deleteButton = new Button("\uD83D\uDDD1");
+    private final Button editButton = new Button("✎");
 
     public TourlistitemCell(TourListViewModel tourListViewModel) {
         super();
@@ -26,8 +24,9 @@ public class TourlistitemCell extends ListCell<Tour> {
         this.tourListViewModel = tourListViewModel;
 
         deleteButton.setOnAction(event -> openDeleteDialog(getItem()));
+        editButton.setOnAction(event -> openUpdateDialog());
         HBox.setHgrow(pane, Priority.ALWAYS);
-        hbox.getChildren().addAll(tourName, pane, deleteButton);
+        hbox.getChildren().addAll(tourName, pane, editButton, deleteButton);
         hbox.setAlignment(Pos.CENTER);
     }
 
@@ -43,14 +42,10 @@ public class TourlistitemCell extends ListCell<Tour> {
     }
 
     private void openDeleteDialog(Tour tour) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Tour");
-        alert.setHeaderText("Delete Tour?");
-        alert.setContentText("Do you want to delete this tour?");
+        tourListViewModel.openDeleteDialog(tour);
+    }
 
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && ButtonType.OK == result.get()) {
-            tourListViewModel.deleteTour(tour);
-        }
+    private void openUpdateDialog() {
+        tourListViewModel.openUpdateDialog();
     }
 }

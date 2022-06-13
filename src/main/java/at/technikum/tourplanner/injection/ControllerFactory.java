@@ -1,5 +1,6 @@
 package at.technikum.tourplanner.injection;
 
+import at.technikum.tourplanner.rest.TourInMemoryRepository;
 import at.technikum.tourplanner.rest.TourRemoteRepository;
 import at.technikum.tourplanner.rest.TourRepository;
 import at.technikum.tourplanner.rest.TourRestAPI;
@@ -36,7 +37,8 @@ public class ControllerFactory {
                 .addConverterFactory(JacksonConverterFactory.create(JsonMapper.builder().findAndAddModules().build()))
                 .build();
 
-        TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
+        // TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
+        TourRepository tourRepository = new TourInMemoryRepository();
 
         tourDialogService = new TourDialogService();
         searchbarViewModel = new SearchbarViewModel();
@@ -90,6 +92,8 @@ public class ControllerFactory {
         addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));
         addControllerCreator(TourDetailsController.class, () -> new TourDetailsController(tourDetailsViewModel));
         addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
+        addControllerCreator(TourCreationDialogController.class, () -> new TourCreationDialogController(tourDialogViewModel));
+        addControllerCreator(TourUpdateDialogController.class, () -> new TourUpdateDialogController(tourDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

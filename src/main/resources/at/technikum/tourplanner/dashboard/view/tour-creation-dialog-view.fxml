@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.technikum.tourplanner.dashboard.view.TourCreationDialogController">
+    <fx:include source="tour-dialog-view.fxml" AnchorPane.topAnchor="4.0" AnchorPane.rightAnchor="4.0"
+                AnchorPane.leftAnchor="4.0"
+                AnchorPane.bottomAnchor="4.0"/>
+    <HBox AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="4.0">
+        <Pane HBox.hgrow="ALWAYS"/>
+        <Button text="Create Tour" onAction="#onCreateTourClicked"/>
+    </HBox>
+</AnchorPane>

@@ -4,19 +4,22 @@ import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.model.TransportType;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.dashboard.viewmodel.observer.Publisher;
 import at.technikum.tourplanner.service.TourDialogService;
 import javafx.beans.property.*;
 
-public class TourDialogViewModel implements Publisher<Tour> {
+import java.util.UUID;
 
+public class TourDialogViewModel {
+
+    private UUID tourUUID;
     private final StringProperty tourName = new SimpleStringProperty();
     private final StringProperty tourFrom = new SimpleStringProperty();
     private final StringProperty tourTo = new SimpleStringProperty();
     private final StringProperty tourDescription = new SimpleStringProperty();
     private final ObjectProperty<TransportType> tourTransportType = new SimpleObjectProperty<>();
 
-    private final Observable<Tour> tourObservable = new Observable<>();
+    private final Observable<Tour> tourCreationObservable = new Observable<>();
+    private final Observable<Tour> tourUpdateObservable = new Observable<>();
 
     private final TourDialogService tourDialogService;
 
@@ -24,70 +27,84 @@ public class TourDialogViewModel implements Publisher<Tour> {
         this.tourDialogService = tourDialogService;
     }
 
-    @Override
-    public void addListener(Listener<Tour> listener) {
-        tourObservable.subscribe(listener);
+    public void subscribeToTourCreation(Listener<Tour> listener) {
+        tourCreationObservable.subscribe(listener);
     }
 
-    @Override
-    public void removeListener(Listener<Tour> listener) {
-        tourObservable.unsubscribe(listener);
+    public void unsubscribeFromTourCreation(Listener<Tour> listener) {
+        tourCreationObservable.unsubscribe(listener);
     }
 
-    public void validateAndBuildTour() {
-        // TODO: Validate User input
-        Tour tour = Tour.builder()
-                .name(tourName.get())
-                .from(tourFrom.get())
-                .to(tourTo.get())
-                .description(tourDescription.get())
-                .transportType(tourTransportType.get())
-                .build();
+    public void subscribeToTourUpdate(Listener<Tour> listener) {
+        tourUpdateObservable.subscribe(listener);
+    }
 
-        tourObservable.notifyListeners(tour);
+    public void unsubscribeFromTourUpdate(Listener<Tour> listener) {
+        tourUpdateObservable.unsubscribe(listener);
+    }
+
+    public void createTour() {
+        tourCreationObservable.notifyListeners(buildTour());
+    }
+
+    public void updateTour() {
+        tourUpdateObservable.notifyListeners(buildTour());
+    }
+
+    public void setTour(Tour tour) {
+        if (null != tour) {
+            tourUUID = tour.getId();
+            tourName.setValue(tour.getName());
+            tourFrom.setValue(tour.getFrom());
+            tourTo.setValue(tour.getTo());
+            tourDescription.setValue(tour.getDescription());
+            tourTransportType.setValue(tour.getTransportType());
+        }
+    }
+
+    public void clearTour() {
+        tourUUID = null;
+        tourName.setValue("");
+        tourFrom.setValue("");
+        tourTo.setValue("");
+        tourDescription.setValue("");
+        tourTransportType.setValue(TransportType.FASTEST);
     }
 
     public void closeDialog() {
         tourDialogService.closeDialog();
     }
 
-    public String getTourName() {
-        return tourName.get();
+    private Tour buildTour() {
+        // TODO: Validate User input
+        return Tour.builder()
+                .id(tourUUID)
+                .name(tourName.get())
+                .from(tourFrom.get())
+                .to(tourTo.get())
+                .description(tourDescription.get())
+                .transportType(tourTransportType.get())
+                .build();
     }
+
 
     public StringProperty tourNameProperty() {
         return tourName;
     }
 
-    public String getTourFrom() {
-        return tourFrom.get();
-    }
     public StringProperty tourFromProperty() {
         return tourFrom;
-    }
-
-    public String getTourTo() {
-        return tourTo.get();
     }
 
     public StringProperty tourToProperty() {
         return tourTo;
     }
 
-    public String getTourDescription() {
-        return tourDescription.get();
-    }
-
     public StringProperty tourDescriptionProperty() {
         return tourDescription;
-    }
-
-    public TransportType getTourTransportType() {
-        return tourTransportType.get();
     }
 
     public ObjectProperty<TransportType> tourTransportTypeProperty() {
         return tourTransportType;
     }
-
 }

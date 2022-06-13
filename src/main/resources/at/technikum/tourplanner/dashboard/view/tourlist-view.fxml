@@ -14,7 +14,7 @@
         </Text>
         <Pane HBox.hgrow="ALWAYS" />
         <Button mnemonicParsing="false" onAction="#addTour" text="+" />
-        <Button mnemonicParsing="false" onAction="#fetchTours" text="refresh" />
+        <Button mnemonicParsing="false" onAction="#fetchTours" text="⟲" />
     </ToolBar>
     <ListView fx:id="tourList" VBox.vgrow="ALWAYS" />
    <padding>
