@@ -36,7 +36,6 @@ public class LogsViewModel {
     }
 
     public void setLogsList(List<Log> logs) {
-        logsList.clear();
         if (null != logs) {
             logsList.setAll(logs);
         }

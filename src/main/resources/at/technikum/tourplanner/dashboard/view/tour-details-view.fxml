@@ -2,63 +2,70 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
+<VBox xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
     <HBox>
         <VBox.margin>
             <Insets top="8.0" />
         </VBox.margin>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
-            <font>
-                <Font size="16.0" />
-            </font>
-            <HBox.margin>
-                <Insets right="4.0" />
-            </HBox.margin>
-        </Text>
-        <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS" />
+        <VBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
+                <font>
+                    <Font size="16.0" />
+                </font>
+                <HBox.margin>
+                    <Insets right="4.0" />
+                </HBox.margin>
+            </Text>
+            <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From:">
+                <VBox.margin>
+                    <Insets topRightBottomLeft="4.0" />
+                </VBox.margin>
+            </Text>
+            <TextField fx:id="from" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
+                <VBox.margin>
+                    <Insets topRightBottomLeft="4.0" />
+                </VBox.margin>
+            </Text>
+            <TextField fx:id="to" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transport type:">
+                <VBox.margin>
+                    <Insets topRightBottomLeft="4.0" />
+                </VBox.margin>
+            </Text>
+            <TextField fx:id="transportType" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+                <VBox.margin>
+                    <Insets topRightBottomLeft="4.0" />
+                </VBox.margin>
+            </Text>
+            <TextArea fx:id="description" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+        </VBox>
+        <ImageView fx:id="tourMapImage" fitHeight="300.0" fitWidth="300.0" HBox.hgrow="ALWAYS">
+         <HBox.margin>
+            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+         </HBox.margin></ImageView>
     </HBox>
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From:">
-        <VBox.margin>
-            <Insets topRightBottomLeft="4.0" />
-        </VBox.margin>
-    </Text>
-    <TextArea fx:id="from" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
-
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
-        <VBox.margin>
-            <Insets topRightBottomLeft="4.0" />
-        </VBox.margin>
-    </Text>
-    <TextArea fx:id="to" editable="false" prefHeight="2.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
-
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
-        <VBox.margin>
-            <Insets topRightBottomLeft="4.0" />
-        </VBox.margin>
-    </Text>
-    <TextArea fx:id="description" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
-
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Transport type:">
-        <VBox.margin>
-            <Insets topRightBottomLeft="4.0" />
-        </VBox.margin>
-    </Text>
-    <TextArea fx:id="transportType" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
 
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distance:">
         <VBox.margin>
             <Insets topRightBottomLeft="4.0" />
         </VBox.margin>
     </Text>
-    <TextArea fx:id="distance" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+    <TextField fx:id="distance" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
 
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time:">
         <VBox.margin>
             <Insets topRightBottomLeft="4.0" />
         </VBox.margin>
     </Text>
-    <TextArea fx:id="time" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+    <TextField fx:id="time" editable="false" prefHeight="0.0" prefWidth="478.0" VBox.vgrow="ALWAYS" />
 </VBox>

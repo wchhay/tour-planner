@@ -4,6 +4,7 @@ import at.technikum.tourplanner.dashboard.viewmodel.TourDetailsViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 public class TourDetailsController {
 
@@ -11,22 +12,25 @@ public class TourDetailsController {
     TextField title;
 
     @FXML
-    TextArea from;
+    TextField from;
 
     @FXML
-    TextArea to;
+    TextField to;
+
+    @FXML
+    TextField transportType;
 
     @FXML
     TextArea description;
 
     @FXML
-    TextArea transportType;
+    TextField distance;
 
     @FXML
-    TextArea distance;
+    TextField time;
 
     @FXML
-    TextArea time;
+    ImageView tourMapImage;
 
     private final TourDetailsViewModel tourDetailsViewModel;
 
@@ -42,6 +46,7 @@ public class TourDetailsController {
         description.textProperty().bindBidirectional(tourDetailsViewModel.descriptionProperty());
         transportType.textProperty().bindBidirectional(tourDetailsViewModel.transportTypeProperty());
 
+        tourMapImage.imageProperty().bind(tourDetailsViewModel.tourMapImageProperty());
         distance.textProperty().bind(tourDetailsViewModel.distanceProperty());
         time.textProperty().bind(tourDetailsViewModel.timeProperty());
     }

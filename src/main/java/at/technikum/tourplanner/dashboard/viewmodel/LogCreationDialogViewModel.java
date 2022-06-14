@@ -6,12 +6,12 @@ import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.service.TourDialogService;
 import javafx.beans.property.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+import static at.technikum.tourplanner.util.TimeConverterUtil.parseTime;
 
 public class LogCreationDialogViewModel {
 
@@ -23,7 +23,6 @@ public class LogCreationDialogViewModel {
     private final StringProperty comment = new SimpleStringProperty();
 
     private final Observable<Log> logCreationObservable = new Observable<>();
-    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     private final TourDialogService tourDialogService;
 
@@ -56,19 +55,6 @@ public class LogCreationDialogViewModel {
                 .rating(rating.get())
                 .comment(comment.get())
                 .build();
-    }
-
-    private Long parseTime(String timeString) {
-        try {
-            return timeFormat.parse(timeString).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return 0L;
-    }
-
-    public DateFormat getTimeFormat() {
-        return timeFormat;
     }
 
     public StringProperty timeProperty() {

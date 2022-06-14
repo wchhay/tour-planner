@@ -1,7 +1,8 @@
 package at.technikum.tourplanner.injection;
 
-import at.technikum.tourplanner.rest.TourInMemoryRepository;
-import at.technikum.tourplanner.rest.TourRepository;
+import at.technikum.tourplanner.config.ConfigService;
+import at.technikum.tourplanner.config.ConfigServiceImpl;
+import at.technikum.tourplanner.rest.*;
 import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ControllerFactory {
-    public static final String REST_API_BASE_URL = "http://localhost:8080";
 
     private static final Map<Class<?>, ControllerCreator> controllerCreators = new HashMap<>();
 
@@ -31,21 +31,25 @@ public class ControllerFactory {
     private final TourService tourService;
     private final TourDialogService tourDialogService;
     private final DashboardViewModel dashboardViewModel;
+    private final ConfigService configService;
+    private final ImageService imageService;
 
     private ControllerFactory() {
+        configService = new ConfigServiceImpl();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(REST_API_BASE_URL)
+                .baseUrl(configService.getKey("rest-base-url"))
                 .addConverterFactory(JacksonConverterFactory.create(JsonMapper.builder().findAndAddModules().build()))
                 .build();
 
-        // TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
-        TourRepository tourRepository = new TourInMemoryRepository();
+        TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
 
         tourDialogService = new TourDialogService();
-        tourService = new TourServiceImpl(tourRepository);
+        imageService = new ImageDownloadService(configService);
+        tourService = new TourServiceImpl(tourRepository, imageService);
         searchbarViewModel = new SearchbarViewModel();
         tourListViewModel = new TourListViewModel(tourService, tourDialogService);
-        tourDetailsViewModel = new TourDetailsViewModel();
+        tourDetailsViewModel = new TourDetailsViewModel(tourService);
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
         logsViewModel = new LogsViewModel(tourDialogService, tourService);
         logCreationDialogViewModel = new LogCreationDialogViewModel(tourDialogService);

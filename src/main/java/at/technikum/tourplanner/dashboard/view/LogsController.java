@@ -8,9 +8,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+
+import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeString;
 
 public class LogsController {
 
@@ -34,8 +34,6 @@ public class LogsController {
 
     private final LogsViewModel logsViewModel;
 
-    private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-
     public LogsController(LogsViewModel logsViewModel) {
         this.logsViewModel = logsViewModel;
     }
@@ -52,7 +50,9 @@ public class LogsController {
                 super.updateItem(item, empty);
 
                 if (!empty && null != item) {
-                    setText(dateFormat.format(item));
+                    setText(convertToTimeString(item));
+                } else {
+                    setText("");
                 }
             }
         });
@@ -66,4 +66,6 @@ public class LogsController {
     public void addTourLog() {
       logsViewModel.openLogDialog();
     }
+
+
 }

@@ -7,6 +7,7 @@ import javafx.util.converter.DateTimeStringConverter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class LogCreationDialogController {
@@ -25,6 +26,8 @@ public class LogCreationDialogController {
     TextArea logComment;
 
     private final LogCreationDialogViewModel logCreationDialogViewModel;
+
+    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
     public LogCreationDialogController(LogCreationDialogViewModel logCreationDialogViewModel) {
         this.logCreationDialogViewModel = logCreationDialogViewModel;
@@ -65,7 +68,6 @@ public class LogCreationDialogController {
 
     private void setTimeFormat(TextField textField) {
         try {
-            DateFormat timeFormat = logCreationDialogViewModel.getTimeFormat();
             textField.setTextFormatter(new TextFormatter<>(new DateTimeStringConverter(timeFormat), timeFormat.parse("00:00:00")));
         } catch (ParseException e) {
             e.printStackTrace();
