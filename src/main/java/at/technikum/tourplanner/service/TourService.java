@@ -1,5 +1,6 @@
 package at.technikum.tourplanner.service;
 
+import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface TourService {
     Tour updateTour(Tour tour);
 
     boolean deleteTour(UUID uuid);
+
+    Log createLog(UUID tourId, Log log);
 }

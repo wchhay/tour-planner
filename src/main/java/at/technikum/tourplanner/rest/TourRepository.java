@@ -2,6 +2,8 @@ package at.technikum.tourplanner.rest;
 
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
+import at.technikum.tourplanner.rest.dto.LogDto;
+import at.technikum.tourplanner.rest.dto.TourDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,13 +15,13 @@ public interface TourRepository {
 
     Optional<Tour> getById(UUID uuid);
 
-    Optional<Tour> create(Tour tour);
+    Optional<Tour> create(TourDto tour);
 
-    Optional<Tour> updateTour(Tour tour);
+    Optional<Tour> updateTour(UUID tourId, TourDto tour);
 
-    Optional<Log> createLog(UUID tourId, Log log);
+    Optional<Log> createLog(UUID tourId, LogDto log);
 
-    Optional<Log> updateLog(UUID tourId, UUID logId, Log log);
+    Optional<Log> updateLog(UUID tourId, UUID logId, LogDto log);
 
     boolean delete(UUID uuid);
 }

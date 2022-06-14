@@ -1,12 +1,11 @@
 package at.technikum.tourplanner.injection;
 
 import at.technikum.tourplanner.rest.TourInMemoryRepository;
-import at.technikum.tourplanner.rest.TourRemoteRepository;
 import at.technikum.tourplanner.rest.TourRepository;
-import at.technikum.tourplanner.rest.TourRestAPI;
 import at.technikum.tourplanner.service.TourDialogService;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
+import at.technikum.tourplanner.service.TourService;
 import at.technikum.tourplanner.service.TourServiceImpl;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import retrofit2.Retrofit;
@@ -28,6 +27,8 @@ public class ControllerFactory {
     private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
+    private final LogCreationDialogViewModel logCreationDialogViewModel;
+    private final TourService tourService;
     private final TourDialogService tourDialogService;
     private final DashboardViewModel dashboardViewModel;
 
@@ -41,12 +42,14 @@ public class ControllerFactory {
         TourRepository tourRepository = new TourInMemoryRepository();
 
         tourDialogService = new TourDialogService();
+        tourService = new TourServiceImpl(tourRepository);
         searchbarViewModel = new SearchbarViewModel();
-        logsViewModel = new LogsViewModel();
-        tourListViewModel = new TourListViewModel(new TourServiceImpl(tourRepository), tourDialogService);
+        tourListViewModel = new TourListViewModel(tourService, tourDialogService);
         tourDetailsViewModel = new TourDetailsViewModel();
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
-        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel);
+        logsViewModel = new LogsViewModel(tourDialogService, tourService);
+        logCreationDialogViewModel = new LogCreationDialogViewModel(tourDialogService);
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logCreationDialogViewModel);
 
         setUpControllerFactory();
     }
@@ -94,6 +97,7 @@ public class ControllerFactory {
         addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
         addControllerCreator(TourCreationDialogController.class, () -> new TourCreationDialogController(tourDialogViewModel));
         addControllerCreator(TourUpdateDialogController.class, () -> new TourUpdateDialogController(tourDialogViewModel));
+        addControllerCreator(LogCreationDialogController.class, () -> new LogCreationDialogController(logCreationDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

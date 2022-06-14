@@ -27,4 +27,24 @@ public class DtoMapper {
                 .rating(log.getRating())
                 .build();
     }
+
+    public static Tour fromDto(TourDto dto) {
+        return Tour.builder()
+                .name(dto.getName())
+                .from(dto.getFrom())
+                .to(dto.getTo())
+                .description(dto.getDescription())
+                .transportType(dto.getTransportType())
+                .build();
+    }
+
+    public static Log fromDto(LogDto dto) {
+        return Log.builder()
+                .date(dto.getDate())
+                .totalTime(dto.getTotalTime())
+                .comment(dto.getComment())
+                .difficulty(dto.getDifficulty())
+                .rating(dto.getRating())
+                .build();
+    }
 }

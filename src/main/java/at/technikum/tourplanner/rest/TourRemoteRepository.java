@@ -2,7 +2,8 @@ package at.technikum.tourplanner.rest;
 
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
-import at.technikum.tourplanner.rest.dto.DtoMapper;
+import at.technikum.tourplanner.rest.dto.LogDto;
+import at.technikum.tourplanner.rest.dto.TourDto;
 import at.technikum.tourplanner.rest.exception.TourAPIException;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -31,23 +32,23 @@ public class TourRemoteRepository implements TourRepository {
     }
 
     @Override
-    public Optional<Tour> create(Tour tour) {
-        return executeCall(tourRestAPI.create(DtoMapper.toTourDto(tour)));
+    public Optional<Tour> create(TourDto tour) {
+        return executeCall(tourRestAPI.create(tour));
     }
 
     @Override
-    public Optional<Tour> updateTour(Tour tour) {
-        return executeCall(tourRestAPI.updateTour(tour.getId(), DtoMapper.toTourDto(tour)));
+    public Optional<Tour> updateTour(UUID tourId, TourDto tour) {
+        return executeCall(tourRestAPI.updateTour(tourId, tour));
     }
 
     @Override
-    public Optional<Log> createLog(UUID tourId, Log log) {
-        return executeCall(tourRestAPI.createLog(tourId, DtoMapper.toLogDto(log)));
+    public Optional<Log> createLog(UUID tourId, LogDto log) {
+        return executeCall(tourRestAPI.createLog(tourId, log));
     }
 
     @Override
-    public Optional<Log> updateLog(UUID tourId, UUID logId, Log log) {
-        return executeCall(tourRestAPI.updateLog(tourId, logId, DtoMapper.toLogDto(log)));
+    public Optional<Log> updateLog(UUID tourId, UUID logId, LogDto log) {
+        return executeCall(tourRestAPI.updateLog(tourId, logId, log));
     }
 
     @Override

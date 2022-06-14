@@ -21,6 +21,10 @@ public class TourDialogService {
         openDialog("Update Tour", "tour-update-dialog-view.fxml");
     }
 
+    public void openLogDialog() {
+        openDialog("Create Tour log", "log-creation-dialog-view.fxml");
+    }
+
     private void openDialog(String title, String fxmlFile) {
         try {
             Parent parent = FXMLDependencyInjection.load(TourDialogController.class.getResource(fxmlFile));
