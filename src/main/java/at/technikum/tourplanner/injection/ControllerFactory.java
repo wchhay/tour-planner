@@ -27,7 +27,7 @@ public class ControllerFactory {
     private final TourListViewModel tourListViewModel;
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
-    private final LogCreationDialogViewModel logCreationDialogViewModel;
+    private final LogDialogViewModel logDialogViewModel;
     private final TourService tourService;
     private final TourDialogService tourDialogService;
     private final DashboardViewModel dashboardViewModel;
@@ -52,8 +52,8 @@ public class ControllerFactory {
         tourDetailsViewModel = new TourDetailsViewModel(tourService);
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
         logsViewModel = new LogsViewModel(tourDialogService, tourService);
-        logCreationDialogViewModel = new LogCreationDialogViewModel(tourDialogService);
-        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logCreationDialogViewModel);
+        logDialogViewModel = new LogDialogViewModel(tourDialogService);
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
 
         setUpControllerFactory();
     }
@@ -101,7 +101,9 @@ public class ControllerFactory {
         addControllerCreator(TourDialogController.class, () -> new TourDialogController(tourDialogViewModel));
         addControllerCreator(TourCreationDialogController.class, () -> new TourCreationDialogController(tourDialogViewModel));
         addControllerCreator(TourUpdateDialogController.class, () -> new TourUpdateDialogController(tourDialogViewModel));
-        addControllerCreator(LogCreationDialogController.class, () -> new LogCreationDialogController(logCreationDialogViewModel));
+        addControllerCreator(LogCreationDialogController.class, () -> new LogCreationDialogController(logDialogViewModel));
+        addControllerCreator(LogUpdateDialogController.class, () -> new LogUpdateDialogController(logDialogViewModel));
+        addControllerCreator(LogDialogController.class, () -> new LogDialogController(logDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

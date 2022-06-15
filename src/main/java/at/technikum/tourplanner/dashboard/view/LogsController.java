@@ -3,6 +3,7 @@ package at.technikum.tourplanner.dashboard.view;
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.viewmodel.LogsViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +32,15 @@ public class LogsController {
 
     @FXML
     TableView<Log> logTable;
+
+    @FXML
+    Button logEditButton;
+
+    @FXML
+    Button logCreationButton;
+
+    @FXML
+    Button logDeleteButton;
 
     private final LogsViewModel logsViewModel;
 
@@ -61,11 +71,23 @@ public class LogsController {
         logRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
         logTable.setItems(logsViewModel.getLogsList());
+        logTable.getSelectionModel().selectedItemProperty().addListener(logsViewModel.getSelectionChangeListener());
+
+        logCreationButton.disableProperty().bind(logsViewModel.selectedTourProperty().isNull());
+        logEditButton.disableProperty().bind(logsViewModel.selectedLogProperty().isNull());
+        logDeleteButton.disableProperty().bind(logsViewModel.selectedLogProperty().isNull());
     }
 
     public void addTourLog() {
-      logsViewModel.openLogDialog();
+      logsViewModel.openLogCreationDialog();
     }
 
+    public void editTourLog() {
+        logsViewModel.openLogUpdateDialog();
+    }
+
+    public void deleteTourLog() {
+        logsViewModel.openLogDeleteConfirmationDialog();
+    }
 
 }

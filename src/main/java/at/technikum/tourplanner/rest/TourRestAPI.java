@@ -24,6 +24,9 @@ public interface TourRestAPI {
     @PUT("/tours/{id}")
     Call<Tour> updateTour(@Path("id") UUID uuid, @Body TourDto tour);
 
+    @GET("/tours/{id}/logs")
+    Call<List<Log>> getLogsFromTour(UUID tourId);
+
     @POST("/tours/{id}/logs")
     Call<Log> createLog(@Path("id") UUID uuid, @Body LogDto log);
 
@@ -31,5 +34,8 @@ public interface TourRestAPI {
     Call<Log> updateLog(@Path("tourId") UUID tourId, @Path("logId") UUID logId, @Body LogDto log);
 
     @DELETE("/tours/{id}")
-    Call<Void> delete(@Path("id") UUID uuid);
+    Call<Void> deleteTour(@Path("id") UUID uuid);
+
+    @DELETE("/tours/{tourId}/logs/{logId}")
+    Call<Void> deleteLog(@Path("tourId") UUID tourId, @Path("logId") UUID logId);
 }

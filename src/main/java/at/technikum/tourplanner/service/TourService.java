@@ -19,5 +19,11 @@ public interface TourService {
 
     Log createLog(UUID tourId, Log log);
 
+    Log updateLog(UUID tourId, UUID logId, Log log);
+
+    List<Log> fetchLogs(UUID tourId);
+
+    boolean deleteLog(UUID tourId, UUID logId);
+
     Image downloadTourMapImage(UUID tourId);
 }

@@ -6,6 +6,7 @@ import at.technikum.tourplanner.rest.ImageService;
 import at.technikum.tourplanner.rest.TourRepository;
 import at.technikum.tourplanner.rest.dto.DtoMapper;
 import at.technikum.tourplanner.service.exception.FailedLogCreationException;
+import at.technikum.tourplanner.service.exception.FailedLogUpdateException;
 import at.technikum.tourplanner.service.exception.FailedTourCreationException;
 import at.technikum.tourplanner.service.exception.FailedTourUpdateException;
 import javafx.scene.image.Image;
@@ -43,13 +44,29 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public boolean deleteTour(UUID uuid) {
-        return tourRepository.delete(uuid);
+        return tourRepository.deleteTour(uuid);
     }
 
     @Override
     public Log createLog(UUID tourId, Log log) {
         return tourRepository.createLog(tourId, DtoMapper.toLogDto(log))
                 .orElseThrow(FailedLogCreationException::new);
+    }
+
+    @Override
+    public Log updateLog(UUID tourId, UUID logId, Log log) {
+        return tourRepository.updateLog(tourId, logId, DtoMapper.toLogDto(log))
+                .orElseThrow(FailedLogUpdateException::new);
+    }
+
+    @Override
+    public List<Log> fetchLogs(UUID tourId) {
+        return tourRepository.getLogsFromTour(tourId);
+    }
+
+    @Override
+    public boolean deleteLog(UUID tourId, UUID logId) {
+        return tourRepository.deleteLog(tourId, logId);
     }
 
     @Override

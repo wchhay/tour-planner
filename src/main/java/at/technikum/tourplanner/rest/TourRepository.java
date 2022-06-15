@@ -19,9 +19,13 @@ public interface TourRepository {
 
     Optional<Tour> updateTour(UUID tourId, TourDto tour);
 
+    boolean deleteTour(UUID uuid);
+
+    List<Log> getLogsFromTour(UUID tourId);
+
     Optional<Log> createLog(UUID tourId, LogDto log);
 
     Optional<Log> updateLog(UUID tourId, UUID logId, LogDto log);
 
-    boolean delete(UUID uuid);
+    boolean deleteLog(UUID tourId, UUID logId);
 }

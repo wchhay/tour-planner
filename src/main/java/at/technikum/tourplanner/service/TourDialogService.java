@@ -21,8 +21,12 @@ public class TourDialogService {
         openDialog("Update Tour", "tour-update-dialog-view.fxml");
     }
 
-    public void openLogDialog() {
+    public void openLogCreationDialog() {
         openDialog("Create Tour log", "log-creation-dialog-view.fxml");
+    }
+
+    public void openLogUpdateDialog() {
+        openDialog("Update Tour log", "log-update-dialog-view.fxml");
     }
 
     private void openDialog(String title, String fxmlFile) {

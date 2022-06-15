@@ -19,7 +19,17 @@
             </HBox.margin>
         </Text>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="+" onAction="#addTourLog">
+        <Button fx:id="logCreationButton" text="+" onAction="#addTourLog">
+            <HBox.margin>
+                <Insets topRightBottomLeft="4.0"/>
+            </HBox.margin>
+        </Button>
+        <Button fx:id="logEditButton" text="✎" onAction="#editTourLog">
+            <HBox.margin>
+                <Insets topRightBottomLeft="4.0"/>
+            </HBox.margin>
+        </Button>
+        <Button fx:id="logDeleteButton" text="🗑" onAction="#deleteTourLog">
             <HBox.margin>
                 <Insets topRightBottomLeft="4.0"/>
             </HBox.margin>

@@ -10,31 +10,40 @@ public class DashboardViewModel {
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
     private final LogsViewModel logsViewModel;
-    private final LogCreationDialogViewModel logCreationDialogViewModel;
+    private final LogDialogViewModel logDialogViewModel;
 
     public DashboardViewModel(
             TourListViewModel tourListViewModel,
             TourDetailsViewModel tourDetailsViewModel,
             TourDialogViewModel tourDialogViewModel,
             LogsViewModel logsViewModel,
-            LogCreationDialogViewModel logCreationDialogViewModel
+            LogDialogViewModel logDialogViewModel
     ) {
         this.tourListViewModel = tourListViewModel;
         this.tourDetailsViewModel = tourDetailsViewModel;
         this.tourDialogViewModel = tourDialogViewModel;
         this.logsViewModel = logsViewModel;
-        this.logCreationDialogViewModel = logCreationDialogViewModel;
+        this.logDialogViewModel = logDialogViewModel;
 
         this.tourListViewModel.subscribeToSelection(this::selectTour);
         this.tourDialogViewModel.subscribeToTourCreation(this::createTour);
         this.tourDialogViewModel.subscribeToTourUpdate(this::updateTour);
         this.tourListViewModel.subscribeToCreateTourClicked(this::resetCreationDialog);
-        this.logCreationDialogViewModel.subscribeToLogCreation(this::createLog);
+        this.logDialogViewModel.subscribeToLogCreation(this::createLog);
+        this.logDialogViewModel.subscribeToLogUpdate(this::updateLog);
+        this.logsViewModel.subscribeToLogDialogOpened(this::selectLog);
+    }
 
+    private void selectLog(Log log) {
+        logDialogViewModel.setLog(log);
     }
 
     private void createLog(Log log) {
         logsViewModel.createLog(log);
+    }
+
+    private void updateLog(Log log) {
+        logsViewModel.updateLog(log);
     }
 
     private void resetCreationDialog(Boolean createTourClicked) {
@@ -59,5 +68,4 @@ public class DashboardViewModel {
     private void updateTour(Tour tour) {
         tourListViewModel.updateTour(tour);
     }
-
 }

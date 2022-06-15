@@ -1,10 +1,14 @@
 package at.technikum.tourplanner.config;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.util.Properties;
 
+@Log4j2
 public class ConfigServiceImpl implements ConfigService {
 
+    public static final String APP_PROPERTIES = "app.properties";
     private final Properties properties = new Properties();
 
     public ConfigServiceImpl() {
@@ -18,9 +22,10 @@ public class ConfigServiceImpl implements ConfigService {
 
     private void loadProperties() {
         try {
-            properties.load(ConfigServiceImpl.class.getResourceAsStream("app.properties"));
+            log.info("Loading app configurations from " + APP_PROPERTIES);
+            properties.load(ConfigServiceImpl.class.getResourceAsStream(APP_PROPERTIES));
         } catch (IOException e) {
-            // TODO: add log
+            log.error("Cannot read configurations from " + APP_PROPERTIES);
         }
     }
 }

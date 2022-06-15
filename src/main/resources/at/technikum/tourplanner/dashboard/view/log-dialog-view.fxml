@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="at.technikum.tourplanner.dashboard.view.LogDialogController"
+          alignment="CENTER">
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0"/>
+        <ColumnConstraints hgrow="ALWAYS"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <Label text="Time">
+            <HBox.margin>
+                <Insets bottom="4.0" right="4.0" top="4.0"/>
+            </HBox.margin>
+        </Label>
+        <TextField fx:id="logTime" HBox.hgrow="ALWAYS"/>
+        <Label text="Date">
+            <HBox.margin>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            </HBox.margin>
+        </Label>
+        <DatePicker fx:id="logDatePicker" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <Label text="Total Time" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="logTotalTime" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <Label text="Difficulty" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Spinner fx:id="logDifficulty" amountToStepBy="1" initialValue="1" max="5" min="1" GridPane.columnIndex="1"
+             GridPane.rowIndex="2"/>
+    <Label text="Rating" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Spinner fx:id="logRating" amountToStepBy="1" initialValue="1" max="5" min="1" GridPane.columnIndex="1"
+             GridPane.rowIndex="3"/>
+    <Label text="Comment" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+    <TextArea fx:id="logComment" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+</GridPane>

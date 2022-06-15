@@ -29,8 +29,8 @@ public class TourInMemoryRepository implements TourRepository {
         Tour tour = DtoMapper.fromDto(dto);
 
         tour.setId(UUID.randomUUID());
-        tour.setDistance(random.nextDouble());
-        tour.setEstimatedTime(random.nextLong());
+        tour.setDistance(random.nextDouble(0.0, 10000.0));
+        tour.setEstimatedTime(random.nextLong(0L, 10000L));
         tour.setLogs(new ArrayList<>());
 
         tourList.add(tour);
@@ -39,10 +39,21 @@ public class TourInMemoryRepository implements TourRepository {
 
     @Override
     public Optional<Tour> updateTour(UUID tourId, TourDto dto) {
-        if (delete(tourId)) {
+        if (deleteTour(tourId)) {
             return create(dto);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<Log> getLogsFromTour(UUID tourId) {
+        Optional<Tour> tour = getById(tourId);
+
+        if (tour.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return tour.get().getLogs();
     }
 
     @Override
@@ -74,7 +85,14 @@ public class TourInMemoryRepository implements TourRepository {
     }
 
     @Override
-    public boolean delete(UUID uuid) {
+    public boolean deleteTour(UUID uuid) {
         return tourList.removeIf(tour -> tour.getId() == uuid);
+    }
+
+    @Override
+    public boolean deleteLog(UUID tourId, UUID logId) {
+        return getById(tourId)
+                .map(tour -> tour.getLogs().removeIf(log -> log.getId() == logId))
+                .orElse(false);
     }
 }

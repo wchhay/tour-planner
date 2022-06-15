@@ -42,6 +42,11 @@ public class TourRemoteRepository implements TourRepository {
     }
 
     @Override
+    public List<Log> getLogsFromTour(UUID tourId) {
+        return executeCall(tourRestAPI.getLogsFromTour(tourId)).orElse(Collections.emptyList());
+    }
+
+    @Override
     public Optional<Log> createLog(UUID tourId, LogDto log) {
         return executeCall(tourRestAPI.createLog(tourId, log));
     }
@@ -52,9 +57,18 @@ public class TourRemoteRepository implements TourRepository {
     }
 
     @Override
-    public boolean delete(UUID uuid) {
+    public boolean deleteTour(UUID uuid) {
         try {
-            return tourRestAPI.delete(uuid).execute().isSuccessful();
+            return tourRestAPI.deleteTour(uuid).execute().isSuccessful();
+        } catch (IOException e) {
+            throw new TourAPIException();
+        }
+    }
+
+    @Override
+    public boolean deleteLog(UUID tourId, UUID logId) {
+        try {
+            return tourRestAPI.deleteLog(tourId, logId).execute().isSuccessful();
         } catch (IOException e) {
             throw new TourAPIException();
         }

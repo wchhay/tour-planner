@@ -6,5 +6,6 @@ open module at.technikum.tourplanner {
     requires com.fasterxml.jackson.databind;
     requires retrofit2;
     requires retrofit2.converter.jackson;
+    requires org.apache.logging.log4j;
     exports at.technikum.tourplanner;
 }
