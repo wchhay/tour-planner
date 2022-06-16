@@ -46,12 +46,12 @@ public class ControllerFactory {
 
         tourDialogService = new TourDialogServiceImpl();
         imageService = new ImageDownloadService(configService);
-        tourService = new TourServiceImpl(tourRepository, imageService);
+        tourService = new TourServiceImpl(tourRepository);
         asyncTourService = new AsyncTourService(tourService);
 
         searchbarViewModel = new SearchbarViewModel();
         tourListViewModel = new TourListViewModel(asyncTourService, tourDialogService);
-        tourDetailsViewModel = new TourDetailsViewModel(tourService);
+        tourDetailsViewModel = new TourDetailsViewModel(imageService);
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
         logsViewModel = new LogsViewModel(tourDialogService, asyncTourService);
         logDialogViewModel = new LogDialogViewModel(tourDialogService);

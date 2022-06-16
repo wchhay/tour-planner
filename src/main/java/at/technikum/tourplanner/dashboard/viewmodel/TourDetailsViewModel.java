@@ -3,7 +3,7 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.service.TourService;
+import at.technikum.tourplanner.rest.ImageService;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -31,10 +31,10 @@ public class TourDetailsViewModel {
 
     private final Observable<Boolean> tourEditClickedObservable = new Observable<>();
 
-    private final TourService tourService;
+    private final ImageService imageService;
 
-    public TourDetailsViewModel(TourService tourService) {
-        this.tourService = tourService;
+    public TourDetailsViewModel(ImageService imageService) {
+        this.imageService = imageService;
     }
 
     public ObjectProperty<UUID> idProperty() {
@@ -112,7 +112,7 @@ public class TourDetailsViewModel {
 
     private void downloadImage() {
         if (id.isNotNull().get()) {
-            Image image = tourService.downloadTourMapImage(id.get());
+            Image image = imageService.downloadTourMapImage(id.get());
             image.exceptionProperty().addListener((observable, oldValue, newValue) -> {
                 if (null != newValue) {
                     Alert aLert = new Alert(Alert.AlertType.ERROR, "Cannot download image");
