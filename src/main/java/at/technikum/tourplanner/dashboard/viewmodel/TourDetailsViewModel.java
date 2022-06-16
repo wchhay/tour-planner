@@ -18,7 +18,6 @@ import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeStrin
 
 public class TourDetailsViewModel {
 
-
     private final ObjectProperty<UUID> id = new SimpleObjectProperty<>();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty from = new SimpleStringProperty();

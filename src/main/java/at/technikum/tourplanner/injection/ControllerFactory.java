@@ -2,6 +2,8 @@ package at.technikum.tourplanner.injection;
 
 import at.technikum.tourplanner.config.ConfigService;
 import at.technikum.tourplanner.config.ConfigServiceImpl;
+import at.technikum.tourplanner.dashboard.viewmodel.validation.Validator;
+import at.technikum.tourplanner.dashboard.viewmodel.validation.ValidatorImpl;
 import at.technikum.tourplanner.rest.*;
 import at.technikum.tourplanner.service.*;
 import at.technikum.tourplanner.dashboard.view.*;
@@ -16,9 +18,9 @@ import java.util.Map;
 
 public class ControllerFactory {
 
-    private static final Map<Class<?>, ControllerCreator> controllerCreators = new HashMap<>();
-
     private static ControllerFactory instance;
+
+    private final Map<Class<?>, ControllerCreator> controllerCreators = new HashMap<>();
 
     private final SearchbarViewModel searchbarViewModel;
     private final LogsViewModel logsViewModel;
@@ -33,6 +35,7 @@ public class ControllerFactory {
     private final TourDialogService tourDialogService;
     private final ConfigService configService;
     private final ImageService imageService;
+    private final Validator validator;
 
     private ControllerFactory() {
         configService = new ConfigServiceImpl();
@@ -48,13 +51,14 @@ public class ControllerFactory {
         imageService = new ImageDownloadService(configService);
         tourService = new TourServiceImpl(tourRepository);
         asyncTourService = new AsyncTourService(tourService);
+        validator = new ValidatorImpl();
 
         searchbarViewModel = new SearchbarViewModel();
         tourListViewModel = new TourListViewModel(asyncTourService, tourDialogService);
         tourDetailsViewModel = new TourDetailsViewModel(imageService);
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
         logsViewModel = new LogsViewModel(tourDialogService, asyncTourService);
-        logDialogViewModel = new LogDialogViewModel(tourDialogService);
+        logDialogViewModel = new LogDialogViewModel(tourDialogService, validator);
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
 
         setUpControllerFactory();

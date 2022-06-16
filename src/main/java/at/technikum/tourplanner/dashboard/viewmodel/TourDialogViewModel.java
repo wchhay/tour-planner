@@ -78,7 +78,7 @@ public class TourDialogViewModel {
         tourDialogService.closeDialog();
     }
 
-    public BooleanBinding validUserInputProperty() {
+    public BooleanBinding validTourUserInputBinding() {
         return tourName.isNotEmpty()
                 .and(tourFrom.isNotEmpty())
                 .and(tourTo.isNotEmpty())

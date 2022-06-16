@@ -17,7 +17,7 @@ public class TourUpdateDialogController {
 
     @FXML
     void initialize() {
-        updateTourButton.disableProperty().bind(tourDialogViewModel.validUserInputProperty().not());
+        updateTourButton.disableProperty().bind(tourDialogViewModel.validTourUserInputBinding().not());
     }
 
     public void onUpdateTourClicked() {

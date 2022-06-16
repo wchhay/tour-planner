@@ -17,7 +17,7 @@ public class TourCreationDialogController {
 
     @FXML
     void initialize() {
-        createTourButton.disableProperty().bind(tourDialogViewModel.validUserInputProperty().not());
+        createTourButton.disableProperty().bind(tourDialogViewModel.validTourUserInputBinding().not());
     }
 
     public void onCreateTourClicked() {

@@ -8,5 +8,5 @@
             fx:controller="at.technikum.tourplanner.dashboard.view.LogUpdateDialogController">
     <fx:include source="log-dialog-view.fxml" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="4.0"
                 AnchorPane.topAnchor="4.0" AnchorPane.leftAnchor="4.0"/>
-    <Button text="Update Log" onAction="#onLogUpdateClicked" AnchorPane.rightAnchor="4.0" AnchorPane.bottomAnchor="4.0"/>
+    <Button fx:id="logUpdateButton" text="Update Log" onAction="#onLogUpdateClicked" AnchorPane.rightAnchor="4.0" AnchorPane.bottomAnchor="4.0"/>
 </AnchorPane>
