@@ -15,7 +15,7 @@ public interface TourService {
 
     Tour updateTour(Tour tour);
 
-    boolean deleteTour(UUID uuid);
+    void deleteTour(UUID uuid);
 
     Log createLog(UUID tourId, Log log);
 
@@ -23,7 +23,7 @@ public interface TourService {
 
     List<Log> fetchLogs(UUID tourId);
 
-    boolean deleteLog(UUID tourId, UUID logId);
+    void deleteLog(UUID tourId, UUID logId);
 
     Image downloadTourMapImage(UUID tourId);
 }

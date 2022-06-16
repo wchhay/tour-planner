@@ -7,6 +7,11 @@
 <?import javafx.scene.text.*?>
 
 <VBox xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
+    <Button fx:id="editButton" text="Edit Tour" onAction="#editTour">
+        <VBox.margin>
+            <Insets top="8.0" />
+        </VBox.margin>
+    </Button>
     <HBox>
         <VBox.margin>
             <Insets top="8.0" />

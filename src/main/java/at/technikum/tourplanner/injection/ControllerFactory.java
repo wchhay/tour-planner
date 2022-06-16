@@ -3,11 +3,9 @@ package at.technikum.tourplanner.injection;
 import at.technikum.tourplanner.config.ConfigService;
 import at.technikum.tourplanner.config.ConfigServiceImpl;
 import at.technikum.tourplanner.rest.*;
-import at.technikum.tourplanner.service.TourDialogService;
+import at.technikum.tourplanner.service.*;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
-import at.technikum.tourplanner.service.TourService;
-import at.technikum.tourplanner.service.TourServiceImpl;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -28,9 +26,11 @@ public class ControllerFactory {
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
     private final LogDialogViewModel logDialogViewModel;
-    private final TourService tourService;
-    private final TourDialogService tourDialogService;
     private final DashboardViewModel dashboardViewModel;
+
+    private final TourService tourService;
+    private final AsyncTourService asyncTourService;
+    private final TourDialogService tourDialogService;
     private final ConfigService configService;
     private final ImageService imageService;
 
@@ -44,14 +44,16 @@ public class ControllerFactory {
 
         TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
 
-        tourDialogService = new TourDialogService();
+        tourDialogService = new TourDialogServiceImpl();
         imageService = new ImageDownloadService(configService);
         tourService = new TourServiceImpl(tourRepository, imageService);
+        asyncTourService = new AsyncTourService(tourService);
+
         searchbarViewModel = new SearchbarViewModel();
-        tourListViewModel = new TourListViewModel(tourService, tourDialogService);
+        tourListViewModel = new TourListViewModel(asyncTourService, tourDialogService);
         tourDetailsViewModel = new TourDetailsViewModel(tourService);
         tourDialogViewModel = new TourDialogViewModel(tourDialogService);
-        logsViewModel = new LogsViewModel(tourDialogService, tourService);
+        logsViewModel = new LogsViewModel(tourDialogService, asyncTourService);
         logDialogViewModel = new LogDialogViewModel(tourDialogService);
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
 

@@ -2,6 +2,7 @@ package at.technikum.tourplanner.dashboard.view;
 
 import at.technikum.tourplanner.dashboard.viewmodel.TourDetailsViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -32,6 +33,9 @@ public class TourDetailsController {
     @FXML
     ImageView tourMapImage;
 
+    @FXML
+    Button editButton;
+
     private final TourDetailsViewModel tourDetailsViewModel;
 
     public TourDetailsController(TourDetailsViewModel tourDetailsViewModel) {
@@ -49,5 +53,11 @@ public class TourDetailsController {
         tourMapImage.imageProperty().bind(tourDetailsViewModel.tourMapImageProperty());
         distance.textProperty().bind(tourDetailsViewModel.distanceProperty());
         time.textProperty().bind(tourDetailsViewModel.timeProperty());
+
+        editButton.disableProperty().bind(tourDetailsViewModel.idProperty().isNull());
+    }
+
+    public void editTour() {
+        tourDetailsViewModel.editTour();
     }
 }

@@ -32,12 +32,12 @@ public class TourDialogController {
 
     @FXML
     void initialize() {
-        tourTransportType.setItems(FXCollections.observableArrayList(TransportType.values()));
-
         tourName.textProperty().bindBidirectional(tourDialogViewModel.tourNameProperty());
         tourFrom.textProperty().bindBidirectional(tourDialogViewModel.tourFromProperty());
         tourTo.textProperty().bindBidirectional(tourDialogViewModel.tourToProperty());
         tourDescription.textProperty().bindBidirectional(tourDialogViewModel.tourDescriptionProperty());
+
+        tourTransportType.setItems(FXCollections.observableArrayList(TransportType.values()));
         tourTransportType.valueProperty().bindBidirectional(tourDialogViewModel.tourTransportTypeProperty());
     }
 }

@@ -1,6 +1,8 @@
 package at.technikum.tourplanner.dashboard.viewmodel;
 
 import at.technikum.tourplanner.dashboard.model.Tour;
+import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
+import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.service.TourService;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -9,13 +11,15 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 
+import java.util.UUID;
+
 import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeString;
 
 
 public class TourDetailsViewModel {
 
-    private Tour selectedTour;
 
+    private final ObjectProperty<UUID> id = new SimpleObjectProperty<>();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty from = new SimpleStringProperty();
     private final StringProperty to = new SimpleStringProperty();
@@ -25,10 +29,16 @@ public class TourDetailsViewModel {
     private final StringProperty time = new SimpleStringProperty();
     private final ObjectProperty<Image> tourMapImage = new SimpleObjectProperty<>();
 
+    private final Observable<Boolean> tourEditClickedObservable = new Observable<>();
+
     private final TourService tourService;
 
     public TourDetailsViewModel(TourService tourService) {
         this.tourService = tourService;
+    }
+
+    public ObjectProperty<UUID> idProperty() {
+        return id;
     }
 
     public StringProperty nameProperty() {
@@ -63,10 +73,17 @@ public class TourDetailsViewModel {
         return tourMapImage;
     }
 
+    public void subscribeToTourEditClicked(Listener<Boolean> listener) {
+        tourEditClickedObservable.subscribe(listener);
+    }
+
+    public void unsubscribeFromTourEditClicked(Listener<Boolean> listener) {
+        tourEditClickedObservable.unsubscribe(listener);
+    }
 
     public void setTour(Tour tour) {
-        selectedTour = tour;
         if (null != tour) {
+            id.set(tour.getId());
             name.set(tour.getName());
             from.set(tour.getFrom());
             to.set(tour.getTo());
@@ -77,6 +94,7 @@ public class TourDetailsViewModel {
 
             downloadImage();
         } else {
+            id.set(null);
             name.set("");
             from.set("");
             to.set("");
@@ -88,14 +106,20 @@ public class TourDetailsViewModel {
         }
     }
 
+    public void editTour() {
+        tourEditClickedObservable.notifyListeners(true);
+    }
+
     private void downloadImage() {
-        Image image = tourService.downloadTourMapImage(selectedTour.getId());
-        image.exceptionProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                Alert aLert = new Alert(Alert.AlertType.ERROR, "Cannot download image");
-                aLert.showAndWait();
-            }
-        });
-        tourMapImage.set(image);
+        if (id.isNotNull().get()) {
+            Image image = tourService.downloadTourMapImage(id.get());
+            image.exceptionProperty().addListener((observable, oldValue, newValue) -> {
+                if (null != newValue) {
+                    Alert aLert = new Alert(Alert.AlertType.ERROR, "Cannot download image");
+                    aLert.showAndWait();
+                }
+            });
+            tourMapImage.set(image);
+        }
     }
 }

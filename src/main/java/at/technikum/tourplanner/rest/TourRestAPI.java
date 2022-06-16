@@ -25,7 +25,7 @@ public interface TourRestAPI {
     Call<Tour> updateTour(@Path("id") UUID uuid, @Body TourDto tour);
 
     @GET("/tours/{id}/logs")
-    Call<List<Log>> getLogsFromTour(UUID tourId);
+    Call<List<Log>> getLogsFromTour(@Path("id") UUID tourId);
 
     @POST("/tours/{id}/logs")
     Call<Log> createLog(@Path("id") UUID uuid, @Body LogDto log);

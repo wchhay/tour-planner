@@ -1,9 +1,6 @@
 package at.technikum.tourplanner.dashboard.viewmodel;
 
 
-import at.technikum.tourplanner.dashboard.model.Log;
-import at.technikum.tourplanner.dashboard.model.Tour;
-
 public class DashboardViewModel {
 
     private final TourListViewModel tourListViewModel;
@@ -25,47 +22,28 @@ public class DashboardViewModel {
         this.logsViewModel = logsViewModel;
         this.logDialogViewModel = logDialogViewModel;
 
-        this.tourListViewModel.subscribeToSelection(this::selectTour);
-        this.tourDialogViewModel.subscribeToTourCreation(this::createTour);
-        this.tourDialogViewModel.subscribeToTourUpdate(this::updateTour);
+        this.tourListViewModel.subscribeToSelection(tourDetailsViewModel::setTour);
+        this.tourListViewModel.subscribeToSelection(logsViewModel::setSelectedTour);
+        this.tourListViewModel.subscribeToSelection(tourDialogViewModel::setTour);
+
+        this.tourDialogViewModel.subscribeToTourCreation(tourListViewModel::createTour);
+        this.tourDialogViewModel.subscribeToTourUpdate(tourListViewModel::updateTour);
         this.tourListViewModel.subscribeToCreateTourClicked(this::resetCreationDialog);
-        this.logDialogViewModel.subscribeToLogCreation(this::createLog);
-        this.logDialogViewModel.subscribeToLogUpdate(this::updateLog);
-        this.logsViewModel.subscribeToLogDialogOpened(this::selectLog);
+        this.tourDetailsViewModel.subscribeToTourEditClicked(this::openEditDialog);
+        this.logDialogViewModel.subscribeToLogCreation(logsViewModel::createLog);
+        this.logDialogViewModel.subscribeToLogUpdate(logsViewModel::updateLog);
+        this.logsViewModel.subscribeToLogDialogOpened(logDialogViewModel::setLog);
     }
 
-    private void selectLog(Log log) {
-        logDialogViewModel.setLog(log);
-    }
-
-    private void createLog(Log log) {
-        logsViewModel.createLog(log);
-    }
-
-    private void updateLog(Log log) {
-        logsViewModel.updateLog(log);
+    private void openEditDialog(Boolean editTourClicked) {
+        if (Boolean.TRUE.equals(editTourClicked)) {
+            tourListViewModel.openUpdateDialog();
+        }
     }
 
     private void resetCreationDialog(Boolean createTourClicked) {
         if (Boolean.TRUE.equals(createTourClicked)) {
             tourDialogViewModel.clearTour();
         }
-    }
-
-    private void selectTour(Tour tour) {
-        if (null != tour) {
-            tourDetailsViewModel.setTour(tour);
-            logsViewModel.setSelectedTour(tour);
-            logsViewModel.setLogsList(tour.getLogs());
-            tourDialogViewModel.setTour(tour);
-        }
-    }
-
-    private void createTour(Tour tour) {
-        tourListViewModel.createTour(tour);
-    }
-
-    private void updateTour(Tour tour) {
-        tourListViewModel.updateTour(tour);
     }
 }

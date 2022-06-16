@@ -5,6 +5,7 @@ import at.technikum.tourplanner.dashboard.model.TransportType;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.service.TourDialogService;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 
 import java.util.UUID;
@@ -59,6 +60,8 @@ public class TourDialogViewModel {
             tourTo.setValue(tour.getTo());
             tourDescription.setValue(tour.getDescription());
             tourTransportType.setValue(tour.getTransportType());
+        } else {
+            clearTour();
         }
     }
 
@@ -68,15 +71,21 @@ public class TourDialogViewModel {
         tourFrom.setValue("");
         tourTo.setValue("");
         tourDescription.setValue("");
-        tourTransportType.setValue(TransportType.FASTEST);
+        tourTransportType.setValue(null);
     }
 
     public void closeDialog() {
         tourDialogService.closeDialog();
     }
 
+    public BooleanBinding validUserInputProperty() {
+        return tourName.isNotEmpty()
+                .and(tourFrom.isNotEmpty())
+                .and(tourTo.isNotEmpty())
+                .and(tourTransportType.isNotNull());
+    }
+
     private Tour buildTour() {
-        // TODO: Validate User input
         return Tour.builder()
                 .id(tourUUID)
                 .name(tourName.get())
@@ -86,7 +95,6 @@ public class TourDialogViewModel {
                 .transportType(tourTransportType.get())
                 .build();
     }
-
 
     public StringProperty tourNameProperty() {
         return tourName;

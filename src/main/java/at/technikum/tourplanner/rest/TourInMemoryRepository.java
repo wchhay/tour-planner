@@ -7,6 +7,7 @@ import at.technikum.tourplanner.rest.dto.LogDto;
 import at.technikum.tourplanner.rest.dto.TourDto;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class TourInMemoryRepository implements TourRepository {
 
@@ -21,7 +22,7 @@ public class TourInMemoryRepository implements TourRepository {
 
     @Override
     public Optional<Tour> getById(UUID uuid) {
-        return tourList.stream().filter(tour -> tour.getId() == uuid).findFirst();
+        return tourList.stream().filter(tour -> tour.getId().equals(uuid)).findFirst();
     }
 
     @Override
@@ -39,10 +40,27 @@ public class TourInMemoryRepository implements TourRepository {
 
     @Override
     public Optional<Tour> updateTour(UUID tourId, TourDto dto) {
-        if (deleteTour(tourId)) {
-            return create(dto);
+        for (Tour tour : tourList) {
+            if (tour.getId().equals(tourId)) {
+                updateTour(tour, dto);
+                return Optional.of(tour);
+            }
         }
         return Optional.empty();
+    }
+
+    private void updateTour(Tour tour, TourDto dto) {
+        setIfNotNull(dto.getName(), tour::setName);
+        setIfNotNull(dto.getFrom(), tour::setFrom);
+        setIfNotNull(dto.getTo(), tour::setTo);
+        setIfNotNull(dto.getDescription(), tour::setDescription);
+        setIfNotNull(dto.getTransportType(), tour::setTransportType);
+    }
+
+    private <T> void setIfNotNull(T value, Consumer<T> setter) {
+        if (null != value) {
+            setter.accept(value);
+        }
     }
 
     @Override
@@ -74,25 +92,33 @@ public class TourInMemoryRepository implements TourRepository {
             return Optional.empty();
         }
 
-        Log log = DtoMapper.fromDto(dto);
         List<Log> logList = foundTour.get().getLogs();
-        if (logList.removeIf(foundLog -> foundLog.getId() == logId)) {
-            logList.add(log);
-            return Optional.of(log);
+        for (Log log : logList) {
+            if (log.getId().equals(logId)) {
+                updateLog(log, dto);
+                return Optional.of(log);
+            }
         }
-
         return Optional.empty();
+    }
+
+    private void updateLog(Log log, LogDto dto) {
+        setIfNotNull(dto.getComment(), log::setComment);
+        setIfNotNull(dto.getDate(), log::setDate);
+        setIfNotNull(dto.getDifficulty(), log::setDifficulty);
+        setIfNotNull(dto.getRating(), log::setRating);
+        setIfNotNull(dto.getTotalTime(), log::setTotalTime);
     }
 
     @Override
     public boolean deleteTour(UUID uuid) {
-        return tourList.removeIf(tour -> tour.getId() == uuid);
+        return tourList.removeIf(tour -> tour.getId().equals(uuid));
     }
 
     @Override
     public boolean deleteLog(UUID tourId, UUID logId) {
         return getById(tourId)
-                .map(tour -> tour.getLogs().removeIf(log -> log.getId() == logId))
+                .map(tour -> tour.getLogs().removeIf(log -> log.getId().equals(logId)))
                 .orElse(false);
     }
 }

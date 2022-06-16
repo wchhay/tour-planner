@@ -3,40 +3,31 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.service.AsyncService;
+import at.technikum.tourplanner.service.AsyncTourService;
 import at.technikum.tourplanner.service.TourDialogService;
-import at.technikum.tourplanner.service.TourService;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 import java.util.Optional;
 
+@Log4j2
 public class TourListViewModel {
-
-    public static final String FAILED_DELETION_MESSAGE = "An error occurred while deleting the tour.";
 
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
     private final Observable<Tour> tourSelectionObservable = new Observable<>();
     private final Observable<Boolean> tourCreationClickedObservable = new Observable<>();
-    private final TourService tourService;
-    private final TourDialogService tourDialogService;
-    private final AsyncService<List<Tour>> tourFetchingService;
-    private final AsyncService<Tour> tourCreationService;
-    private final AsyncService<Tour> tourUpdateService;
-    private final AsyncService<Boolean> tourDeletionService;
 
-    public TourListViewModel(TourService tourService, TourDialogService tourDialogService) {
+    private final AsyncTourService tourService;
+    private final TourDialogService tourDialogService;
+
+    public TourListViewModel(AsyncTourService tourService, TourDialogService tourDialogService) {
         this.tourService = tourService;
         this.tourDialogService = tourDialogService;
-
-        this.tourFetchingService = new AsyncService<>(tourService::fetchTours);
-        this.tourCreationService = new AsyncService<>();
-        this.tourUpdateService = new AsyncService<>();
-        this.tourDeletionService = new AsyncService<>();
 
         subscribeToFetchingTours();
         subscribeToCreatingTours();
@@ -90,24 +81,20 @@ public class TourListViewModel {
     }
 
     public void fetchTours() {
-        tourFetchingService.restart();
+        tourService.fetchTours();
     }
 
     public void createTour(Tour tour) {
-        tourCreationService.setSupplier(() -> tourService.createTour(tour));
-        tourCreationService.restart();
+        tourService.createTour(tour);
     }
 
     public void updateTour(Tour tour) {
-        tourUpdateService.setSupplier(() -> tourService.updateTour(tour));
-        tourUpdateService.restart();
+        tourService.updateTour(tour);
     }
 
     public void deleteTour(Tour tour) {
-        tourDeletionService.setSupplier(() -> tourService.deleteTour(tour.getId()));
-        tourDeletionService.restart();
-
         tourList.remove(tour);
+        tourService.deleteTour(tour);
     }
 
     private void setTours(List<Tour> tours) {
@@ -118,55 +105,33 @@ public class TourListViewModel {
     }
 
     private void subscribeToFetchingTours() {
-        tourFetchingService.valueProperty().addListener((observableValue, oldValue, newValue) -> setTours(newValue));
-        tourFetchingService.exceptionProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (null != newValue) {
-                showErrorAlert(newValue.getMessage());
-            }
-        });
+        tourService.subscribeToFetchTours(this::setTours, this::showErrorAlert);
     }
 
     private void subscribeToCreatingTours() {
-        tourCreationService.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                this.tourList.add(newValue);
-            }
-        });
-        tourCreationService.exceptionProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                showErrorAlert(newValue.getMessage());
-            }
-        });
-    }
-
-    private void subscribeToDeletingTours() {
-        tourDeletionService.valueProperty().addListener((observable, oldValue, isSuccessful) -> {
-            if (Boolean.FALSE.equals(isSuccessful)) {
-                showErrorAlert(FAILED_DELETION_MESSAGE);
-            }
-        });
-        tourDeletionService.exceptionProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                showErrorAlert(newValue.getMessage());
-            }
-        });
+        tourService.subscribeToCreateTour(tourList::add, this::showErrorAlert);
     }
 
     private void subscribeToUpdatingTours() {
-        tourUpdateService.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                fetchTours();
-            }
-        });
-        tourUpdateService.exceptionProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
-                showErrorAlert(newValue.getMessage());
-            }
-        });
+        tourService.subscribeToUpdateTour(this::updateTourInTourList, this::showErrorAlert);
     }
 
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+    private void subscribeToDeletingTours() {
+        tourService.subscribeToDeleteTour(null, this::showErrorAlert);
+    }
+
+    private void updateTourInTourList(Tour tour) {
+        for (int i = 0; i < tourList.size(); i++) {
+            if (tourList.get(i).getId().equals(tour.getId())) {
+                tourList.set(i, tour);
+                log.debug(tour + " updating in TourList");
+                return;
+            }
+        }
+    }
+
+    private void showErrorAlert(Throwable throwable) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, throwable.getMessage());
         alert.showAndWait();
     }
 }

@@ -12,6 +12,6 @@
                 AnchorPane.bottomAnchor="4.0"/>
     <HBox AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="4.0">
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Create Tour" onAction="#onCreateTourClicked"/>
+        <Button fx:id="createTourButton" text="Create Tour" onAction="#onCreateTourClicked"/>
     </HBox>
 </AnchorPane>

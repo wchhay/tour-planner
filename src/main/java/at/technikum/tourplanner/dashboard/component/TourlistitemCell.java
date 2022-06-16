@@ -16,7 +16,6 @@ public class TourlistitemCell extends ListCell<Tour> {
     private final Label tourName = new Label();
     private final Pane pane = new Pane();
     private final Button deleteButton = new Button("\uD83D\uDDD1");
-    private final Button editButton = new Button("✎");
 
     public TourlistitemCell(TourListViewModel tourListViewModel) {
         super();
@@ -24,9 +23,8 @@ public class TourlistitemCell extends ListCell<Tour> {
         this.tourListViewModel = tourListViewModel;
 
         deleteButton.setOnAction(event -> openDeleteDialog(getItem()));
-        editButton.setOnAction(event -> openUpdateDialog());
         HBox.setHgrow(pane, Priority.ALWAYS);
-        hbox.getChildren().addAll(tourName, pane, editButton, deleteButton);
+        hbox.getChildren().addAll(tourName, pane, deleteButton);
         hbox.setAlignment(Pos.CENTER);
     }
 
@@ -43,9 +41,5 @@ public class TourlistitemCell extends ListCell<Tour> {
 
     private void openDeleteDialog(Tour tour) {
         tourListViewModel.openDeleteDialog(tour);
-    }
-
-    private void openUpdateDialog() {
-        tourListViewModel.openUpdateDialog();
     }
 }
