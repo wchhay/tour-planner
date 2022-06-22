@@ -19,5 +19,7 @@ public class Tour {
     private Double distance;
     private Long estimatedTime;
     private String description;
+    private Integer popularity;
+    private Integer childFriendliness;
     private List<Log> logs;
 }

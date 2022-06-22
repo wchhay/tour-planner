@@ -5,10 +5,21 @@ import at.technikum.tourplanner.config.ConfigServiceImpl;
 import at.technikum.tourplanner.dashboard.viewmodel.validation.Validator;
 import at.technikum.tourplanner.dashboard.viewmodel.validation.ValidatorImpl;
 import at.technikum.tourplanner.rest.*;
-import at.technikum.tourplanner.service.*;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import at.technikum.tourplanner.service.dialog.DialogService;
+import at.technikum.tourplanner.service.dialog.DialogServiceImpl;
+import at.technikum.tourplanner.service.file.FileService;
+import at.technikum.tourplanner.service.file.FileServiceImpl;
+import at.technikum.tourplanner.service.file.JsonFileChooser;
+import at.technikum.tourplanner.service.json.JsonConverter;
+import at.technikum.tourplanner.service.json.JsonConverterImpl;
+import at.technikum.tourplanner.service.json.ObjectMapperFactory;
+import at.technikum.tourplanner.service.log.AsyncLogService;
+import at.technikum.tourplanner.service.log.AsyncLogServiceImpl;
+import at.technikum.tourplanner.service.log.LogService;
+import at.technikum.tourplanner.service.log.LogServiceImpl;
+import at.technikum.tourplanner.service.tour.*;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -20,7 +31,7 @@ public class ControllerFactory {
 
     private static ControllerFactory instance;
 
-    private final Map<Class<?>, ControllerCreator> controllerCreators = new HashMap<>();
+    private final Map<Class<?>, ControllerCreator<?>> controllerCreators = new HashMap<>();
 
     private final SearchbarViewModel searchbarViewModel;
     private final LogsViewModel logsViewModel;
@@ -28,37 +39,55 @@ public class ControllerFactory {
     private final TourDetailsViewModel tourDetailsViewModel;
     private final TourDialogViewModel tourDialogViewModel;
     private final LogDialogViewModel logDialogViewModel;
+    private final MenuBarViewModel menuBarViewModel;
+    private final FileImportDialogViewModel fileImportDialogViewModel;
+    private final FileExportDialogViewModel fileExportDialogViewModel;
     private final DashboardViewModel dashboardViewModel;
 
     private final TourService tourService;
+    private final LogService logService;
     private final AsyncTourService asyncTourService;
-    private final TourDialogService tourDialogService;
+    private final AsyncLogService asyncLogService;
+    private final DialogService dialogService;
     private final ConfigService configService;
     private final ImageService imageService;
     private final Validator validator;
+    private final TourDataStoreService tourDataStoreService;
+    private final FileService fileService;
+    private final JsonConverter jsonConverter;
+    private final StatisticsService statisticsService;
 
     private ControllerFactory() {
         configService = new ConfigServiceImpl();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(configService.getKey("rest-base-url"))
-                .addConverterFactory(JacksonConverterFactory.create(JsonMapper.builder().findAndAddModules().build()))
+                .addConverterFactory(JacksonConverterFactory.create(ObjectMapperFactory.create()))
                 .build();
 
         TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
 
-        tourDialogService = new TourDialogServiceImpl();
+        dialogService = new DialogServiceImpl();
+        tourDataStoreService = new TourDataStoreServiceImpl();
         imageService = new ImageDownloadService(configService);
         tourService = new TourServiceImpl(tourRepository);
-        asyncTourService = new AsyncTourService(tourService);
+        logService = new LogServiceImpl(tourRepository);
+        asyncTourService = new AsyncTourServiceImpl(tourService);
+        asyncLogService = new AsyncLogServiceImpl(logService);
         validator = new ValidatorImpl();
+        fileService = new FileServiceImpl(JsonFileChooser.create(), configService);
+        jsonConverter = new JsonConverterImpl(ObjectMapperFactory.create());
+        statisticsService = new StatisticsServiceImpl(tourDataStoreService);
 
         searchbarViewModel = new SearchbarViewModel();
-        tourListViewModel = new TourListViewModel(asyncTourService, tourDialogService);
+        tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, statisticsService);
         tourDetailsViewModel = new TourDetailsViewModel(imageService);
-        tourDialogViewModel = new TourDialogViewModel(tourDialogService);
-        logsViewModel = new LogsViewModel(tourDialogService, asyncTourService);
-        logDialogViewModel = new LogDialogViewModel(tourDialogService, validator);
+        tourDialogViewModel = new TourDialogViewModel(dialogService);
+        logsViewModel = new LogsViewModel(dialogService, asyncLogService, statisticsService);
+        logDialogViewModel = new LogDialogViewModel(dialogService, validator);
+        menuBarViewModel = new MenuBarViewModel(dialogService);
+        fileImportDialogViewModel = new FileImportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService);
+        fileExportDialogViewModel = new FileExportDialogViewModel(fileService, jsonConverter, tourDataStoreService);
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
 
         setUpControllerFactory();
@@ -71,12 +100,8 @@ public class ControllerFactory {
         return instance;
     }
 
-    public void addControllerCreator(Class<?> controllerClass, ControllerCreator controllerCreator) {
+    public <T> void addControllerCreator(Class<T> controllerClass, ControllerCreator<T> controllerCreator) {
         controllerCreators.put(controllerClass, controllerCreator);
-    }
-
-    public void removeControllerCreator(Class<?> controllerClass) {
-        controllerCreators.remove(controllerClass);
     }
 
     public void removeAllControllerCreators() {
@@ -110,6 +135,9 @@ public class ControllerFactory {
         addControllerCreator(LogCreationDialogController.class, () -> new LogCreationDialogController(logDialogViewModel));
         addControllerCreator(LogUpdateDialogController.class, () -> new LogUpdateDialogController(logDialogViewModel));
         addControllerCreator(LogDialogController.class, () -> new LogDialogController(logDialogViewModel));
+        addControllerCreator(MenuBarController.class, () -> new MenuBarController(menuBarViewModel));
+        addControllerCreator(FileImportDialogController.class, () -> new FileImportDialogController(fileImportDialogViewModel));
+        addControllerCreator(FileExportDialogController.class, () -> new FileExportDialogController(fileExportDialogViewModel));
         addControllerCreator(DashboardController.class, () -> new DashboardController(dashboardViewModel));
     }
 }

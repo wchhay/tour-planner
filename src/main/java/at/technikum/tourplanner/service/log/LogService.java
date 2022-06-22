@@ -1,20 +1,11 @@
-package at.technikum.tourplanner.service;
+package at.technikum.tourplanner.service.log;
 
 import at.technikum.tourplanner.dashboard.model.Log;
-import at.technikum.tourplanner.dashboard.model.Tour;
 
 import java.util.List;
 import java.util.UUID;
 
-public interface TourService {
-
-    List<Tour> fetchTours();
-
-    Tour createTour(Tour tour);
-
-    Tour updateTour(Tour tour);
-
-    void deleteTour(UUID uuid);
+public interface LogService {
 
     Log createLog(UUID tourId, Log log);
 

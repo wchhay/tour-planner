@@ -28,10 +28,11 @@ public class DashboardViewModel {
 
         this.tourDialogViewModel.subscribeToTourCreation(tourListViewModel::createTour);
         this.tourDialogViewModel.subscribeToTourUpdate(tourListViewModel::updateTour);
-        this.tourListViewModel.subscribeToCreateTourClicked(this::resetCreationDialog);
-        this.tourDetailsViewModel.subscribeToTourEditClicked(this::openEditDialog);
         this.logDialogViewModel.subscribeToLogCreation(logsViewModel::createLog);
         this.logDialogViewModel.subscribeToLogUpdate(logsViewModel::updateLog);
+
+        this.tourListViewModel.subscribeToCreateTourClicked(this::resetCreationDialog);
+        this.tourDetailsViewModel.subscribeToTourEditClicked(this::openEditDialog);
         this.logsViewModel.subscribeToLogDialogOpened(logDialogViewModel::setLog);
     }
 

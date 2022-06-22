@@ -1,6 +1,6 @@
-package at.technikum.tourplanner.service;
+package at.technikum.tourplanner.service.dialog;
 
-public interface TourDialogService {
+public interface DialogService {
     void openCreationDialog();
 
     void openUpdateDialog();
@@ -10,4 +10,8 @@ public interface TourDialogService {
     void openLogUpdateDialog();
 
     void closeDialog();
+
+    void openFileImportDialog();
+
+    void openFileExportDialog();
 }

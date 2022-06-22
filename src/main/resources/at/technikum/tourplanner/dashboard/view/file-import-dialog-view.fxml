@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="at.technikum.tourplanner.dashboard.view.FileImportDialogController">
+    <HBox alignment="CENTER">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0"/>
+        </VBox.margin>
+        <Button layoutX="200.0" layoutY="30.0" mnemonicParsing="false" onAction="#importFile" prefWidth="80.0"
+                text="Load File"/>
+        <Button fx:id="confirmButton" layoutX="320.0" layoutY="30.0" mnemonicParsing="false" onAction="#confirmImport"
+                prefWidth="80.0" text="Import Data"/>
+    </HBox>
+    <TextArea fx:id="textAreaImport" layoutX="200.0" layoutY="70.0" prefHeight="160.0" prefWidth="200.0">
+        <VBox.margin>
+            <Insets topRightBottomLeft="4.0"/>
+        </VBox.margin>
+    </TextArea>
+</VBox>

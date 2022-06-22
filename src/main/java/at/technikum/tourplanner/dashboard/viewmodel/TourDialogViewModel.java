@@ -4,7 +4,7 @@ import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.model.TransportType;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.service.TourDialogService;
+import at.technikum.tourplanner.service.dialog.DialogService;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
 
@@ -22,10 +22,10 @@ public class TourDialogViewModel {
     private final Observable<Tour> tourCreationObservable = new Observable<>();
     private final Observable<Tour> tourUpdateObservable = new Observable<>();
 
-    private final TourDialogService tourDialogService;
+    private final DialogService dialogService;
 
-    public TourDialogViewModel(TourDialogService tourDialogService) {
-        this.tourDialogService = tourDialogService;
+    public TourDialogViewModel(DialogService dialogService) {
+        this.dialogService = dialogService;
     }
 
     public void subscribeToTourCreation(Listener<Tour> listener) {
@@ -75,7 +75,7 @@ public class TourDialogViewModel {
     }
 
     public void closeDialog() {
-        tourDialogService.closeDialog();
+        dialogService.closeDialog();
     }
 
     public BooleanBinding validTourUserInputBinding() {

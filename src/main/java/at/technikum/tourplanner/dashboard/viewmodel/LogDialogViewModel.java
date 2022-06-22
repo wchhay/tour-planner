@@ -4,7 +4,7 @@ import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.dashboard.viewmodel.validation.Validator;
-import at.technikum.tourplanner.service.TourDialogService;
+import at.technikum.tourplanner.service.dialog.DialogService;
 import at.technikum.tourplanner.util.TimeConverterUtil;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
@@ -44,10 +44,10 @@ public class LogDialogViewModel {
     private final Observable<Log> logCreationObservable = new Observable<>();
     private final Observable<Log> logUpdateObservable = new Observable<>();
 
-    private final TourDialogService tourDialogService;
+    private final DialogService dialogService;
 
-    public LogDialogViewModel(TourDialogService tourDialogService, Validator validator) {
-        this.tourDialogService = tourDialogService;
+    public LogDialogViewModel(DialogService dialogService, Validator validator) {
+        this.dialogService = dialogService;
         this.validator = validator;
 
         setUpValidations();
@@ -80,7 +80,7 @@ public class LogDialogViewModel {
     }
 
     public void closeDialog() {
-        tourDialogService.closeDialog();
+        dialogService.closeDialog();
     }
 
     public void setLog(Log log) {

@@ -8,9 +8,8 @@
         <MenuItem mnemonicParsing="false" onAction="#showExportDialog" text="Export" />
     </Menu>
     <Menu mnemonicParsing="false" text="Report">
-        <MenuItem mnemonicParsing="false" onAction="#showReportDialog" text="Tour-report" />
-        <MenuItem mnemonicParsing="false" onAction="#showSummarizeDialog" text="Summarize-report" />
+        <MenuItem mnemonicParsing="false" text="Tour-report" />
+        <MenuItem mnemonicParsing="false" text="Summarize-report" />
     </Menu>
-
 </MenuBar>
 

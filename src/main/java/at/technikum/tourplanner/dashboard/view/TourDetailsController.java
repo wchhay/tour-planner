@@ -34,6 +34,12 @@ public class TourDetailsController {
     ImageView tourMapImage;
 
     @FXML
+    TextField popularity;
+
+    @FXML
+    TextField childFriendliness;
+
+    @FXML
     Button editButton;
 
     private final TourDetailsViewModel tourDetailsViewModel;
@@ -44,15 +50,17 @@ public class TourDetailsController {
 
     @FXML
     void initialize() {
-        title.textProperty().bindBidirectional(tourDetailsViewModel.nameProperty());
-        from.textProperty().bindBidirectional(tourDetailsViewModel.fromProperty());
-        to.textProperty().bindBidirectional(tourDetailsViewModel.toProperty());
-        description.textProperty().bindBidirectional(tourDetailsViewModel.descriptionProperty());
-        transportType.textProperty().bindBidirectional(tourDetailsViewModel.transportTypeProperty());
+        title.textProperty().bind(tourDetailsViewModel.nameProperty());
+        from.textProperty().bind(tourDetailsViewModel.fromProperty());
+        to.textProperty().bind(tourDetailsViewModel.toProperty());
+        description.textProperty().bind(tourDetailsViewModel.descriptionProperty());
+        transportType.textProperty().bind(tourDetailsViewModel.transportTypeProperty());
 
         tourMapImage.imageProperty().bind(tourDetailsViewModel.tourMapImageProperty());
         distance.textProperty().bind(tourDetailsViewModel.distanceProperty());
         time.textProperty().bind(tourDetailsViewModel.timeProperty());
+        popularity.textProperty().bind(tourDetailsViewModel.popularityProperty());
+        childFriendliness.textProperty().bind(tourDetailsViewModel.childFriendlinessProperty());
 
         editButton.disableProperty().bind(tourDetailsViewModel.idProperty().isNull());
     }

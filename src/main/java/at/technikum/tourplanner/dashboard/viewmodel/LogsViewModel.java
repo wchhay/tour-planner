@@ -4,8 +4,9 @@ import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.service.AsyncTourService;
-import at.technikum.tourplanner.service.TourDialogService;
+import at.technikum.tourplanner.service.log.AsyncLogService;
+import at.technikum.tourplanner.service.dialog.DialogService;
+import at.technikum.tourplanner.service.tour.StatisticsService;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -27,12 +28,14 @@ public class LogsViewModel {
     private final ObservableList<Log> logsList = FXCollections.observableArrayList();
     private final Observable<Log> logDialogOpenedObservable = new Observable<>();
 
-    private final TourDialogService tourDialogService;
-    private final AsyncTourService tourService;
+    private final DialogService dialogService;
+    private final AsyncLogService logService;
+    private final StatisticsService statisticsService;
 
-    public LogsViewModel(TourDialogService tourDialogService, AsyncTourService tourService) {
-        this.tourDialogService = tourDialogService;
-        this.tourService = tourService;
+    public LogsViewModel(DialogService dialogService, AsyncLogService logService, StatisticsService statisticsService) {
+        this.dialogService = dialogService;
+        this.logService = logService;
+        this.statisticsService = statisticsService;
 
         subscribeToLogCreation();
         subscribeToFetchingLogs();
@@ -42,12 +45,12 @@ public class LogsViewModel {
 
     public void openLogCreationDialog() {
         logDialogOpenedObservable.notifyListeners(null);
-        tourDialogService.openLogCreationDialog();
+        dialogService.openLogCreationDialog();
     }
 
     public void openLogUpdateDialog() {
         logDialogOpenedObservable.notifyListeners(selectedLog.get());
-        tourDialogService.openLogUpdateDialog();
+        dialogService.openLogUpdateDialog();
     }
 
     public void openLogDeleteConfirmationDialog() {
@@ -64,36 +67,32 @@ public class LogsViewModel {
 
     public void fetchLogs() {
         if (null != selectedTour.get()) {
-            tourService.fetchLogs(selectedTour.get().getId());
+            logService.fetchLogs(selectedTour.get().getId());
             log.info("Fetching logs from " + selectedTour.get());
         }
     }
 
     public void createLog(Log log) {
         if (null != selectedTour.get()) {
-            tourService.createLog(selectedTour.get().getId(), log);
+            logService.createLog(selectedTour.get().getId(), log);
         }
     }
 
     public void updateLog(Log log) {
         if (null != selectedTour.get()) {
-            tourService.updateLog(selectedTour.get().getId(), log);
+            logService.updateLog(selectedTour.get().getId(), log);
         }
     }
 
     public void deleteLog(Log log) {
         if (null != selectedTour.get()) {
             removeFromTourLogs(log);
-            tourService.deleteLog(selectedTour.get().getId(), log);
+            logService.deleteLog(selectedTour.get().getId(), log);
         }
     }
 
     public void subscribeToLogDialogOpened(Listener<Log> listener) {
         logDialogOpenedObservable.subscribe(listener);
-    }
-
-    public void unsubscribeFromLogDialogOpened(Listener<Log> listener) {
-        logDialogOpenedObservable.unsubscribe(listener);
     }
 
     public ChangeListener<Log> getSelectionChangeListener() {
@@ -119,24 +118,40 @@ public class LogsViewModel {
         }
     }
 
+    private void setSelectedTourLogs(List<Log> logs) {
+        if (null != selectedTour.get()) {
+            selectedTour.get().setLogs(logs);
+        }
+        setLogsObservableList(logs);
+    }
+
     public void setSelectedLog(Log log) {
         selectedLog.setValue(log);
     }
 
     private void subscribeToFetchingLogs() {
-        tourService.subscribeToFetchLogs(this::setSelectedTourLogs, this::showErrorAlert);
+        logService.subscribeToFetchLogs(logs -> {
+            setSelectedTourLogs(logs);
+            statisticsService.calculateAndSetComputedAttributes();
+        }, this::showErrorAlert);
     }
 
     private void subscribeToLogCreation() {
-        tourService.subscribeToCreateLog(this::addToTourLogs, this::showErrorAlert);
+        logService.subscribeToCreateLog(log -> {
+            addToTourLogs(log);
+            statisticsService.calculateAndSetComputedAttributes();
+        }, this::showErrorAlert);
     }
 
     private void subscribeToLogUpdate() {
-        tourService.subscribeToUpdateLog(newValue -> fetchLogs(), this::showErrorAlert);
+        logService.subscribeToUpdateLog(newValue -> fetchLogs(), this::showErrorAlert);
     }
 
     private void subscribeToDeletingTours() {
-        tourService.subscribeToDeleteLog(null, this::showErrorAlert);
+        logService.subscribeToDeleteLog(
+                success -> statisticsService.calculateAndSetComputedAttributes(),
+                this::showErrorAlert
+        );
     }
 
     private void addToTourLogs(Log log) {
@@ -149,13 +164,6 @@ public class LogsViewModel {
     private void removeFromTourLogs(Log log) {
         logsList.remove(log);
         selectedTour.get().getLogs().remove(log);
-    }
-
-    private void setSelectedTourLogs(List<Log> logs) {
-        setLogsObservableList(logs);
-        if (null != selectedTour.get()) {
-            selectedTour.get().setLogs(logs);
-        }
     }
 
     private void setLogsObservableList(List<Log> logs) {

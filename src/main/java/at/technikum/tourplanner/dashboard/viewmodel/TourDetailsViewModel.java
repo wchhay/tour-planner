@@ -27,6 +27,8 @@ public class TourDetailsViewModel {
     private final StringProperty distance = new SimpleStringProperty();
     private final StringProperty time = new SimpleStringProperty();
     private final ObjectProperty<Image> tourMapImage = new SimpleObjectProperty<>();
+    private final StringProperty popularity = new SimpleStringProperty();
+    private final StringProperty childFriendliness = new SimpleStringProperty();
 
     private final Observable<Boolean> tourEditClickedObservable = new Observable<>();
 
@@ -72,6 +74,14 @@ public class TourDetailsViewModel {
         return tourMapImage;
     }
 
+    public StringProperty popularityProperty() {
+        return popularity;
+    }
+
+    public StringProperty childFriendlinessProperty() {
+        return childFriendliness;
+    }
+
     public void subscribeToTourEditClicked(Listener<Boolean> listener) {
         tourEditClickedObservable.subscribe(listener);
     }
@@ -88,8 +98,10 @@ public class TourDetailsViewModel {
             to.set(tour.getTo());
             description.set(tour.getDescription());
             transportType.set(tour.getTransportType().value);
-            distance.set(tour.getDistance().toString());
+            distance.set(convertNullableNumberToString(tour.getDistance()));
             time.set(convertToTimeString(tour.getEstimatedTime()));
+            popularity.set(convertNullableNumberToString(tour.getPopularity()));
+            childFriendliness.set(convertNullableNumberToString(tour.getChildFriendliness()));
 
             downloadImage();
         } else {
@@ -102,11 +114,20 @@ public class TourDetailsViewModel {
             distance.set("");
             time.set("");
             tourMapImage.set(null);
+            popularity.set("");
+            childFriendliness.set("");
         }
     }
 
     public void editTour() {
         tourEditClickedObservable.notifyListeners(true);
+    }
+
+    private String convertNullableNumberToString(Number number) {
+        if (null != number) {
+            return number.toString();
+        }
+        return "";
     }
 
     private void downloadImage() {

@@ -1,6 +1,5 @@
-package at.technikum.tourplanner.service;
+package at.technikum.tourplanner.service.tour;
 
-import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.rest.TourRepository;
 import at.technikum.tourplanner.rest.dto.DtoMapper;
@@ -38,30 +37,6 @@ public class TourServiceImpl implements TourService {
     public void deleteTour(UUID uuid) {
         if (!tourRepository.deleteTour(uuid)) {
             throw new FailedTourDeletionException();
-        }
-    }
-
-    @Override
-    public Log createLog(UUID tourId, Log log) {
-        return tourRepository.createLog(tourId, DtoMapper.toLogDto(log))
-                .orElseThrow(FailedLogCreationException::new);
-    }
-
-    @Override
-    public Log updateLog(UUID tourId, UUID logId, Log log) {
-        return tourRepository.updateLog(tourId, logId, DtoMapper.toLogDto(log))
-                .orElseThrow(FailedLogUpdateException::new);
-    }
-
-    @Override
-    public List<Log> fetchLogs(UUID tourId) {
-        return tourRepository.getLogsFromTour(tourId);
-    }
-
-    @Override
-    public void deleteLog(UUID tourId, UUID logId) {
-        if (!tourRepository.deleteLog(tourId, logId)) {
-            throw new FailedLogDeletionException();
         }
     }
 }

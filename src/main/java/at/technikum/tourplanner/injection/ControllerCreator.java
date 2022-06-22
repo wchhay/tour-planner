@@ -1,5 +1,5 @@
 package at.technikum.tourplanner.injection;
 
-public interface ControllerCreator {
-    Object create();
+public interface ControllerCreator<T> {
+    T create();
 }
