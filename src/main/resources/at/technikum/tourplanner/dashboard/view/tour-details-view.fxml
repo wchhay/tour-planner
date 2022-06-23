@@ -8,11 +8,17 @@
 
 <VBox xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="at.technikum.tourplanner.dashboard.view.TourDetailsController">
-    <Button fx:id="editButton" onAction="#editTour" text="Edit Tour">
+    <HBox>
         <VBox.margin>
             <Insets top="8.0"/>
         </VBox.margin>
-    </Button>
+        <Button fx:id="editButton" onAction="#editTour" text="Edit Tour">
+            <HBox.margin>
+                <Insets right="4.0"/>
+            </HBox.margin>
+        </Button>
+        <Button fx:id="pdfReportButton" onAction="#generateReport" text="Generate Report"/>
+    </HBox>
     <HBox>
         <VBox.margin>
             <Insets top="8.0"/>
@@ -22,9 +28,9 @@
                 <font>
                     <Font size="16.0"/>
                 </font>
-                <HBox.margin>
-                    <Insets right="4.0"/>
-                </HBox.margin>
+                <VBox.margin>
+                    <Insets topRightBottomLeft="4.0"/>
+                </VBox.margin>
             </Text>
             <TextField fx:id="title" editable="false" HBox.hgrow="ALWAYS"/>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="From:">

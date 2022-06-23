@@ -23,7 +23,7 @@ public class DashboardViewModel {
         this.logDialogViewModel = logDialogViewModel;
 
         this.tourListViewModel.subscribeToSelection(tourDetailsViewModel::setTour);
-        this.tourListViewModel.subscribeToSelection(logsViewModel::setSelectedTour);
+        this.tourListViewModel.subscribeToSelection(logsViewModel::setTourAndLogs);
         this.tourListViewModel.subscribeToSelection(tourDialogViewModel::setTour);
 
         this.tourDialogViewModel.subscribeToTourCreation(tourListViewModel::createTour);
@@ -34,17 +34,18 @@ public class DashboardViewModel {
         this.tourListViewModel.subscribeToCreateTourClicked(this::resetCreationDialog);
         this.tourDetailsViewModel.subscribeToTourEditClicked(this::openEditDialog);
         this.logsViewModel.subscribeToLogDialogOpened(logDialogViewModel::setLog);
+        this.logsViewModel.subscribeToTourReloadRequired(this::reloadTourDetails);
+    }
+
+    private void reloadTourDetails(Boolean reloadRequired) {
+        tourDetailsViewModel.reloadSelectedTour();
     }
 
     private void openEditDialog(Boolean editTourClicked) {
-        if (Boolean.TRUE.equals(editTourClicked)) {
-            tourListViewModel.openUpdateDialog();
-        }
+        tourListViewModel.openUpdateDialog();
     }
 
     private void resetCreationDialog(Boolean createTourClicked) {
-        if (Boolean.TRUE.equals(createTourClicked)) {
-            tourDialogViewModel.clearTour();
-        }
+        tourDialogViewModel.clearTour();
     }
 }

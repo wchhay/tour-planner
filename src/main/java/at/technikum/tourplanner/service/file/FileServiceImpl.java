@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class FileServiceImpl implements FileService {
 
     public static final String DEFAULT_EXPORT_DIR = "default-export-dir";
+
     private final FileChooser fileChooser;
 
     public FileServiceImpl(FileChooser fileChooser, ConfigService configService) {

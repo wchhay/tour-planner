@@ -7,5 +7,8 @@ open module at.technikum.tourplanner {
     requires retrofit2;
     requires retrofit2.converter.jackson;
     requires org.apache.logging.log4j;
+    requires kernel;
+    requires layout;
+    requires io;
     exports at.technikum.tourplanner;
 }

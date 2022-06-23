@@ -7,11 +7,13 @@ import at.technikum.tourplanner.dashboard.viewmodel.validation.ValidatorImpl;
 import at.technikum.tourplanner.rest.*;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
+import at.technikum.tourplanner.service.dialog.AlertService;
+import at.technikum.tourplanner.service.dialog.AlertServiceImpl;
 import at.technikum.tourplanner.service.dialog.DialogService;
 import at.technikum.tourplanner.service.dialog.DialogServiceImpl;
 import at.technikum.tourplanner.service.file.FileService;
 import at.technikum.tourplanner.service.file.FileServiceImpl;
-import at.technikum.tourplanner.service.file.JsonFileChooser;
+import at.technikum.tourplanner.service.file.FileChooserFactory;
 import at.technikum.tourplanner.service.json.JsonConverter;
 import at.technikum.tourplanner.service.json.JsonConverterImpl;
 import at.technikum.tourplanner.service.json.ObjectMapperFactory;
@@ -19,6 +21,9 @@ import at.technikum.tourplanner.service.log.AsyncLogService;
 import at.technikum.tourplanner.service.log.AsyncLogServiceImpl;
 import at.technikum.tourplanner.service.log.LogService;
 import at.technikum.tourplanner.service.log.LogServiceImpl;
+import at.technikum.tourplanner.service.report.ReportService;
+import at.technikum.tourplanner.service.statistics.StatisticsService;
+import at.technikum.tourplanner.service.statistics.StatisticsServiceImpl;
 import at.technikum.tourplanner.service.tour.*;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -56,6 +61,8 @@ public class ControllerFactory {
     private final FileService fileService;
     private final JsonConverter jsonConverter;
     private final StatisticsService statisticsService;
+    private final AlertService alertService;
+    private final ReportService reportService;
 
     private ControllerFactory() {
         configService = new ConfigServiceImpl();
@@ -68,26 +75,28 @@ public class ControllerFactory {
         TourRepository tourRepository = new TourRemoteRepository(retrofit.create(TourRestAPI.class));
 
         dialogService = new DialogServiceImpl();
+        alertService = new AlertServiceImpl();
+        validator = new ValidatorImpl();
+        statisticsService = new StatisticsServiceImpl();
         tourDataStoreService = new TourDataStoreServiceImpl();
         imageService = new ImageDownloadService(configService);
         tourService = new TourServiceImpl(tourRepository);
         logService = new LogServiceImpl(tourRepository);
         asyncTourService = new AsyncTourServiceImpl(tourService);
         asyncLogService = new AsyncLogServiceImpl(logService);
-        validator = new ValidatorImpl();
-        fileService = new FileServiceImpl(JsonFileChooser.create(), configService);
+        fileService = new FileServiceImpl(FileChooserFactory.forJson(), configService);
         jsonConverter = new JsonConverterImpl(ObjectMapperFactory.create());
-        statisticsService = new StatisticsServiceImpl(tourDataStoreService);
+        reportService = new ReportService(FileChooserFactory.forPdf(), configService, statisticsService);
 
         searchbarViewModel = new SearchbarViewModel();
-        tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, statisticsService);
-        tourDetailsViewModel = new TourDetailsViewModel(imageService);
+        tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, alertService);
+        tourDetailsViewModel = new TourDetailsViewModel(imageService, alertService, reportService, statisticsService);
         tourDialogViewModel = new TourDialogViewModel(dialogService);
-        logsViewModel = new LogsViewModel(dialogService, asyncLogService, statisticsService);
+        logsViewModel = new LogsViewModel(dialogService, asyncLogService, alertService);
         logDialogViewModel = new LogDialogViewModel(dialogService, validator);
-        menuBarViewModel = new MenuBarViewModel(dialogService);
+        menuBarViewModel = new MenuBarViewModel(dialogService, reportService, tourDataStoreService);
         fileImportDialogViewModel = new FileImportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService);
-        fileExportDialogViewModel = new FileExportDialogViewModel(fileService, jsonConverter, tourDataStoreService);
+        fileExportDialogViewModel = new FileExportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService);
         dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
 
         setUpControllerFactory();

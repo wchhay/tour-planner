@@ -4,21 +4,23 @@ import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.rest.ImageService;
+import at.technikum.tourplanner.service.dialog.AlertService;
+import at.technikum.tourplanner.service.report.ReportService;
+import at.technikum.tourplanner.service.statistics.StatisticsService;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 
-import java.util.UUID;
 
 import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeString;
 
 
 public class TourDetailsViewModel {
 
-    private final ObjectProperty<UUID> id = new SimpleObjectProperty<>();
+    private final ObjectProperty<Tour> selectedTour = new SimpleObjectProperty<>();
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty from = new SimpleStringProperty();
     private final StringProperty to = new SimpleStringProperty();
@@ -33,13 +35,19 @@ public class TourDetailsViewModel {
     private final Observable<Boolean> tourEditClickedObservable = new Observable<>();
 
     private final ImageService imageService;
+    private final AlertService alertService;
+    private final ReportService reportService;
+    private final StatisticsService statisticsService;
 
-    public TourDetailsViewModel(ImageService imageService) {
+    public TourDetailsViewModel(ImageService imageService, AlertService alertService, ReportService reportService, StatisticsService statisticsService) {
         this.imageService = imageService;
+        this.alertService = alertService;
+        this.reportService = reportService;
+        this.statisticsService = statisticsService;
     }
 
-    public ObjectProperty<UUID> idProperty() {
-        return id;
+    public ObjectProperty<Tour> selectedTourProperty() {
+        return selectedTour;
     }
 
     public StringProperty nameProperty() {
@@ -82,17 +90,39 @@ public class TourDetailsViewModel {
         return childFriendliness;
     }
 
+    public BooleanBinding pdfReportDisabled() {
+        return selectedTour.isNull().or(tourMapImage.isNull());
+    }
+
     public void subscribeToTourEditClicked(Listener<Boolean> listener) {
         tourEditClickedObservable.subscribe(listener);
     }
 
-    public void unsubscribeFromTourEditClicked(Listener<Boolean> listener) {
-        tourEditClickedObservable.unsubscribe(listener);
+    public void setTour(Tour tour) {
+        selectedTour.set(tour);
+        downloadImage(tour);
+        setProperties(tour);
     }
 
-    public void setTour(Tour tour) {
+    public void reloadSelectedTour() {
+        setProperties(selectedTour.get());
+    }
+
+    public void editTour() {
+        tourEditClickedObservable.notifyListeners(true);
+    }
+
+    public void generateTourReport() {
+        if (selectedTour.isNotNull().get() && tourMapImage.isNotNull().get()) {
+            reportService.generateTourReport(selectedTour.get(), tourMapImage.get().getUrl());
+        }
+    }
+
+    private void setProperties(Tour tour) {
         if (null != tour) {
-            id.set(tour.getId());
+            statisticsService.calculateAndSetPopularity(tour);
+            statisticsService.calculateAndSetChildFriendliness(tour);
+
             name.set(tour.getName());
             from.set(tour.getFrom());
             to.set(tour.getTo());
@@ -102,10 +132,7 @@ public class TourDetailsViewModel {
             time.set(convertToTimeString(tour.getEstimatedTime()));
             popularity.set(convertNullableNumberToString(tour.getPopularity()));
             childFriendliness.set(convertNullableNumberToString(tour.getChildFriendliness()));
-
-            downloadImage();
         } else {
-            id.set(null);
             name.set("");
             from.set("");
             to.set("");
@@ -113,14 +140,9 @@ public class TourDetailsViewModel {
             transportType.set("");
             distance.set("");
             time.set("");
-            tourMapImage.set(null);
             popularity.set("");
             childFriendliness.set("");
         }
-    }
-
-    public void editTour() {
-        tourEditClickedObservable.notifyListeners(true);
     }
 
     private String convertNullableNumberToString(Number number) {
@@ -130,16 +152,17 @@ public class TourDetailsViewModel {
         return "";
     }
 
-    private void downloadImage() {
-        if (id.isNotNull().get()) {
-            Image image = imageService.downloadTourMapImage(id.get());
+    private void downloadImage(Tour tour) {
+        if (null != tour) {
+            Image image = imageService.downloadTourMapImage(tour.getId());
             image.exceptionProperty().addListener((observable, oldValue, newValue) -> {
                 if (null != newValue) {
-                    Alert aLert = new Alert(Alert.AlertType.ERROR, "Cannot download image");
-                    aLert.showAndWait();
+                    alertService.showErrorAlert("Cannot download image");
                 }
             });
             tourMapImage.set(image);
+        } else {
+            tourMapImage.set(null);
         }
     }
 }

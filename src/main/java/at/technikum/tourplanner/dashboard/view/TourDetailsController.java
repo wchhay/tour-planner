@@ -42,6 +42,9 @@ public class TourDetailsController {
     @FXML
     Button editButton;
 
+    @FXML
+    Button pdfReportButton;
+
     private final TourDetailsViewModel tourDetailsViewModel;
 
     public TourDetailsController(TourDetailsViewModel tourDetailsViewModel) {
@@ -62,10 +65,15 @@ public class TourDetailsController {
         popularity.textProperty().bind(tourDetailsViewModel.popularityProperty());
         childFriendliness.textProperty().bind(tourDetailsViewModel.childFriendlinessProperty());
 
-        editButton.disableProperty().bind(tourDetailsViewModel.idProperty().isNull());
+        editButton.disableProperty().bind(tourDetailsViewModel.selectedTourProperty().isNull());
+        pdfReportButton.disableProperty().bind(tourDetailsViewModel.pdfReportDisabled());
     }
 
     public void editTour() {
         tourDetailsViewModel.editTour();
+    }
+
+    public void generateReport() {
+        tourDetailsViewModel.generateTourReport();
     }
 }

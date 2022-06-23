@@ -19,4 +19,8 @@ public class MenuBarController {
     public void showExportDialog() {
         menuBarViewModel.openFileExportDialog();
     }
+
+    public void generateSummarizeReport() {
+        menuBarViewModel.generateSummarizeReport();
+    }
 }

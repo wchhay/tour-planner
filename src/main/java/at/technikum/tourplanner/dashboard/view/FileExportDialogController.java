@@ -13,4 +13,8 @@ public class FileExportDialogController {
     public void export() {
         fileExportDialogViewModel.exportToFile();
     }
+
+    public void closeDialog() {
+        fileExportDialogViewModel.closeDialog();
+    }
 }

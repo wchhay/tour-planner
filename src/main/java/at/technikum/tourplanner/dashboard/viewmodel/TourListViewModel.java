@@ -3,17 +3,14 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
+import at.technikum.tourplanner.service.dialog.AlertService;
 import at.technikum.tourplanner.service.tour.AsyncTourService;
 import at.technikum.tourplanner.service.dialog.DialogService;
-import at.technikum.tourplanner.service.tour.StatisticsService;
 import at.technikum.tourplanner.service.tour.TourDataStoreService;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import lombok.extern.log4j.Log4j2;
 
-import java.util.Optional;
 
 @Log4j2
 public class TourListViewModel {
@@ -24,13 +21,13 @@ public class TourListViewModel {
     private final AsyncTourService tourService;
     private final DialogService dialogService;
     private final TourDataStoreService tourDataStoreService;
-    private final StatisticsService statisticsService;
+    private final AlertService alertService;
 
-    public TourListViewModel(AsyncTourService tourService, DialogService dialogService, TourDataStoreService tourDataStoreService, StatisticsService statisticsService) {
+    public TourListViewModel(AsyncTourService tourService, DialogService dialogService, TourDataStoreService tourDataStoreService, AlertService alertService) {
         this.tourService = tourService;
         this.dialogService = dialogService;
         this.tourDataStoreService = tourDataStoreService;
-        this.statisticsService = statisticsService;
+        this.alertService = alertService;
 
         subscribeToFetchingTours();
         subscribeToCreatingTours();
@@ -64,13 +61,7 @@ public class TourListViewModel {
     }
 
     public void openDeleteDialog(Tour tour) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Delete Tour");
-        alert.setHeaderText("Delete Tour?");
-        alert.setContentText("Do you want to delete this tour?");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && ButtonType.OK == result.get()) {
+        if (alertService.getUserConfirmation("Delete Tour", "Do you want to delete this tour?")) {
             deleteTour(tour);
         }
     }
@@ -93,35 +84,18 @@ public class TourListViewModel {
     }
 
     private void subscribeToFetchingTours() {
-        tourService.subscribeToFetchTours(tours -> {
-            tourDataStoreService.setTours(tours);
-            statisticsService.calculateAndSetComputedAttributes();
-        }, this::showErrorAlert);
+        tourService.subscribeToFetchTours(tourDataStoreService::setTours, alertService::showErrorAlert);
     }
 
     private void subscribeToCreatingTours() {
-        tourService.subscribeToCreateTour(tour -> {
-            tourDataStoreService.add(tour);
-            statisticsService.calculateAndSetComputedAttributes();
-        }, this::showErrorAlert);
+        tourService.subscribeToCreateTour(tourDataStoreService::add, alertService::showErrorAlert);
     }
 
     private void subscribeToUpdatingTours() {
-        tourService.subscribeToUpdateTour(tour -> {
-            tourDataStoreService.update(tour);
-            statisticsService.calculateAndSetComputedAttributes();
-        }, this::showErrorAlert);
+        tourService.subscribeToUpdateTour(tourDataStoreService::update, alertService::showErrorAlert);
     }
 
     private void subscribeToDeletingTours() {
-        tourService.subscribeToDeleteTour(
-                success -> statisticsService.calculateAndSetComputedAttributes(),
-                this::showErrorAlert
-        );
-    }
-
-    private void showErrorAlert(Throwable throwable) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, throwable.getMessage());
-        alert.showAndWait();
+        tourService.subscribeToDeleteTour(null, alertService::showErrorAlert);
     }
 }

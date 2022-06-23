@@ -4,12 +4,11 @@
 
 <MenuBar xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
     <Menu mnemonicParsing="false" text="File">
-        <MenuItem mnemonicParsing="false" onAction="#showImportDialog" text="Import" />
-        <MenuItem mnemonicParsing="false" onAction="#showExportDialog" text="Export" />
+        <MenuItem mnemonicParsing="false" onAction="#showImportDialog" text="Import tour data" />
+        <MenuItem mnemonicParsing="false" onAction="#showExportDialog" text="Export tour data" />
     </Menu>
     <Menu mnemonicParsing="false" text="Report">
-        <MenuItem mnemonicParsing="false" text="Tour-report" />
-        <MenuItem mnemonicParsing="false" text="Summarize-report" />
+        <MenuItem mnemonicParsing="false" onAction="#generateSummarizeReport" text="Generate summarize-report" />
     </Menu>
 </MenuBar>
 
