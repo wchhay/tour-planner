@@ -22,10 +22,10 @@ public class ConfigServiceImpl implements ConfigService {
 
     private void loadProperties() {
         try {
-            log.info("Loading app configurations from " + APP_PROPERTIES);
+            logger.debug("Loading app configurations from {}", APP_PROPERTIES);
             properties.load(ConfigServiceImpl.class.getResourceAsStream(APP_PROPERTIES));
         } catch (IOException e) {
-            log.error("Cannot read configurations from " + APP_PROPERTIES);
+            logger.error("Cannot read configurations from {}", APP_PROPERTIES);
         }
     }
 }

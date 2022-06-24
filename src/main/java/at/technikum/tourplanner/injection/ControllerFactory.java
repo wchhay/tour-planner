@@ -2,8 +2,8 @@ package at.technikum.tourplanner.injection;
 
 import at.technikum.tourplanner.config.ConfigService;
 import at.technikum.tourplanner.config.ConfigServiceImpl;
-import at.technikum.tourplanner.dashboard.viewmodel.validation.Validator;
-import at.technikum.tourplanner.dashboard.viewmodel.validation.ValidatorImpl;
+import at.technikum.tourplanner.service.validation.Validator;
+import at.technikum.tourplanner.service.validation.ValidatorImpl;
 import at.technikum.tourplanner.rest.*;
 import at.technikum.tourplanner.dashboard.view.*;
 import at.technikum.tourplanner.dashboard.viewmodel.*;
@@ -22,9 +22,13 @@ import at.technikum.tourplanner.service.log.AsyncLogServiceImpl;
 import at.technikum.tourplanner.service.log.LogService;
 import at.technikum.tourplanner.service.log.LogServiceImpl;
 import at.technikum.tourplanner.service.report.ReportService;
+import at.technikum.tourplanner.service.report.ReportServiceImpl;
+import at.technikum.tourplanner.service.search.SearchService;
+import at.technikum.tourplanner.service.search.SearchServiceImpl;
 import at.technikum.tourplanner.service.statistics.StatisticsService;
 import at.technikum.tourplanner.service.statistics.StatisticsServiceImpl;
 import at.technikum.tourplanner.service.tour.*;
+import lombok.extern.log4j.Log4j2;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -32,6 +36,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class ControllerFactory {
 
     private static ControllerFactory instance;
@@ -63,6 +68,7 @@ public class ControllerFactory {
     private final StatisticsService statisticsService;
     private final AlertService alertService;
     private final ReportService reportService;
+    private final SearchService searchService;
 
     private ControllerFactory() {
         configService = new ConfigServiceImpl();
@@ -79,6 +85,7 @@ public class ControllerFactory {
         validator = new ValidatorImpl();
         statisticsService = new StatisticsServiceImpl();
         tourDataStoreService = new TourDataStoreServiceImpl();
+        searchService = new SearchServiceImpl();
         imageService = new ImageDownloadService(configService);
         tourService = new TourServiceImpl(tourRepository);
         logService = new LogServiceImpl(tourRepository);
@@ -86,18 +93,18 @@ public class ControllerFactory {
         asyncLogService = new AsyncLogServiceImpl(logService);
         fileService = new FileServiceImpl(FileChooserFactory.forJson(), configService);
         jsonConverter = new JsonConverterImpl(ObjectMapperFactory.create());
-        reportService = new ReportService(FileChooserFactory.forPdf(), configService, statisticsService);
+        reportService = new ReportServiceImpl(FileChooserFactory.forPdf(), configService, statisticsService);
 
         searchbarViewModel = new SearchbarViewModel();
-        tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, alertService);
+        tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, alertService, searchService);
         tourDetailsViewModel = new TourDetailsViewModel(imageService, alertService, reportService, statisticsService);
         tourDialogViewModel = new TourDialogViewModel(dialogService);
         logsViewModel = new LogsViewModel(dialogService, asyncLogService, alertService);
         logDialogViewModel = new LogDialogViewModel(dialogService, validator);
-        menuBarViewModel = new MenuBarViewModel(dialogService, reportService, tourDataStoreService);
-        fileImportDialogViewModel = new FileImportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService);
-        fileExportDialogViewModel = new FileExportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService);
-        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel);
+        menuBarViewModel = new MenuBarViewModel(dialogService, reportService, tourDataStoreService, alertService);
+        fileImportDialogViewModel = new FileImportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService, alertService);
+        fileExportDialogViewModel = new FileExportDialogViewModel(fileService, jsonConverter, tourDataStoreService, dialogService, alertService);
+        dashboardViewModel = new DashboardViewModel(tourListViewModel, tourDetailsViewModel, tourDialogViewModel, logsViewModel, logDialogViewModel, searchbarViewModel);
 
         setUpControllerFactory();
     }
@@ -118,6 +125,7 @@ public class ControllerFactory {
     }
 
     public Object create(Class<?> controllerClass) {
+        logger.debug("Creating controller of class={}", controllerClass.getName());
         if (controllerCreators.containsKey(controllerClass)) {
             return controllerCreators.get(controllerClass).create();
         }

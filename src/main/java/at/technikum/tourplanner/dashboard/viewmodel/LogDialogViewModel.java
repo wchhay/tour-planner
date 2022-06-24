@@ -3,11 +3,12 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.dashboard.viewmodel.validation.Validator;
+import at.technikum.tourplanner.service.validation.Validator;
 import at.technikum.tourplanner.service.dialog.DialogService;
 import at.technikum.tourplanner.util.TimeConverterUtil;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import lombok.extern.log4j.Log4j2;
 
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 import static at.technikum.tourplanner.util.TimeConverterUtil.parseTime;
 
+@Log4j2
 public class LogDialogViewModel {
 
     public static final String INITIAL_TIME_VALUE = "00:00:00";
@@ -57,16 +59,8 @@ public class LogDialogViewModel {
         logCreationObservable.subscribe(listener);
     }
 
-    public void unsubscribeFromLogCreation(Listener<Log> listener) {
-        logCreationObservable.unsubscribe(listener);
-    }
-
     public void subscribeToLogUpdate(Listener<Log> listener) {
         logUpdateObservable.subscribe(listener);
-    }
-
-    public void unsubscribeFromLogUpdate(Listener<Log> listener) {
-        logUpdateObservable.unsubscribe(listener);
     }
 
     public void createLog() {
@@ -92,6 +86,8 @@ public class LogDialogViewModel {
             difficulty.setValue(log.getDifficulty());
             rating.setValue(log.getRating());
             comment.setValue(log.getComment());
+
+            logger.debug("Setting Log with id={}", selectedLogId);
         } else {
             clearLog();
         }
@@ -130,6 +126,8 @@ public class LogDialogViewModel {
         difficulty.setValue(LOWER_BOUND);
         rating.setValue(LOWER_BOUND);
         comment.setValue("");
+
+        logger.info("Setting selected log to default values");
     }
 
     private Log buildLog() {

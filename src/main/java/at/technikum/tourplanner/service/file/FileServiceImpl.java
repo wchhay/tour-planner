@@ -3,12 +3,14 @@ package at.technikum.tourplanner.service.file;
 import at.technikum.tourplanner.config.ConfigService;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+@Log4j2
 public class FileServiceImpl implements FileService {
 
     public static final String DEFAULT_EXPORT_DIR = "default-export-dir";
@@ -19,6 +21,7 @@ public class FileServiceImpl implements FileService {
         this.fileChooser = fileChooser;
 
         String dirName = configService.getKey(DEFAULT_EXPORT_DIR);
+        logger.debug("Setting initialDirectory={}", dirName);
         fileChooser.setInitialDirectory(new File(dirName));
     }
 
@@ -33,7 +36,7 @@ public class FileServiceImpl implements FileService {
                 }
                 return stringBuilder.toString();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.warn("File not found during import", e);
             }
         }
         return "";
@@ -46,8 +49,7 @@ public class FileServiceImpl implements FileService {
             try (PrintWriter printWriter = new PrintWriter(file)) {
                 printWriter.write(content);
             } catch (FileNotFoundException e) {
-                // TODO: custom exception
-                e.printStackTrace();
+                logger.warn("File not found during export", e);
             }
         }
     }

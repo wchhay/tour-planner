@@ -6,9 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
+@Log4j2
 public class DialogServiceImpl implements DialogService {
 
     private Stage stage;
@@ -54,7 +56,7 @@ public class DialogServiceImpl implements DialogService {
             stage.setTitle(title);
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Failed to load fxmlFile={}", fxmlFile);
         }
     }
 

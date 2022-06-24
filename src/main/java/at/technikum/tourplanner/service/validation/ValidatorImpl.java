@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.dashboard.viewmodel.validation;
+package at.technikum.tourplanner.service.validation;
 
 import org.apache.logging.log4j.util.Strings;
 

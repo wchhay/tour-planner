@@ -15,30 +15,29 @@ public class JsonConverterImpl implements JsonConverter {
     }
 
     @Override
-    public <T> T fromJson(String json, TypeReference<T> typeReference) {
+    public <T> T fromJson(String json, TypeReference<T> typeReference) throws JsonConverterException {
         try {
             return objectMapper.readValue(json, typeReference);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new JsonConverterException(e);
         }
     }
 
     @Override
-    public <T> T fromJson(String json, Class<T> type) {
+    public <T> T fromJson(String json, Class<T> type) throws JsonConverterException {
         try {
             return objectMapper.readValue(json, type);
         } catch (JsonProcessingException e) {
-            // TODO: Custom exception
-            throw new RuntimeException(e);
+            throw new JsonConverterException(e);
         }
     }
 
     @Override
-    public String toJson(Object object) {
+    public String toJson(Object object) throws JsonConverterException {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new JsonConverterException(e);
         }
     }
 }

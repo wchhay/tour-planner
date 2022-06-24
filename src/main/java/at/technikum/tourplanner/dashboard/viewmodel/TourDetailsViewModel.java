@@ -5,6 +5,7 @@ import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.rest.ImageService;
 import at.technikum.tourplanner.service.dialog.AlertService;
+import at.technikum.tourplanner.service.report.FailedPdfGenerationException;
 import at.technikum.tourplanner.service.report.ReportService;
 import at.technikum.tourplanner.service.statistics.StatisticsService;
 import javafx.beans.binding.BooleanBinding;
@@ -13,11 +14,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
+import lombok.extern.log4j.Log4j2;
 
 
 import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeString;
 
 
+@Log4j2
 public class TourDetailsViewModel {
 
     private final ObjectProperty<Tour> selectedTour = new SimpleObjectProperty<>();
@@ -99,6 +102,7 @@ public class TourDetailsViewModel {
     }
 
     public void setTour(Tour tour) {
+        logger.debug("Setting selected tour to {}", tour);
         selectedTour.set(tour);
         downloadImage(tour);
         setProperties(tour);
@@ -114,12 +118,19 @@ public class TourDetailsViewModel {
 
     public void generateTourReport() {
         if (selectedTour.isNotNull().get() && tourMapImage.isNotNull().get()) {
-            reportService.generateTourReport(selectedTour.get(), tourMapImage.get().getUrl());
+            logger.info("Generating tour report for {}", selectedTour.get());
+            try {
+                reportService.generateTourReport(selectedTour.get(), tourMapImage.get().getUrl());
+            } catch (FailedPdfGenerationException e) {
+                logger.warn(e);
+                alertService.showErrorAlert(e);
+            }
         }
     }
 
     private void setProperties(Tour tour) {
         if (null != tour) {
+            logger.debug("Calculating computed attributes for {}", tour);
             statisticsService.calculateAndSetPopularity(tour);
             statisticsService.calculateAndSetChildFriendliness(tour);
 
@@ -132,6 +143,8 @@ public class TourDetailsViewModel {
             time.set(convertToTimeString(tour.getEstimatedTime()));
             popularity.set(convertNullableNumberToString(tour.getPopularity()));
             childFriendliness.set(convertNullableNumberToString(tour.getChildFriendliness()));
+
+            logger.debug("Setting tour details for {}", tour);
         } else {
             name.set("");
             from.set("");
@@ -142,6 +155,8 @@ public class TourDetailsViewModel {
             time.set("");
             popularity.set("");
             childFriendliness.set("");
+
+            logger.debug("Clearing tour details");
         }
     }
 
@@ -158,9 +173,11 @@ public class TourDetailsViewModel {
             image.exceptionProperty().addListener((observable, oldValue, newValue) -> {
                 if (null != newValue) {
                     alertService.showErrorAlert("Cannot download image");
+                    logger.warn("Cannot download image for {}", tour);
                 }
             });
             tourMapImage.set(image);
+            logger.debug("Downloading and setting image for {}", tour);
         } else {
             tourMapImage.set(null);
         }

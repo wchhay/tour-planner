@@ -60,19 +60,21 @@ public class LogsViewModel {
     public void fetchLogs() {
         if (null != selectedTour.get()) {
             logService.fetchLogs(selectedTour.get().getId());
-            log.info("Fetching logs from " + selectedTour.get());
+            logger.info("Fetching logs from {}", selectedTour.get());
         }
     }
 
     public void createLog(Log log) {
         if (null != selectedTour.get()) {
             logService.createLog(selectedTour.get().getId(), log);
+            logger.info("Creating new log for {}", selectedTour);
         }
     }
 
     public void updateLog(Log log) {
         if (null != selectedTour.get()) {
             logService.updateLog(selectedTour.get().getId(), log);
+            logger.info("Updating {} of {}", log, selectedTour);
         }
     }
 
@@ -80,6 +82,7 @@ public class LogsViewModel {
         if (null != selectedTour.get()) {
             removeFromTourLogs(log);
             logService.deleteLog(selectedTour.get().getId(), log);
+            logger.info("Deleting {} of {}", log, selectedTour);
         }
     }
 
@@ -108,6 +111,7 @@ public class LogsViewModel {
     }
 
     public void setTourAndLogs(Tour tour) {
+        logger.debug("Setting selected tour to {}", tour);
         selectedTour.setValue(tour);
         if (null != tour) {
             setLogsObservableList(tour.getLogs());
@@ -118,22 +122,23 @@ public class LogsViewModel {
 
     public void setSelectedLog(Log log) {
         selectedLog.setValue(log);
+        logger.debug("Selecting {}", log);
     }
 
     private void subscribeToFetchingLogs() {
-        logService.subscribeToFetchLogs(this::setSelectedTourLogs, alertService::showErrorAlert);
+        logService.subscribeToFetchLogs(this::setSelectedTourLogs, this::refetchLogsOnError);
     }
 
     private void subscribeToLogCreation() {
-        logService.subscribeToCreateLog(this::addToTourLogs, alertService::showErrorAlert);
+        logService.subscribeToCreateLog(this::addToTourLogs, this::refetchLogsOnError);
     }
 
     private void subscribeToLogUpdate() {
-        logService.subscribeToUpdateLog(newValue -> fetchLogs(), alertService::showErrorAlert);
+        logService.subscribeToUpdateLog(newValue -> fetchLogs(), this::refetchLogsOnError);
     }
 
     private void subscribeToDeletingTours() {
-        logService.subscribeToDeleteLog(null, alertService::showErrorAlert);
+        logService.subscribeToDeleteLog(null, this::refetchLogsOnError);
     }
 
     private void setSelectedTourLogs(List<Log> logs) {
@@ -163,5 +168,11 @@ public class LogsViewModel {
         if (null != logs) {
             logsList.setAll(logs);
         }
+    }
+
+    private void refetchLogsOnError(Throwable e) {
+        logger.info("Re-fetching logs because an error occurred", e);
+        fetchLogs();
+        alertService.showErrorAlert(e);
     }
 }

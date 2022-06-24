@@ -7,9 +7,11 @@ import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
 import at.technikum.tourplanner.service.dialog.DialogService;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.*;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.UUID;
 
+@Log4j2
 public class TourDialogViewModel {
 
     private UUID tourUUID;
@@ -32,16 +34,8 @@ public class TourDialogViewModel {
         tourCreationObservable.subscribe(listener);
     }
 
-    public void unsubscribeFromTourCreation(Listener<Tour> listener) {
-        tourCreationObservable.unsubscribe(listener);
-    }
-
     public void subscribeToTourUpdate(Listener<Tour> listener) {
         tourUpdateObservable.subscribe(listener);
-    }
-
-    public void unsubscribeFromTourUpdate(Listener<Tour> listener) {
-        tourUpdateObservable.unsubscribe(listener);
     }
 
     public void createTour() {

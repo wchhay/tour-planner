@@ -8,19 +8,22 @@ public class DashboardViewModel {
     private final TourDialogViewModel tourDialogViewModel;
     private final LogsViewModel logsViewModel;
     private final LogDialogViewModel logDialogViewModel;
+    private final SearchbarViewModel searchbarViewModel;
 
     public DashboardViewModel(
             TourListViewModel tourListViewModel,
             TourDetailsViewModel tourDetailsViewModel,
             TourDialogViewModel tourDialogViewModel,
             LogsViewModel logsViewModel,
-            LogDialogViewModel logDialogViewModel
+            LogDialogViewModel logDialogViewModel,
+            SearchbarViewModel searchbarViewModel
     ) {
         this.tourListViewModel = tourListViewModel;
         this.tourDetailsViewModel = tourDetailsViewModel;
         this.tourDialogViewModel = tourDialogViewModel;
         this.logsViewModel = logsViewModel;
         this.logDialogViewModel = logDialogViewModel;
+        this.searchbarViewModel = searchbarViewModel;
 
         this.tourListViewModel.subscribeToSelection(tourDetailsViewModel::setTour);
         this.tourListViewModel.subscribeToSelection(logsViewModel::setTourAndLogs);
@@ -35,6 +38,8 @@ public class DashboardViewModel {
         this.tourDetailsViewModel.subscribeToTourEditClicked(this::openEditDialog);
         this.logsViewModel.subscribeToLogDialogOpened(logDialogViewModel::setLog);
         this.logsViewModel.subscribeToTourReloadRequired(this::reloadTourDetails);
+
+        this.searchbarViewModel.subscribeToSearch(tourListViewModel::search);
     }
 
     private void reloadTourDetails(Boolean reloadRequired) {
