@@ -1,7 +1,7 @@
 package at.technikum.tourplanner.injection;
 
-import at.technikum.tourplanner.config.ConfigService;
-import at.technikum.tourplanner.config.ConfigServiceImpl;
+import at.technikum.tourplanner.config.AppConfiguration;
+import at.technikum.tourplanner.config.AppConfigurationLoader;
 import at.technikum.tourplanner.service.validation.Validator;
 import at.technikum.tourplanner.service.validation.ValidatorImpl;
 import at.technikum.tourplanner.rest.*;
@@ -59,7 +59,6 @@ public class ControllerFactory {
     private final AsyncTourService asyncTourService;
     private final AsyncLogService asyncLogService;
     private final DialogService dialogService;
-    private final ConfigService configService;
     private final ImageService imageService;
     private final Validator validator;
     private final TourDataStoreService tourDataStoreService;
@@ -70,11 +69,13 @@ public class ControllerFactory {
     private final ReportService reportService;
     private final SearchService searchService;
 
+    private final AppConfiguration appConfiguration;
+
     private ControllerFactory() {
-        configService = new ConfigServiceImpl();
+        appConfiguration = AppConfigurationLoader.getInstance().getAppConfiguration();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(configService.getKey("rest-base-url"))
+                .baseUrl(appConfiguration.getRestBaseUrl())
                 .addConverterFactory(JacksonConverterFactory.create(ObjectMapperFactory.create()))
                 .build();
 
@@ -86,14 +87,14 @@ public class ControllerFactory {
         statisticsService = new StatisticsServiceImpl();
         tourDataStoreService = new TourDataStoreServiceImpl();
         searchService = new SearchServiceImpl();
-        imageService = new ImageDownloadService(configService);
+        imageService = new ImageDownloadService(appConfiguration);
         tourService = new TourServiceImpl(tourRepository);
         logService = new LogServiceImpl(tourRepository);
         asyncTourService = new AsyncTourServiceImpl(tourService);
         asyncLogService = new AsyncLogServiceImpl(logService);
-        fileService = new FileServiceImpl(FileChooserFactory.forJson(), configService);
+        fileService = new FileServiceImpl(FileChooserFactory.forJson(), appConfiguration);
         jsonConverter = new JsonConverterImpl(ObjectMapperFactory.create());
-        reportService = new ReportServiceImpl(FileChooserFactory.forPdf(), configService, statisticsService);
+        reportService = new ReportServiceImpl(FileChooserFactory.forPdf(), appConfiguration, statisticsService);
 
         searchbarViewModel = new SearchbarViewModel();
         tourListViewModel = new TourListViewModel(asyncTourService, dialogService, tourDataStoreService, alertService, searchService);
@@ -120,10 +121,6 @@ public class ControllerFactory {
         controllerCreators.put(controllerClass, controllerCreator);
     }
 
-    public void removeAllControllerCreators() {
-        controllerCreators.clear();
-    }
-
     public Object create(Class<?> controllerClass) {
         logger.debug("Creating controller of class={}", controllerClass.getName());
         if (controllerCreators.containsKey(controllerClass)) {
@@ -142,6 +139,7 @@ public class ControllerFactory {
     }
 
     private void setUpControllerFactory() {
+        logger.debug("Setting up controller factory");
         addControllerCreator(SearchbarController.class, () -> new SearchbarController(searchbarViewModel));
         addControllerCreator(LogsController.class, () -> new LogsController(logsViewModel));
         addControllerCreator(TourlistController.class, () -> new TourlistController(tourListViewModel));

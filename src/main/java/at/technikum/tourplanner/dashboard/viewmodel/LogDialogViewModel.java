@@ -41,12 +41,11 @@ public class LogDialogViewModel {
     private final BooleanProperty isValidDifficulty = new SimpleBooleanProperty(true);
     private final BooleanProperty isValidRating = new SimpleBooleanProperty(true);
 
-    private final Validator validator;
-
     private final Observable<Log> logCreationObservable = new Observable<>();
     private final Observable<Log> logUpdateObservable = new Observable<>();
 
     private final DialogService dialogService;
+    private final Validator validator;
 
     public LogDialogViewModel(DialogService dialogService, Validator validator) {
         this.dialogService = dialogService;
@@ -64,13 +63,17 @@ public class LogDialogViewModel {
     }
 
     public void createLog() {
-        Log log = buildLog();
-        logCreationObservable.notifyListeners(log);
+        if (validLogUserInputBinding().get()) {
+            Log log = buildLog();
+            logCreationObservable.notifyListeners(log);
+        }
     }
 
     public void updateLog() {
-        Log log = buildLog();
-        logUpdateObservable.notifyListeners(log);
+        if (validLogUserInputBinding().get()) {
+            Log log = buildLog();
+            logUpdateObservable.notifyListeners(log);
+        }
     }
 
     public void closeDialog() {

@@ -1,7 +1,6 @@
 package at.technikum.tourplanner.injection;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -27,13 +26,7 @@ class ControllerFactoryTest {
         }
     }
 
-    private ControllerFactory controllerFactory;
-
-    @BeforeEach
-    void setUp() {
-        controllerFactory = ControllerFactory.getInstance();
-        controllerFactory.removeAllControllerCreators();
-    }
+    private final ControllerFactory controllerFactory = ControllerFactory.getInstance();
 
     @Test
     void GIVEN_controllerCreator_not_exists_AND_no_default_constructor_WHEN_create_THEN_exception_thrown() {

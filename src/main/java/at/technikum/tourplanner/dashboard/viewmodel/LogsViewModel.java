@@ -126,7 +126,7 @@ public class LogsViewModel {
     }
 
     private void subscribeToFetchingLogs() {
-        logService.subscribeToFetchLogs(this::setSelectedTourLogs, this::refetchLogsOnError);
+        logService.subscribeToFetchLogs(this::setSelectedTourLogs, alertService::showErrorAlert);
     }
 
     private void subscribeToLogCreation() {

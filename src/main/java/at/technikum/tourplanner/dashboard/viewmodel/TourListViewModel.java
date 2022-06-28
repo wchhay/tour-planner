@@ -42,7 +42,6 @@ public class TourListViewModel {
         subscribeToUpdatingTours();
 
         subscribeToTourObservableListChanged(tourDataStoreService);
-        fetchTours();
     }
 
     public void subscribeToSelection(Listener<Tour> listener) {
@@ -57,7 +56,7 @@ public class TourListViewModel {
         return tourList;
     }
 
-    public ChangeListener<Tour> getChangeListener() {
+    public ChangeListener<Tour> getSelectionChangeListener() {
         return ((observable, oldValue, newValue) -> tourSelectionObservable.notifyListeners(newValue));
     }
 

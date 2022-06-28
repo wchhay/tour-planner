@@ -16,12 +16,12 @@ public class AsyncService<R> extends Service<R> {
 
     public void subscribe(Consumer<R> onSuccess, Consumer<Throwable> onError) {
         valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (null != newValue) {
+            if (null != newValue && null != onSuccess) {
                 onSuccess.accept(newValue);
             }
         });
         exceptionProperty().addListener((observable, oldValue, throwable) -> {
-            if (null != throwable) {
+            if (null != throwable && null != onError) {
                 onError.accept(throwable);
             }
         });

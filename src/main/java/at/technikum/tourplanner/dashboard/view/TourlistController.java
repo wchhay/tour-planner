@@ -22,7 +22,9 @@ public class TourlistController {
     void initialize() {
         tourList.setItems(tourListViewModel.getTourList());
         tourList.setCellFactory(param -> new TourlistitemCell(tourListViewModel));
-        tourList.getSelectionModel().selectedItemProperty().addListener(tourListViewModel.getChangeListener());
+        tourList.getSelectionModel().selectedItemProperty().addListener(tourListViewModel.getSelectionChangeListener());
+
+        fetchTours();
     }
 
     public void addTour() {

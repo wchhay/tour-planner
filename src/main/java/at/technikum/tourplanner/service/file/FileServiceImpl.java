@@ -1,6 +1,6 @@
 package at.technikum.tourplanner.service.file;
 
-import at.technikum.tourplanner.config.ConfigService;
+import at.technikum.tourplanner.config.AppConfiguration;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
@@ -13,14 +13,12 @@ import java.util.Scanner;
 @Log4j2
 public class FileServiceImpl implements FileService {
 
-    public static final String DEFAULT_EXPORT_DIR = "default-export-dir";
-
     private final FileChooser fileChooser;
 
-    public FileServiceImpl(FileChooser fileChooser, ConfigService configService) {
+    public FileServiceImpl(FileChooser fileChooser, AppConfiguration appConfiguration) {
         this.fileChooser = fileChooser;
 
-        String dirName = configService.getKey(DEFAULT_EXPORT_DIR);
+        String dirName = appConfiguration.getDefaultExportDir();
         logger.debug("Setting initialDirectory={}", dirName);
         fileChooser.setInitialDirectory(new File(dirName));
     }

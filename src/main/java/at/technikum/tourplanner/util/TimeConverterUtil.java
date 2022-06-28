@@ -2,6 +2,7 @@ package at.technikum.tourplanner.util;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class TimeConverterUtil {
 
@@ -17,7 +18,11 @@ public class TimeConverterUtil {
     }
 
     public static Long parseTime(String timeString) {
-        LocalTime localTime = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm:ss"));
-        return (long) localTime.toSecondOfDay();
+        try {
+            LocalTime localTime = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm:ss"));
+            return (long) localTime.toSecondOfDay();
+        } catch (DateTimeParseException e) {
+            return 0L;
+        }
     }
 }

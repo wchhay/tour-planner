@@ -39,11 +39,15 @@ public class TourDialogViewModel {
     }
 
     public void createTour() {
-        tourCreationObservable.notifyListeners(buildTour());
+        if (validTourUserInputBinding().get()) {
+            tourCreationObservable.notifyListeners(buildTour());
+        }
     }
 
     public void updateTour() {
-        tourUpdateObservable.notifyListeners(buildTour());
+        if (validTourUserInputBinding().get()) {
+            tourUpdateObservable.notifyListeners(buildTour());
+        }
     }
 
     public void setTour(Tour tour) {

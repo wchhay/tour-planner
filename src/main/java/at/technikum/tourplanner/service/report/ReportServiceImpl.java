@@ -1,6 +1,6 @@
 package at.technikum.tourplanner.service.report;
 
-import at.technikum.tourplanner.config.ConfigService;
+import at.technikum.tourplanner.config.AppConfiguration;
 import at.technikum.tourplanner.dashboard.model.Log;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.service.statistics.StatisticsService;
@@ -36,12 +36,12 @@ public class ReportServiceImpl implements ReportService {
     public static final float MARGIN = 10F;
 
     private final FileChooser fileChooser;
-    private final ConfigService configService;
+    private final AppConfiguration configReader;
     private final StatisticsService statisticsService;
 
-    public ReportServiceImpl(FileChooser fileChooser, ConfigService configService, StatisticsService statisticsService) {
+    public ReportServiceImpl(FileChooser fileChooser, AppConfiguration appConfiguration, StatisticsService statisticsService) {
         this.fileChooser = fileChooser;
-        this.configService = configService;
+        this.configReader = appConfiguration;
         this.statisticsService = statisticsService;
 
         setUpInitialDirectory();
@@ -180,7 +180,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     private void setUpInitialDirectory() {
-        String dirName = configService.getKey(DEFAULT_EXPORT_DIR);
+        String dirName = configReader.getDefaultExportDir();
         fileChooser.setInitialDirectory(new File(dirName));
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Log4j2
 public class StatisticsServiceImpl implements StatisticsService {
 
-    public static final int MAX_CHILD_FRIENDLY_DISTANCE = 10000;
+    public static final double MAX_CHILD_FRIENDLY_DISTANCE = 10.0;
     public static final double MAX_CHILD_FRIENDLY_DIFFICULTY = 3.0;
     public static final double POPULARITY_FIRST_LIMIT = 3;
     public static final double POPULARITY_SECOND_LIMIT = 6;
