@@ -5,9 +5,13 @@ import at.technikum.tourplanner.dashboard.component.TourlistitemCell;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.TourListViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 public class TourlistController {
+
+    @FXML
+    Button addTourButton;
 
     @FXML
     ListView<Tour> tourList;

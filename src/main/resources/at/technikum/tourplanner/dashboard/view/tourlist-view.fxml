@@ -13,7 +13,7 @@
             </font>
         </Text>
         <Pane HBox.hgrow="ALWAYS" />
-        <Button mnemonicParsing="false" onAction="#addTour" text="+" />
+        <Button fx:id="addTourButton" mnemonicParsing="false" onAction="#addTour" text="+" />
         <Button mnemonicParsing="false" onAction="#fetchTours" text="⟲" />
     </ToolBar>
     <ListView fx:id="tourList" VBox.vgrow="ALWAYS" />

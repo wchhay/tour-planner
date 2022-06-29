@@ -69,7 +69,7 @@ public class TourDialogViewModel {
         tourFrom.setValue("");
         tourTo.setValue("");
         tourDescription.setValue("");
-        tourTransportType.setValue(null);
+        tourTransportType.setValue(TransportType.FASTEST);
     }
 
     public void closeDialog() {

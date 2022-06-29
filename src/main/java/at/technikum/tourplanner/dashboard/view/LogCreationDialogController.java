@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 public class LogCreationDialogController {
 
     @FXML
-    Button logCreationButton;
+    Button createLogButton;
 
     private final LogDialogViewModel logDialogViewModel;
 
@@ -17,7 +17,7 @@ public class LogCreationDialogController {
 
     @FXML
     void initialize() {
-        logCreationButton.disableProperty().bind(logDialogViewModel.validLogUserInputBinding().not());
+        createLogButton.disableProperty().bind(logDialogViewModel.validLogUserInputBinding().not());
     }
 
     public void onLogCreationClicked() {

@@ -23,7 +23,7 @@
         <VBox.margin>
             <Insets top="8.0"/>
         </VBox.margin>
-        <VBox>
+        <VBox HBox.hgrow="ALWAYS">
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
                 <font>
                     <Font size="16.0"/>
