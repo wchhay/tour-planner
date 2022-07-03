@@ -139,7 +139,7 @@ public class TourDetailsViewModel {
             to.set(tour.getTo());
             description.set(tour.getDescription());
             transportType.set(tour.getTransportType().value);
-            distance.set(convertNullableNumberToString(tour.getDistance()));
+            distance.set(convertToDistanceString(tour.getDistance()));
             time.set(convertToTimeString(tour.getEstimatedTime()));
             popularity.set(convertNullableNumberToString(tour.getPopularity()));
             childFriendliness.set(convertNullableNumberToString(tour.getChildFriendliness()));
@@ -158,6 +158,10 @@ public class TourDetailsViewModel {
 
             logger.debug("Clearing tour details");
         }
+    }
+
+    private String convertToDistanceString(Double distance) {
+        return String.format("%.2f km", distance);
     }
 
     private String convertNullableNumberToString(Number number) {

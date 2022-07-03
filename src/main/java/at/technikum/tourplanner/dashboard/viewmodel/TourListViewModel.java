@@ -8,6 +8,8 @@ import at.technikum.tourplanner.service.search.SearchService;
 import at.technikum.tourplanner.service.tour.AsyncTourService;
 import at.technikum.tourplanner.service.dialog.DialogService;
 import at.technikum.tourplanner.service.tour.TourDataStoreService;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -19,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 public class TourListViewModel {
 
     private final ObservableList<Tour> tourList = FXCollections.observableArrayList();
+    private final BooleanProperty isLoading = new SimpleBooleanProperty(false);
 
     private final Observable<Tour> tourSelectionObservable = new Observable<>();
     private final Observable<Boolean> tourCreationClickedObservable = new Observable<>();
@@ -52,6 +55,10 @@ public class TourListViewModel {
         tourCreationClickedObservable.subscribe(listener);
     }
 
+    public BooleanProperty isLoadingProperty() {
+        return isLoading;
+    }
+
     public ObservableList<Tour> getTourList() {
         return tourList;
     }
@@ -77,16 +84,19 @@ public class TourListViewModel {
 
     public void fetchTours() {
         logger.info("Fetching tours");
+        isLoading.set(true);
         tourService.fetchTours();
     }
 
     public void createTour(Tour tour) {
         logger.info("Creating new tour");
+        isLoading.set(true);
         tourService.createTour(tour);
     }
 
     public void updateTour(Tour tour) {
         logger.info("Updating {}", tour);
+        isLoading.set(true);
         tourService.updateTour(tour);
     }
 
@@ -107,15 +117,24 @@ public class TourListViewModel {
     }
 
     private void subscribeToFetchingTours() {
-        tourService.subscribeToFetchTours(tourDataStoreService::setTours, alertService::showErrorAlert);
+        tourService.subscribeToFetchTours(tours -> {
+            tourDataStoreService.setTours(tours);
+            isLoading.set(false);
+        }, this::showErrorAlert);
     }
 
     private void subscribeToCreatingTours() {
-        tourService.subscribeToCreateTour(tourDataStoreService::add, this::refetchToursOnError);
+        tourService.subscribeToCreateTour(tour -> {
+            tourDataStoreService.add(tour);
+            isLoading.set(false);
+        }, this::refetchToursOnError);
     }
 
     private void subscribeToUpdatingTours() {
-        tourService.subscribeToUpdateTour(tourDataStoreService::update, this::refetchToursOnError);
+        tourService.subscribeToUpdateTour(tour -> {
+            tourDataStoreService.update(tour);
+            isLoading.set(false);
+        }, this::refetchToursOnError);
     }
 
     private void subscribeToDeletingTours() {
@@ -133,6 +152,11 @@ public class TourListViewModel {
     private void refetchToursOnError(Throwable e) {
         logger.info("Re-fetching tours because an error occurred", e);
         fetchTours();
+        showErrorAlert(e);
+    }
+
+    private void showErrorAlert(Throwable e) {
         alertService.showErrorAlert(e);
+        isLoading.set(false);
     }
 }

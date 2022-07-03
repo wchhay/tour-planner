@@ -32,7 +32,6 @@ import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeStrin
 
 public class ReportServiceImpl implements ReportService {
 
-    public static final String DEFAULT_EXPORT_DIR = "default-export-dir";
     public static final float MARGIN = 10F;
 
     private final FileChooser fileChooser;

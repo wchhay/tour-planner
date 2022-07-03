@@ -60,6 +60,7 @@ class DashboardUITest {
 
         Tour lastTour = getLastItem(tourList.getItems());
 
+        assertThat(lastTour).isNotNull();
         assertThat(lastTour.getName()).isEqualTo(TOUR_NAME);
         assertThat(lastTour.getFrom()).isEqualTo(TOUR_FROM);
         assertThat(lastTour.getTo()).isEqualTo(TOUR_TO);
@@ -67,6 +68,6 @@ class DashboardUITest {
     }
 
     private <T> T getLastItem(List<T> list) {
-        return list.get(list.size()-1);
+        return list.isEmpty() ? null : list.get(list.size()-1);
     }
 }

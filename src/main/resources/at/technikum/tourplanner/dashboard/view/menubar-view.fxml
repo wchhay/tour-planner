@@ -2,13 +2,16 @@
 
 <?import javafx.scene.control.*?>
 
-<MenuBar xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
+<MenuBar fx:id="menuBar" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.tourplanner.dashboard.view.MenuBarController">
     <Menu mnemonicParsing="false" text="File">
         <MenuItem mnemonicParsing="false" onAction="#showImportDialog" text="Import tour data" />
         <MenuItem mnemonicParsing="false" onAction="#showExportDialog" text="Export tour data" />
     </Menu>
     <Menu mnemonicParsing="false" text="Report">
         <MenuItem mnemonicParsing="false" onAction="#generateSummarizeReport" text="Generate summarize-report" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Preferences">
+        <RadioMenuItem fx:id="darkModeMenuItem" mnemonicParsing="false" text="Enable dark mode"/>
     </Menu>
 </MenuBar>
 

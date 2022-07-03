@@ -5,10 +5,13 @@ import at.technikum.tourplanner.service.dialog.DialogService;
 import at.technikum.tourplanner.service.report.FailedPdfGenerationException;
 import at.technikum.tourplanner.service.report.ReportService;
 import at.technikum.tourplanner.service.tour.TourDataStoreService;
+import javafx.scene.Scene;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 public class MenuBarViewModel {
+
+    public static final String DARK_THEME = "dark-theme.css";
 
     private final DialogService dialogService;
     private final ReportService reportService;
@@ -38,5 +41,13 @@ public class MenuBarViewModel {
             logger.warn(e);
             alertService.showErrorAlert(e);
         }
+    }
+
+    public void enableDarkTheme(Scene scene) {
+        scene.getStylesheets().add(DARK_THEME);
+    }
+
+    public void disableDarkTheme(Scene scene) {
+        scene.getStylesheets().remove(DARK_THEME);
     }
 }
