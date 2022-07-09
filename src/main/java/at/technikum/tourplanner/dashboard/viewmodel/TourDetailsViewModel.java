@@ -3,7 +3,7 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Listener;
 import at.technikum.tourplanner.dashboard.viewmodel.observer.Observable;
-import at.technikum.tourplanner.rest.ImageService;
+import at.technikum.tourplanner.service.tour.ImageService;
 import at.technikum.tourplanner.service.dialog.AlertService;
 import at.technikum.tourplanner.service.report.FailedPdfGenerationException;
 import at.technikum.tourplanner.service.report.ReportService;

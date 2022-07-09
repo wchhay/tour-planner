@@ -1,4 +1,4 @@
-package at.technikum.tourplanner.rest;
+package at.technikum.tourplanner.service.tour;
 
 import javafx.scene.image.Image;
 

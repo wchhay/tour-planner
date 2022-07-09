@@ -1,12 +1,10 @@
-package at.technikum.tourplanner.rest;
+package at.technikum.tourplanner.service.tour;
 
 import at.technikum.tourplanner.config.AppConfiguration;
 import javafx.scene.image.Image;
-import lombok.extern.log4j.Log4j2;
 
 import java.util.UUID;
 
-@Log4j2
 public class ImageDownloadService implements ImageService {
 
     private final AppConfiguration appConfiguration;

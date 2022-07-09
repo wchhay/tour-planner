@@ -2,7 +2,7 @@ package at.technikum.tourplanner.dashboard.viewmodel;
 
 import at.technikum.tourplanner.dashboard.model.Tour;
 import at.technikum.tourplanner.dashboard.model.TransportType;
-import at.technikum.tourplanner.rest.ImageService;
+import at.technikum.tourplanner.service.tour.ImageService;
 import at.technikum.tourplanner.service.dialog.AlertService;
 import at.technikum.tourplanner.service.report.ReportService;
 import at.technikum.tourplanner.service.statistics.StatisticsService;
@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static at.technikum.tourplanner.util.TimeConverterUtil.convertToTimeString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -24,6 +23,19 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class TourDetailsViewModelTest {
 
+    public static final String TOUR_NAME = "name";
+    public static final String TOUR_FROM = "from";
+    public static final String TOUR_TO = "to";
+    public static final TransportType TRANSPORT_TYPE = TransportType.FASTEST;
+    public static final String TOUR_DESCRIPTION = "description";
+    public static final long ESTIMATED_TIME = 3600L;
+    public static final String ESTIMATED_TIME_STRING = "01:00:00";
+    public static final double DISTANCE = 200.0;
+    public static final String DISTANCE_STRING = "200,00 km";
+    public static final int POPULARITY = 2;
+    public static final String POPULARITY_STRING = "2";
+    public static final int CHILD_FRIENDLINESS = 3;
+    public static final String CHILD_FRIENDLINESS_STRING = "3";
     @Mock
     private ImageService imageService;
 
@@ -54,29 +66,29 @@ class TourDetailsViewModelTest {
         tourDetailsViewModel.setTour(tour);
 
         assertThat(tourDetailsViewModel.selectedTourProperty().get()).isEqualTo(tour);
-        assertThat(tourDetailsViewModel.nameProperty().get()).isEqualTo(tour.getName());
-        assertThat(tourDetailsViewModel.fromProperty().get()).isEqualTo(tour.getFrom());
-        assertThat(tourDetailsViewModel.toProperty().get()).isEqualTo(tour.getTo());
-        assertThat(tourDetailsViewModel.transportTypeProperty().get()).isEqualTo(tour.getTransportType().value);
-        assertThat(tourDetailsViewModel.descriptionProperty().get()).isEqualTo(tour.getDescription());
-        assertThat(tourDetailsViewModel.timeProperty().get()).isEqualTo(convertToTimeString(tour.getEstimatedTime()));
-        assertThat(tourDetailsViewModel.distanceProperty().get()).isEqualTo(tour.getDistance().toString());
-        assertThat(tourDetailsViewModel.popularityProperty().get()).isEqualTo(tour.getPopularity().toString());
-        assertThat(tourDetailsViewModel.childFriendlinessProperty().get()).isEqualTo(tour.getChildFriendliness().toString());
+        assertThat(tourDetailsViewModel.nameProperty().get()).isEqualTo(TOUR_NAME);
+        assertThat(tourDetailsViewModel.fromProperty().get()).isEqualTo(TOUR_FROM);
+        assertThat(tourDetailsViewModel.toProperty().get()).isEqualTo(TOUR_TO);
+        assertThat(tourDetailsViewModel.transportTypeProperty().get()).isEqualTo(TRANSPORT_TYPE.value);
+        assertThat(tourDetailsViewModel.descriptionProperty().get()).isEqualTo(TOUR_DESCRIPTION);
+        assertThat(tourDetailsViewModel.timeProperty().get()).isEqualTo(ESTIMATED_TIME_STRING);
+        assertThat(tourDetailsViewModel.distanceProperty().get()).isEqualTo(DISTANCE_STRING);
+        assertThat(tourDetailsViewModel.popularityProperty().get()).isEqualTo(POPULARITY_STRING);
+        assertThat(tourDetailsViewModel.childFriendlinessProperty().get()).isEqualTo(CHILD_FRIENDLINESS_STRING);
     }
 
     private Tour buildTour() {
         return Tour.builder()
                 .id(UUID.randomUUID())
-                .name("name")
-                .from("from")
-                .to("to")
-                .transportType(TransportType.FASTEST)
-                .description("description")
-                .estimatedTime(3600L)
-                .distance(200.0)
-                .popularity(2)
-                .childFriendliness(2)
+                .name(TOUR_NAME)
+                .from(TOUR_FROM)
+                .to(TOUR_TO)
+                .transportType(TRANSPORT_TYPE)
+                .description(TOUR_DESCRIPTION)
+                .estimatedTime(ESTIMATED_TIME)
+                .distance(DISTANCE)
+                .popularity(POPULARITY)
+                .childFriendliness(CHILD_FRIENDLINESS)
                 .build();
     }
 }
